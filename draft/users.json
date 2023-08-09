@@ -1,0 +1,19 @@
+{
+  "users": [
+    {
+      "role": "Admin",
+      "name": "Tom Cruise",
+      "email": "tcruise@some-company.com"
+    },
+    {
+      "role": "Admin",
+      "name": "Brad Pitt",
+      "email": "bpitt@some-company.com"
+    },
+    {
+      "role": "User",
+      "name": "Leonardo DiCaprio",
+      "email": "ldicaprio@some-company.com"
+    }
+  ]
+}
