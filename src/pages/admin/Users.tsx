@@ -20,7 +20,9 @@ interface User {
 
 const NewUserModal = (props: {
   open: boolean;
-  setOpen: (open: boolean) => void;
+  setOpen: any;
+  newUser: User;
+  setNewUser: any;
 }) => {
   return (
     <Container>
@@ -35,7 +37,7 @@ const NewUserModal = (props: {
             left: '50%',
             transform: 'translate(-50%, -50%)',
             width: 400,
-            p: 4,
+            p: 5,
             backgroundColor: 'white',
             border: 'none',
           }}
@@ -48,19 +50,27 @@ const NewUserModal = (props: {
             id='name'
             label='Name'
             color='primary'
-            sx={{ paddingBottom: 2, margin: 'auto' }}
+            value={props.newUser.name}
+            onChange={(e) => props.setNewUser({ ...props.newUser, name: e.target.value })}
+            sx={{ paddingBottom: 2, margin: 'auto', width: '100%' }}
           />
           <TextField
             required
             id='email'
             label='Email'
             color='primary'
-            sx={{ paddingBottom: 2 }}
+            type='email'
+            value={props.newUser.email}
+            onChange={(e) => props.setNewUser({ ...props.newUser, email: e.target.value })}
+            sx={{ paddingBottom: 2, margin: 'auto', width: '100%' }}
           />
           <Autocomplete
             id='role'
             options={users['available-roles']}
             renderInput={(params) => <TextField {...params} label='Role' />}
+            sx={{ margin: 'auto', width: '100%' }}
+            value={props.newUser.role}
+            onChange={(e, value) => props.setNewUser({ ...props.newUser, role: value || '' })}
           />
           <Box
             sx={{
@@ -69,7 +79,11 @@ const NewUserModal = (props: {
               paddingTop: 2,
             }}
           >
-            <Button variant="contained" sx={{ marginRight: 2 }} onClick={() => props.setOpen(!props.open)} color='inherit'>
+            <Button
+              variant="contained"
+              onClick={() => { props.setOpen(!props.open); props.setNewUser({name: '', email: '', role: '' })}}
+              color='inherit'
+            >
               Cancel
             </Button>
             <Button variant="contained" endIcon={<Save />} color='inherit'>
@@ -84,7 +98,7 @@ const NewUserModal = (props: {
 
 export const Users = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [newUser, setNewUser] = useState<User>();
+  const [newUser, setNewUser] = useState<User>({ name: '', email: '', role: '' });
 
   const [selectedRows, setSelectedRows] = useState<GridRowSelectionModel>();
   const gridFields: GridColDef[] = [
@@ -115,6 +129,8 @@ export const Users = () => {
           <NewUserModal
             open={openModal}
             setOpen={setOpenModal}
+            newUser={newUser}
+            setNewUser={setNewUser}
           />
         ) : null
       }
