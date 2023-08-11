@@ -1,7 +1,7 @@
 import { ThemeProvider, createTheme, CssBaseline, Box, Toolbar } from "@mui/material";
-import './App.css';
 import { Router } from "./Router";
 import { Sidebar } from "./components/Sidebar";
+import './App.css';
 
 const theme = createTheme({
   typography: {
