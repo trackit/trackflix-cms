@@ -12,6 +12,11 @@ import { useState } from "react";
 import users from '../../draft/users.json';
 import { Save } from "@mui/icons-material";
 
+import { Modal as NewModal } from "../../components/Modal";
+import { TextField as NewTextField } from "../../components/TextField";
+import { Button as NewButton } from "../../components/Button";
+import { Dropdown as NewDropdown } from "../../components/Dropdown";
+
 interface User {
   name: string;
   email: string;
@@ -24,6 +29,43 @@ const NewUserModal = (props: {
   newUser: User;
   setNewUser: any;
 }) => {
+  return (
+    <NewModal isOpen={props.open} setOpen={props.setOpen}>
+      <div className='grid gap-4'>
+        <NewTextField
+          placeholder='Name'
+          value={props.newUser.name}
+          onChange={(e: any) => props.setNewUser({ ...props.newUser, name: e.target.value })}
+        />
+        <NewTextField
+          placeholder='Email'
+          value={props.newUser.email}
+          onChange={(e: any) => props.setNewUser({ ...props.newUser, email: e.target.value })}
+        />
+          <NewDropdown
+            buttonText='Role'
+            items={users['available-roles']}
+            selectedValue={props.newUser.role}
+            onSelect={(value: string) => props.setNewUser({ ...props.newUser, role: value })}
+            placeholder='Role'
+          />
+      </div>
+      <div className="flex justify-between pt-4">
+        <NewButton
+          color='neutral'
+          onClick={() => { props.setOpen(!props.open); props.setNewUser({ name: '', email: '', role: '' }) }}
+        >
+          <p>Cancel</p>
+        </NewButton>
+        <NewButton
+          color='neutral'
+          onClick={() => { props.setOpen(!props.open); props.setNewUser({ name: '', email: '', role: '' }) }}
+        >
+          <p>Create</p>
+        </NewButton>
+      </div>
+    </NewModal>
+  );
   return (
     <Container>
       <Modal
