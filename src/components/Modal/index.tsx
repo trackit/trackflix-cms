@@ -1,4 +1,4 @@
-import { ReactNode, FC, Dispatch, SetStateAction } from "react"
+import { ReactNode, FC, Dispatch, SetStateAction, Children } from "react"
 import { styled } from "styled-components";
 
 interface ModalProps {
@@ -24,8 +24,10 @@ export const Modal: FC<ModalProps> = ({ isOpen, setOpen, children }) => {
         className="fixed inset-0 bg-black opacity-60"
         onClick={setOpen ? () => setOpen(false) : undefined}
       ></div>
-      <ModalWrapper className={`fixed left-2/4 top-2/4 -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded shadow-md z-10 h-1/3`}>
-        {children}
+      <ModalWrapper className={`flex flex-col fixed left-2/4 top-2/4 -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded shadow-md z-10 h-1/3`}>
+        <div className="grid gap-4">
+          {children}
+        </div>
       </ModalWrapper>
     </div>
   )
