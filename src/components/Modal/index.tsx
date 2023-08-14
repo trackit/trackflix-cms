@@ -15,15 +15,16 @@ const ModalWrapper = styled.div`
 `;
 
 export const Modal: FC<ModalProps> = ({ isOpen, setOpen, children }) => {
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
+    <div className="absolute top-2/4 left-2/4 inset-0 flex items-center justify-center z-50">
       <div
         className="fixed inset-0 bg-black opacity-60"
         onClick={setOpen ? () => setOpen(false) : undefined}
       ></div>
-      <ModalWrapper className={`bg-white p-6 rounded shadow-md z-10 h-1/3`}>
+      <ModalWrapper className={`fixed left-2/4 top-2/4 -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded shadow-md z-10 h-1/3`}>
         {children}
       </ModalWrapper>
     </div>
