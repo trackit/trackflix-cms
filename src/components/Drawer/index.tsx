@@ -14,7 +14,9 @@ const Drawer = ({children, open, widthPx}:DrawerProps) => {
             style={{width: `${open? widthPx : 0}px`, zIndex: 1000}}
             className="h-screen ease-in-out drop-shadow-xl duration-500 bg-white overflow-hidden"
             >
+                <div style={{width: widthPx}}>
                 {children}
+                </div>
             </div>
             
             {
