@@ -17,6 +17,7 @@ interface DataGridProps {
     checkboxSelect?: boolean,
     onSelectChange?: (selectedRows: any[]) => void,
     onRowClick?: (row: any) => void,
+
 }
 
 export const DataGrid = (props: DataGridProps) => {
@@ -129,12 +130,12 @@ export const DataGrid = (props: DataGridProps) => {
                         {currentPage * pageSize + 1} - {currentPage * pageSize + page.length} of {props.rows.length}
                     </div>
                     <IconButton
-                    color={couldGoPreviousPage() ? "inherit" : "disabled"}
+                    color={couldGoPreviousPage() ? "primary" : "disabled"}
                     icon={KeyboardArrowLeft}
                     onClick={previousPage}
                     />
                     <IconButton
-                    color={couldGoNextPage() ? "inherit": "disabled"}
+                    color={couldGoNextPage() ? "primary": "disabled"}
                     icon={KeyboardArrowRight}
                     onClick={nextPage}
                     />

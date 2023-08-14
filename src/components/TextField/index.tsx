@@ -1,28 +1,19 @@
-import { FC } from "react"
+import { FC, InputHTMLAttributes } from "react"
 
-interface TextFieldProps {
-  placeholder?: string;
-  borderColor?: string;
-  required?: boolean;
-  value: string;
-  onChange: any;
-}
+type TextFieldProps = InputHTMLAttributes<HTMLInputElement>
 
 export const TextField: FC<TextFieldProps> = ({
   placeholder = '',
-  borderColor = 'blue',
   required = false,
-  value,
   onChange,
+  ...attr
 }) => {
   return (
     <input
       type="text"
-      className={`border rounded p-2 focus:outline-none focus:border-${borderColor}-500`}
+      className={`border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
       placeholder={`${placeholder}${required ? '*' : ''}`}
-      onChange={onChange}
-      value={value}
-      required={required}
+      {...attr}
     />
   );
 }
