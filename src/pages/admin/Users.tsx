@@ -1,107 +1,85 @@
 import {
-  Box,
   Typography,
-  Container,
-  Button,
-  Modal,
-  TextField,
-  Autocomplete,
 } from "@mui/material";
-import { DataGrid, GridColDef, GridRowSelectionModel } from '@mui/x-data-grid';
+import { DataGrid, DataGripsColumnDef } from "../../components/DataGrid";
 import { useState } from "react";
 import users from '../../draft/users.json';
-import { Save } from "@mui/icons-material";
+
+import { Modal } from "../../components/Modal";
+import { TextField } from "../../components/TextField";
+import { Button } from "../../components/Button";
+import { Dropdown } from "../../components/Dropdown";
 
 interface User {
   name: string;
   email: string;
   role: string;
+  id?: number;
 }
 
-const NewUserModal = (props: {
+const UserModal = (props: {
   open: boolean;
   setOpen: any;
-  newUser: User;
-  setNewUser: any;
+  submit: (user: User) => void;
+  edit?: User;
 }) => {
+
+  const [newUser, setNewUser] = useState<User>(props.edit ? props.edit : { name: '', email: '', role: '' });
+
+  const submitUser = () => {
+    const submittedUser: User = {
+      ...newUser
+    }
+    setNewUser({ name: '', email: '', role: '' });
+    props.submit(submittedUser);
+
+  };
+
   return (
-    <Container>
-      <Modal
-        open={props.open}
-        onClose={() => props.setOpen(false)}
-      >
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: 400,
-            p: 5,
-            backgroundColor: 'white',
-            border: 'none',
-          }}
+    <Modal isOpen={props.open} setOpen={props.setOpen}>
+      <TextField
+          placeholder='Name'
+          value={newUser.name}
+          onChange={(e: any) => setNewUser({ ...newUser, name: e.target.value })}
+        />
+        <TextField
+          placeholder='Email'
+          value={newUser.email}
+          onChange={(e: any) => setNewUser({ ...newUser, email: e.target.value })}
+        />
+        <Dropdown
+          buttonText='Role'
+          items={users['available-roles']}
+          selectedValue={newUser.role}
+          onSelect={(value: string) => setNewUser({ ...newUser, role: value })}
+          placeholder='Role'
+        />
+      <div className="flex justify-between pt-4">
+        <Button
+          color='danger'
+          onClick={() => { props.setOpen(!props.open); setNewUser({ name: '', email: '', role: '' }) }}
         >
-          <Typography id="user-modal-title" variant="h6" component="h2" sx={{ paddingBottom: 2 }}>
-            Create a new user
-          </Typography>
-          <TextField
-            required
-            id='name'
-            label='Name'
-            color='primary'
-            value={props.newUser.name}
-            onChange={(e) => props.setNewUser({ ...props.newUser, name: e.target.value })}
-            sx={{ paddingBottom: 2, margin: 'auto', width: '100%' }}
-          />
-          <TextField
-            required
-            id='email'
-            label='Email'
-            color='primary'
-            type='email'
-            value={props.newUser.email}
-            onChange={(e) => props.setNewUser({ ...props.newUser, email: e.target.value })}
-            sx={{ paddingBottom: 2, margin: 'auto', width: '100%' }}
-          />
-          <Autocomplete
-            id='role'
-            options={users['available-roles']}
-            renderInput={(params) => <TextField {...params} label='Role' />}
-            sx={{ margin: 'auto', width: '100%' }}
-            value={props.newUser.role}
-            onChange={(e, value) => props.setNewUser({ ...props.newUser, role: value || '' })}
-          />
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              paddingTop: 2,
-            }}
-          >
-            <Button
-              variant="contained"
-              onClick={() => { props.setOpen(!props.open); props.setNewUser({name: '', email: '', role: '' })}}
-              color='inherit'
-            >
-              Cancel
-            </Button>
-            <Button variant="contained" endIcon={<Save />} color='inherit'>
-              Create
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
-    </Container>
+          <p>Cancel</p>
+        </Button>
+        <Button
+          color='primary'
+          onClick={submitUser}
+        >
+          <p>
+            {props.edit ? 'Save' : 'Create'}
+          </p>
+        </Button>
+      </div>
+    </Modal>
   );
 }
 
 export const Users = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [newUser, setNewUser] = useState<User>({ name: '', email: '', role: '' });
 
-  const [selectedRows, setSelectedRows] = useState<GridRowSelectionModel>();
-  const gridFields: GridColDef[] = [
+  const [selectedRows, setSelectedRows] = useState<any[]>([]);
+  const [targetUser, setTargetUser] = useState<User | undefined>(undefined);
+  const gridFields: DataGripsColumnDef[] = [
     {
       field: 'name',
       headerName: 'Name',
@@ -122,45 +100,55 @@ export const Users = () => {
     },
   ];
 
+  const submitUser = (user: User) => {
+    setOpenModal(false);
+    if (user.id) { //update user
+      console.log("edited user", user)
+      users.users = users.users.map((u: any) => {
+        if (u.id === user.id) {
+          return user;
+        }
+        return u;
+      });
+      console.log(users.users)
+      setTargetUser(undefined);
+    }
+    else { //create user
+      const id = users.users.length + 1;
+      console.log("created user", user)
+      users.users.push({ ...user, id: id });
+    }
+  }
+
+  const editUser = (user: User) => {
+    setTargetUser(user);
+    setOpenModal(true);
+  }
+
   return (
-    <Container>
+    <div className="flex flex-col align-center justify-center w-max m-auto">
       {
         openModal ? (
-          <NewUserModal
+          <UserModal
             open={openModal}
             setOpen={setOpenModal}
-            newUser={newUser}
-            setNewUser={setNewUser}
+            submit={submitUser}
+            edit={targetUser}
           />
         ) : null
       }
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          p: 2,
-        }}
-      >
-        <Typography variant='h5'>Users</Typography>
-        <Button variant='contained' color='inherit' onClick={() => setOpenModal(!openModal)}>Create</Button>
-      </Box>
+        <div className="flex flex-row justify-between mb-4">
+          <Typography variant='h5'>Users</Typography>
+          <Button color="primary" onClick={() => setOpenModal(!openModal)}>Create</Button>
+        </div>
       <DataGrid
         rows={users.users}
         columns={gridFields}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 10,
-            },
-          },
-        }}
-        pageSizeOptions={[10]}
-        checkboxSelection
-        disableRowSelectionOnClick
-        rowSelectionModel={selectedRows}
-        onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
+        pageSize={10}
+        checkboxSelect
+        onSelectChange={(newSelection: any) => setSelectedRows(newSelection)}
+        onRowClick={editUser}
       />
-    </Container>
+    </div>
   );
 }

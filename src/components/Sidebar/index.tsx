@@ -1,17 +1,8 @@
 import { useState } from 'react';
-import {
-  styled,
-  Box,
-  Drawer,
-  ListItem,
-  Toolbar,
-  List,
-  Divider,
-  IconButton,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText
-} from '@mui/material';
+import ToolBar from '../ToolBar';
+import Drawer from '../Drawer';
+import { IconButton } from '../Button';
+
 import {
   ChevronLeft,
   Menu,
@@ -24,131 +15,110 @@ import {
   AdminPanelSettings,
   Class,
 } from '@mui/icons-material';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 
-export const drawerWidth = 240;
+export const drawerWidth = 260;
 
-interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
-}
+const DrawerHeader = ({children}: {children: JSX.Element[] | JSX.Element}) => (
+  <div className="flex justify-end align-center p-4 ">
+    {children}
+  </div>
+)
 
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})<AppBarProps>(({ theme, open }) => ({
-  transition: theme.transitions.create(['margin', 'width'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: theme.spacing(0, 1),
-  ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
-}));
-
-interface ButtonProps {
+interface DrawerButtonProps {
   text: string;
   icon: JSX.Element;
   onClick?: () => void;
 }
 
-const Button = (props: ButtonProps) => (
-  <ListItem key={props.text} disablePadding>
-  <ListItemButton onClick={props.onClick}>
-    <ListItemIcon>
-      {props.icon}
-    </ListItemIcon>
-    <ListItemText primary={props.text} />
-  </ListItemButton>
-</ListItem>
+const DrawerButton = (props: DrawerButtonProps) => (
+  <div onClick={props.onClick}
+  className="flex flex-row justify-start p-3 pl-4 w-full transition cursor-pointer duration-200 hover:bg-gray-200">
+    {props.icon}
+    <div className='ml-8 grow'>
+    {props.text}
+    </div>
+  </div>
 )
 
-const CategoryText = styled(ListItemText)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'flex-start',
-  padding: theme.spacing(0, 2),
-  fontWeight: 'bold'
-}));
+interface CategoryTextProps {
+  primary: string;
+  //secondary?: string;
+}
+const CategoryText = ({primary}: CategoryTextProps) => (
+  <span
+    className='flex justify-start pt-0 pb-3 pr2 pl-4 w-full font-bold'
+  >
+    {primary}
+  </span>
+)
+
+
+const Divider = ({ size = "small" }: {size? : "small" | "medium" | "large"}) => (
+  <hr className={
+    size === "small" ? "h-0.5" :
+    size === "medium" ? "h-1/2" :
+    size === "large" ? "h-1" :
+    "w-1/4"
+  } />
+)
+
+const List = ({children}: {children: JSX.Element[] | JSX.Element}) => (
+  <div className='w-full'>
+    <Divider />
+    <div className='flex flex-col pt-4 pb-4 w-full'>
+      {children}
+    </div>
+  </div>
+)
 
 export const Sidebar = () => {
   const [open, setOpen] = useState(false);
-
   const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
+    setOpen(true)
+  }
   const handleDrawerClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <AppBar position='fixed' open={open}>
-        <Toolbar sx={{ backgroundColor: '#E63946' }}>
-          <IconButton
-            color='inherit'
-            aria-label='open drawer'
-            onClick={handleDrawerOpen}
-            edge='start'
-            sx={{ mr: 2, ...(open && { display: 'none' })}}
-          >
-            <Menu />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
-            boxSizing: 'border-box',
-          },
-        }}
-        open={open}
-      >
+    <div>
+      <ToolBar style={{ backgroundColor: '#E63946' }}>
+        <IconButton
+          color='inherit'
+          aria-label='open drawer'
+          onClick={handleDrawerOpen}
+          icon={Menu}
+          style={{display: open ? 'none' : 'block'}}
+        />
+      </ToolBar>
+      <Drawer widthPx={drawerWidth} open={open}>
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeft />
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          <CategoryText primary='Content' />
-          <Button text='Live channels' icon={<LiveTv />} onClick={() => window.location.href = '/content/live-channels'} />
-          <Button text='VOD' icon={<OndemandVideo />} onClick={() => window.location.href = '/content/vod'} />
-        </List>
-        <Divider />
-        <List>
-          <CategoryText primary='Reporting' />
-          <Button text='Metrics' icon={<QueryStats />} onClick={() => window.location.href = '/reporting/metrics'} />
-        </List>
-        <Divider />
-        <List>
-          <CategoryText primary='Configuration' />
-          <Button text='Genres' icon={<Category />} onClick={() => window.location.href = '/configuration/genres'} />
-          <Button text='Categories' icon={<Class />} onClick={() => window.location.href = '/configuration/categories'} />
-          <Button text='Platforms' icon={<Movie />} onClick={() => window.location.href = '/configuration/platforms'} />
-        </List>
-        <Divider />
-        <List>
-          <CategoryText primary='Admin' />
-          <Button text='Users' icon={<Person />} onClick={() => window.location.href = '/admin/users'} />
-          <Button text='Permissions' icon={<AdminPanelSettings />} onClick={() => window.location.href = '/admin/permissions'} />
-        </List>
-        <Divider />
+            <IconButton
+            onClick={handleDrawerClose}
+            icon={ChevronLeft}
+            />
+          </DrawerHeader>
+          <List>
+            <CategoryText primary='Content' />
+            <DrawerButton text='Live channels' icon={<LiveTv />} onClick={() => window.location.href = '/content/live-channels'} />
+            <DrawerButton text='VOD' icon={<OndemandVideo />} onClick={() => window.location.href = '/content/vod'} />
+          </List>
+          <List>
+            <CategoryText primary='Reporting' />
+            <DrawerButton text='Metrics' icon={<QueryStats />} onClick={() => window.location.href = '/reporting/metrics'} />
+          </List>
+          <List>
+            <CategoryText primary='Configuration' />
+            <DrawerButton text='Genres' icon={<Category />} onClick={() => window.location.href = '/configuration/genres'} />
+            <DrawerButton text='Categories' icon={<Class />} onClick={() => window.location.href = '/configuration/categories'} />
+            <DrawerButton text='Platforms' icon={<Movie />} onClick={() => window.location.href = '/configuration/platforms'} />
+          </List>
+          <List>
+            <CategoryText primary='Admin' />
+            <DrawerButton text='Users' icon={<Person />} onClick={() => window.location.href = '/admin/users'} />
+            <DrawerButton text='Permissions' icon={<AdminPanelSettings />} onClick={() => window.location.href = '/admin/permissions'} />
+          </List>
       </Drawer>
-    </Box>
+    </div>
   );
 }
