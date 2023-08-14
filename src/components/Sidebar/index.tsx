@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import ToolBar from '../ToolBar';
 import Drawer from '../Drawer';
-import {
-  IconButton,
-} from '@mui/material';
+import { IconButton } from '../Button';
+
 import {
   ChevronLeft,
   Menu,
@@ -33,7 +32,7 @@ interface DrawerButtonProps {
 
 const DrawerButton = (props: DrawerButtonProps) => (
   <div onClick={props.onClick}
-  className="flex flex-row justify-start p-3 pl-4 transition cursor-pointer duration-200 hover:bg-gray-200">
+  className="flex flex-row justify-start p-3 pl-4 w-full transition cursor-pointer duration-200 hover:bg-gray-200">
     {props.icon}
     <div className='ml-8 grow'>
     {props.text}
@@ -47,7 +46,7 @@ interface CategoryTextProps {
 }
 const CategoryText = ({primary}: CategoryTextProps) => (
   <span
-    className='flex justify-start pt-0 pb-3 pr2 pl-4 font-bold'
+    className='flex justify-start pt-0 pb-3 pr2 pl-4 w-full font-bold'
   >
     {primary}
   </span>
@@ -64,9 +63,9 @@ const Divider = ({ size = "small" }: {size? : "small" | "medium" | "large"}) => 
 )
 
 const List = ({children}: {children: JSX.Element[] | JSX.Element}) => (
-  <div>
+  <div className='w-full'>
     <Divider />
-    <div className='flex flex-col pt-4 pb-4'>
+    <div className='flex flex-col pt-4 pb-4 w-full'>
       {children}
     </div>
   </div>
@@ -74,26 +73,30 @@ const List = ({children}: {children: JSX.Element[] | JSX.Element}) => (
 
 export const Sidebar = () => {
   const [open, setOpen] = useState(false);
-  const handleDrawerOpen = () => setOpen(true)
-  const handleDrawerClose = () => setOpen(false)
+  const handleDrawerOpen = () => {
+    setOpen(true)
+  }
+  const handleDrawerClose = () => {
+    setOpen(false)
+  }
 
   return (
-    <div className="flex">
+    <div>
       <ToolBar style={{ backgroundColor: '#E63946' }}>
         <IconButton
           color='inherit'
           aria-label='open drawer'
           onClick={handleDrawerOpen}
-          sx={{ mr: 2, ...(open && { display: 'none' })}}
-        >
-          <Menu />
-        </IconButton>
+          icon={Menu}
+          style={{display: open ? 'none' : 'block'}}
+        />
       </ToolBar>
       <Drawer widthPx={drawerWidth} open={open}>
         <DrawerHeader>
-            <IconButton onClick={handleDrawerClose}>
-              <ChevronLeft />
-            </IconButton>
+            <IconButton
+            onClick={handleDrawerClose}
+            icon={ChevronLeft}
+            />
           </DrawerHeader>
           <List>
             <CategoryText primary='Content' />
