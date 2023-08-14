@@ -1,14 +1,25 @@
 import { ReactNode, FC, ButtonHTMLAttributes}  from "react";
 import SvgIcon, {SvgIconTypeMap} from "@mui/material/SvgIcon"
-import Colors from "tailwindcss/colors"
+
 
 type SvgIconComponent = typeof SvgIcon;
-type TailwindColor = keyof typeof Colors;
 
 type IconColor = SvgIconTypeMap["props"]["color"];
 
+const colorMap = {
+  "primary": "bg-slate-200",
+  "secondary": "bg-green-500",
+  "danger": "bg-red-500",
+  "warning": "bg-yellow-500",
+  "success": "bg-green-500",
+  "info": "bg-blue-500",
+  "disabled": "bg-gray-200",
+  "transparent": "bg-transparent",
+}
+
+
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>{
-  color?: TailwindColor,
+  color: keyof typeof colorMap,
   children?: ReactNode
 };
 
@@ -17,20 +28,18 @@ interface IconButtonProps extends Omit<ButtonProps, 'color'> {
   color?: IconColor,
 }
 
+
 export const Button: FC<ButtonProps> = ({
-  color,
+  color = "primary",
   children,
   className,
   ...attr
 }) => {
-
-  const backgroundColor =  color ? "bg-" + color + "-500": "bg-slate-200";
-  const defaultClasseName = `${ backgroundColor } hover:brightness-110 hover:drop-shadow-xl text-black py-2 px-4 rounded`
-
+  const defaultClasseName = `${ colorMap[color] } hover:brightness-110 hover:drop-shadow-xl text-black py-2 px-4 rounded`
   return (
     <button
-      className={className ? defaultClasseName + " " + className : defaultClasseName}
-      {...attr}
+    className={`${defaultClasseName}`}
+    {...attr}
     >
       {children}
     </button>
