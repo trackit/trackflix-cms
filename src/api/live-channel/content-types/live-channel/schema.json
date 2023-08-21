@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "live_channels",
+  "info": {
+    "singularName": "live-channel",
+    "pluralName": "live-channels",
+    "displayName": "Live Channel",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "inputType": {
+      "type": "enumeration",
+      "enum": [
+        "RTMP",
+        "SRT",
+        "HLS"
+      ]
+    },
+    "outputType": {
+      "type": "enumeration",
+      "enum": [
+        "ABR - 4 outputs",
+        "ABR - 8 outputs"
+      ]
+    },
+    "Thumbnail": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "LiveToVOD": {
+      "type": "boolean"
+    },
+    "catchUp": {
+      "type": "boolean"
+    }
+  }
+}
