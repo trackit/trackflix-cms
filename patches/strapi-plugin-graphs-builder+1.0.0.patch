@@ -1,0 +1,33 @@
+diff --git a/node_modules/strapi-plugin-graphs-builder/admin/src/index.js b/node_modules/strapi-plugin-graphs-builder/admin/src/index.js
+index 37709ff..284044e 100644
+--- a/node_modules/strapi-plugin-graphs-builder/admin/src/index.js
++++ b/node_modules/strapi-plugin-graphs-builder/admin/src/index.js
+@@ -10,11 +10,11 @@ const name = pluginPkg.strapi.name;
+ export default {
+   register(app) {
+     app.addMenuLink({
+-      to: `/plugins/${pluginId}`,
++      to: `/plugins/metrics`,
+       icon: GraphIcon,
+       intlLabel: {
+         id: `${pluginId}.plugin.name`,
+-        defaultMessage: 'Graphs Builder',
++        defaultMessage: 'Metrics',
+       },
+       Component: async () => {
+         const component = await import(/* webpackChunkName: "[request]" */ './pages/App');
+diff --git a/node_modules/strapi-plugin-graphs-builder/admin/src/pages/App/index.js b/node_modules/strapi-plugin-graphs-builder/admin/src/pages/App/index.js
+index c1e38f0..e137fe8 100644
+--- a/node_modules/strapi-plugin-graphs-builder/admin/src/pages/App/index.js
++++ b/node_modules/strapi-plugin-graphs-builder/admin/src/pages/App/index.js
+@@ -17,8 +17,8 @@ const App = () => {
+   return (
+     <div>
+       <Switch>
+-        <Route path={`/plugins/${pluginId}`} component={HomePage} exact />
+-        <Route path={`/plugins/${pluginId}/graphs/create-graph`} component={CreateGraph} exact />
++        <Route path={`/plugins/metrics`} component={HomePage} exact />
++        <Route path={`/plugins/metrics/graphs/create-graph`} component={CreateGraph} exact />
+         <Route component={NotFound} />
+       </Switch>
+     </div>

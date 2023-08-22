@@ -9,13 +9,30 @@
     "build": "strapi build",
     "strapi": "strapi"
   },
-  "devDependencies": {},
   "dependencies": {
-    "@chartbrew/plugin-strapi": "^0.5.0",
+    "@babel/core": "^7.22.10",
+    "@babel/runtime": "^7.22.10",
+    "@codemirror/autocomplete": "^6.9.0",
+    "@codemirror/language": "^6.9.0",
+    "@codemirror/lint": "^6.4.0",
+    "@codemirror/search": "^6.5.1",
+    "@codemirror/state": "^6.2.1",
+    "@codemirror/theme-one-dark": "^6.1.2",
+    "@codemirror/view": "^6.16.0",
+    "@lezer/common": "^1.0.4",
+    "@strapi/plugin-documentation": "4.12.5",
     "@strapi/plugin-i18n": "4.12.5",
     "@strapi/plugin-users-permissions": "4.12.5",
     "@strapi/strapi": "4.12.5",
-    "pg": "8.8.0"
+    "codemirror": "^6.0.1",
+    "pg": "8.8.0",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-is": "16.8.0",
+    "react-router-dom": "5.3.4",
+    "strapi-plugin-graphs-builder": "^1.0.0",
+    "styled-components": "5.3.3"
   },
   "author": {
     "name": "A Strapi developer"

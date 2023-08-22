@@ -111,3 +111,5 @@ exports
 *.cache
 build
 .strapi-updater.json
+yarn.lock
+package-lock.json
