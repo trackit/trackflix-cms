@@ -16,7 +16,7 @@
       "type": "string",
       "required": true
     },
-    "inputType": {
+    "input_type": {
       "type": "enumeration",
       "enum": [
         "RTMP",
@@ -24,14 +24,14 @@
         "HLS"
       ]
     },
-    "outputType": {
+    "output_type": {
       "type": "enumeration",
       "enum": [
         "ABR - 4 outputs",
         "ABR - 8 outputs"
       ]
     },
-    "Thumbnail": {
+    "thumbnail": {
       "type": "media",
       "multiple": false,
       "required": false,
@@ -42,11 +42,14 @@
         "audios"
       ]
     },
-    "LiveToVOD": {
+    "Live_to_vod": {
       "type": "boolean"
     },
-    "catchUp": {
+    "catch_up": {
       "type": "boolean"
+    },
+    "access_count": {
+      "type": "integer"
     }
   }
 }

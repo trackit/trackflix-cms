@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "description": "A Strapi application",
   "scripts": {
+    "prebuild": "cd src/plugins/cloudfront-metrics && yarn build",
     "develop": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
