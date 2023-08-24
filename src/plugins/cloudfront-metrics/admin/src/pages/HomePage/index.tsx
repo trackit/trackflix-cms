@@ -17,11 +17,11 @@ import {
   BarElement,
 } from 'chart.js'
 import UptimeChart from './charts/UptimeChart';
-import styled from 'styled-components';
 import React from 'react';
 import { Duration } from './charts/enums';
 import LatencyChart from './charts/LatencyChart';
 import draft from './charts/draft.json';
+import BroadcastQualityChart from './charts/BroadcastQualityChart';
 
 ChartJS.register(
   CategoryScale,
@@ -33,11 +33,6 @@ ChartJS.register(
   Legend,
   BarElement,
 );
-
-const ChartsWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-`
 
 const HomePage = () => {
   return (
@@ -53,6 +48,9 @@ const HomePage = () => {
           data={draft.latency.data}
           period={draft.latency.period}
           duration={draft.latency.duration as Duration}
+        />
+        <BroadcastQualityChart
+          streams={draft["broadcast-quality"].streams}
         />
       </div>
     </div>

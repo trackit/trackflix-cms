@@ -25,8 +25,6 @@
     "@emotion/styled": "^11.11.0",
     "@formatjs/intl": "^2.9.0",
     "@lezer/common": "^1.0.4",
-    "@mui/icons-material": "^5.14.7",
-    "@mui/material": "^5.14.7",
     "@strapi/design-system": "^1.9.0",
     "@strapi/helper-plugin": "^4.12.6",
     "@strapi/plugin-documentation": "4.12.5",

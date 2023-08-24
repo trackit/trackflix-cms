@@ -30,5 +30,113 @@
     ],
     "duration": "days",
     "period": 10
+  },
+  "broadcast-quality": {
+    "streams": [
+      {
+        "id": "stream-976471-john-smith",
+        "name": "John Smith's stream",
+        "data": [
+          {
+            "quality": "FULL HD",
+            "timestamp": "00h10m00s"
+          },
+          {
+            "quality": "FULL HD",
+            "timestamp": "00h30m31s"
+          },
+          {
+            "quality": "FULL HD",
+            "timestamp": "00h45m31s"
+          },
+          {
+            "quality": "FULL HD",
+            "timestamp": "01h00m00s"
+          },
+          {
+            "quality": "FULL HD",
+            "timestamp": "01h31m00s"
+          }
+        ]
+      },
+      {
+        "id": "stream-714764-jane-doe",
+        "name": "Jane Doe's stream",
+        "data": [
+          {
+            "quality": "FULL HD",
+            "timestamp": "00h10m00s"
+          },
+          {
+            "quality": "4K",
+            "timestamp": "00h30m31s"
+          },
+          {
+            "quality": "4K",
+            "timestamp": "00h45m31s"
+          },
+          {
+            "quality": "4K",
+            "timestamp": "01h00m00s"
+          },
+          {
+            "quality": "2K",
+            "timestamp": "01h31m00s"
+          }
+        ]
+      },
+      {
+        "id": "stream-194711-john-doe",
+        "name": "John Doe's stream",
+        "data": [
+          {
+            "quality": "FULL HD",
+            "timestamp": "00h10m00s"
+          },
+          {
+            "quality": "FULL HD",
+            "timestamp": "00h30m31s"
+          },
+          {
+            "quality": "HD",
+            "timestamp": "00h45m31s"
+          },
+          {
+            "quality": "HD",
+            "timestamp": "01h00m00s"
+          },
+          {
+            "quality": "FULL HD",
+            "timestamp": "01h31m00s"
+          }
+        ]
+      },
+      {
+        "id": "stream-316724-jane-smith",
+        "name": "Jane Smith's stream",
+        "data": [
+          {
+            "quality": "2K",
+            "timestamp": "00h10m00s"
+          },
+          {
+            "quality": "4K",
+            "timestamp": "00h30m31s"
+          },
+          {
+            "quality": "4K",
+            "timestamp": "00h45m31s"
+          },
+          {
+            "quality": "4K",
+            "timestamp": "01h00m00s"
+          },
+          {
+            "quality": "4K",
+            "timestamp": "01h31m00s"
+          }
+        ]
+      }
+    ]
   }
 }
