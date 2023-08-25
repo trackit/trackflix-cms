@@ -42,7 +42,6 @@ ChartJS.register(
 const HomePage = () => {
   return (
     <div>
-      <h1>{pluginId}&apos;s HomePage</h1>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', padding: '1em' }}>
         <UptimeChart
           data={draft.uptime.data}

@@ -31,7 +31,7 @@ const DoughnutChart = (props: DoughnutChartProps) => {
         const { ctx } = chart;
 
         ctx.save();
-        ctx.font = `bolder 30px ${Chart.defaults.font.family}`;
+        ctx.font = `bolder 20px ${Chart.defaults.font.family}`;
         ctx.fillStyle = Chart.defaults.color;
         ctx.textAlign = 'center';
         ctx.fillText(`${props.percentage}%`, chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y);
