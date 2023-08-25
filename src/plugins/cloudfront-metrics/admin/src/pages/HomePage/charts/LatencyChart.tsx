@@ -62,7 +62,7 @@ const LatencyChart = (props: LatencyChartProps) => {
   };
 
   return (
-    <div>
+    <div style={{ display: 'flex', alignItems: 'center' }}>
       <Line data={data} options={options} />
     </div>
   );

@@ -63,7 +63,7 @@ const UptimeChart = (props: UptimeChartProps) => {
   };
 
   return (
-    <div>
+    <div style={{ display: 'flex', alignItems: 'center' }}>
       <Bar data={data} options={options} />
     </div>
   );

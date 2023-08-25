@@ -1,7 +1,6 @@
-import { Combobox, ComboboxOption, CreatableCombobox } from '@strapi/design-system';
+import { Combobox, ComboboxOption } from '@strapi/design-system';
 import { Line } from 'react-chartjs-2';
 import React, { useState } from 'react';
-import { LineOptions } from 'chart.js';
 
 interface StreamData {
   quality: string;
@@ -41,10 +40,14 @@ const BroadcastQualityChart = (props: BroadcastQualityChartProps) => {
         },
       },
       y: {
+        min: 0,
+        max: 3,
         ticks: {
           callback: (value: string) => {
-            if (yLabels[Number(value)])
-              return yLabels[Number(value)];
+            const index = Number(value);
+            if (index >= 0 && index < yLabels.length) {
+              return yLabels[index];
+            }
             return '';
           },
         },
@@ -61,15 +64,16 @@ const BroadcastQualityChart = (props: BroadcastQualityChartProps) => {
     datasets: [
       {
         label: 'Latency',
-        data: props.streams.find((stream: Stream) => stream.id === id)?.data.map((val) => yLabels.indexOf(val.quality)) || [],        borderColor: 'blue',
+        data: props.streams.find((stream: Stream) => stream.id === id)?.data.map((val) => yLabels.indexOf(val.quality)) || [],
+        borderColor: 'blue',
         backgroundColor: 'rgba(0, 0, 255, 0.2)',
       },
     ],
   };
 
   return (
-    <div>
-      <Combobox placeholder="Select a stream id" label="Stream ID" value={id} onChange={setId} autocomplete={'list'} onClear={() => setId('')}>
+    <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+      <Combobox placeholder="Select a stream id" label="Stream ID" value={id} onChange={setId} autocomplete={'none'} onClear={() => setId('')}>
         {props.streams.map((stream: Stream) => <ComboboxOption value={stream.id}>{stream.id}</ComboboxOption>)}
       </Combobox>
       <Line data={data} options={options} />
