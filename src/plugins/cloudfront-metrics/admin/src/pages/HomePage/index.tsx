@@ -15,13 +15,16 @@ import {
   Tooltip,
   Legend,
   BarElement,
+  Filler,
+  ArcElement,
 } from 'chart.js'
 import UptimeChart from './charts/UptimeChart';
-import React from 'react';
 import { Duration } from './charts/enums';
 import LatencyChart from './charts/LatencyChart';
 import draft from './charts/draft.json';
 import BroadcastQualityChart from './charts/BroadcastQualityChart';
+import DoughnutChart from './charts/DoughnutChart';
+import React from 'react';
 
 ChartJS.register(
   CategoryScale,
@@ -32,13 +35,15 @@ ChartJS.register(
   Tooltip,
   Legend,
   BarElement,
+  Filler,
+  ArcElement,
 );
 
 const HomePage = () => {
   return (
     <div>
       <h1>{pluginId}&apos;s HomePage</h1>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', padding: '1em' }}>
         <UptimeChart
           data={draft.uptime.data}
           period={draft.uptime.period}
@@ -51,6 +56,9 @@ const HomePage = () => {
         />
         <BroadcastQualityChart
           streams={draft["broadcast-quality"].streams}
+        />
+        <DoughnutChart
+          percentage={draft["error-rates"].percentage}
         />
       </div>
     </div>

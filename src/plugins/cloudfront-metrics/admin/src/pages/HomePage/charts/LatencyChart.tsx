@@ -26,6 +26,7 @@ const LatencyChart = (props: LatencyChartProps) => {
     labels: labels,
     datasets: [
       {
+        fill: true,
         label: 'Latency',
         data: props.data,
         borderColor: 'blue',

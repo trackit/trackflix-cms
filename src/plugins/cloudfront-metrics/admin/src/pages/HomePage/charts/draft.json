@@ -138,5 +138,8 @@
         ]
       }
     ]
+  },
+  "error-rates": {
+    "percentage": 22.5
   }
 }
