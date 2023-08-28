@@ -1,0 +1,16 @@
+{
+  "videos-list": [
+    {
+      "id": "0",
+      "name": "Deploy a Node.js Application to AWS Elastic Beanstalk"
+    },
+    {
+      "id": "1",
+      "name": "How to create an Aurora Serverless Database Cluster"
+    },
+    {
+      "id": "2",
+      "name": "How to create an AWS Lambda Function"
+    }
+  ]
+}

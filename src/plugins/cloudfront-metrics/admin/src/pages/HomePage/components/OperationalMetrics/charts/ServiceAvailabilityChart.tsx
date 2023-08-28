@@ -1,14 +1,14 @@
 import { Line } from "react-chartjs-2";
-import React from 'react';
-import { Duration } from "./enums";
+import { Duration } from "../../../enums";
+import React from "react";
 
-interface LatencyChartProps {
+interface ServiceAvailabilityChartProps {
   data: number[];
   period: number;
   duration: Duration;
 }
 
-const LatencyChart = (props: LatencyChartProps) => {
+const ServiceAvailabilityChart = (props: ServiceAvailabilityChartProps) => {
   if (props.data.length !== props.period)
     throw new Error('Data and period must be the same length');
 
@@ -22,51 +22,52 @@ const LatencyChart = (props: LatencyChartProps) => {
     }
   });
 
-  const data = {
-    labels: labels,
-    datasets: [
-      {
-        fill: true,
-        label: 'Latency',
-        data: props.data,
-        borderColor: 'blue',
-        backgroundColor: 'rgba(0, 0, 255, 0.2)',
-      },
-    ],
-  };
-
-  const options = {
+  const options: any = {
     plugins: {
       legend: {
         display: false,
       },
       title: {
         display: true,
-        text: 'Latency',
+        text: 'Service Availability',
       },
     },
     scales: {
       x: {
         title: {
           display: false,
-          text: `${props.duration} Ago`,
+          text: 'Time',
         },
       },
       y: {
-        min: 0,
+        ticks: {
+          callback: (value: string) => {
+            return `${value}%`;
+          },
+        },
         title: {
           display: true,
-          text: 'Latency (ms)',
+          text: 'Availability',
         },
       },
     },
   };
 
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: 'Service Availability',
+      data: props.data,
+      backgroundColor: 'rgba(0, 0, 255, 0.2)',
+      borderColor: 'blue',
+    }]
+  };
+
   return (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
+    <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
       <Line data={data} options={options} />
     </div>
   );
 }
 
-export default LatencyChart;
+export default ServiceAvailabilityChart;

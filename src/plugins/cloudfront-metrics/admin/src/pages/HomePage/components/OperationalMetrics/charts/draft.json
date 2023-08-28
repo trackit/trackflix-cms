@@ -141,5 +141,21 @@
   },
   "error-rates": {
     "percentage": 22.5
+  },
+  "service-availability": {
+    "data": [
+      100,
+      99.82,
+      100,
+      99.92,
+      100,
+      100,
+      99.99,
+      100,
+      99.01,
+      100
+    ],
+    "period": 10,
+    "duration": "days"
   }
 }

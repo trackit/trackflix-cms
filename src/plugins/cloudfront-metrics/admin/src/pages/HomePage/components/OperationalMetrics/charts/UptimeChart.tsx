@@ -1,6 +1,6 @@
 import { Bar } from "react-chartjs-2";
 import React from 'react';
-import { Duration } from "./enums";
+import { Duration } from "../../../enums";
 
 interface UptimeChartProps {
   data: number[];

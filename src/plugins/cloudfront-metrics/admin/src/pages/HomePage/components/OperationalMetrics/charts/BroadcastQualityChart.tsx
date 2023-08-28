@@ -1,17 +1,7 @@
 import { Combobox, ComboboxOption } from '@strapi/design-system';
 import { Line } from 'react-chartjs-2';
 import React, { useState } from 'react';
-
-interface StreamData {
-  quality: string;
-  timestamp: string;
-}
-
-interface Stream {
-  id: string;
-  name: string;
-  data: StreamData[];
-}
+import { Stream } from '../../../interfaces';
 
 interface BroadcastQualityChartProps {
   streams: Stream[];
@@ -40,8 +30,7 @@ const BroadcastQualityChart = (props: BroadcastQualityChartProps) => {
         },
       },
       y: {
-        min: 0,
-        max: 3,
+        startAtZero: true,
         ticks: {
           callback: (value: string) => {
             const index = Number(value);

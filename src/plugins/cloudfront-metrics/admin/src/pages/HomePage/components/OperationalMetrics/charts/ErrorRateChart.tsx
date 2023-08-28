@@ -23,7 +23,7 @@ const ErrorRateChart = (props: ErrorRateChartProps) => {
     },
     rotation: 270,
     circumference: 180,
-    aspectRatio: 1.5,
+    aspectRatio: 2.5,
   };
   const plugins = [
     {
