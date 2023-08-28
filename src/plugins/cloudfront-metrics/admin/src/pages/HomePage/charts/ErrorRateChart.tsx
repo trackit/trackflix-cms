@@ -2,11 +2,11 @@ import { Doughnut } from "react-chartjs-2";
 import React from "react";
 import { Chart } from "chart.js";
 
-interface DoughnutChartProps {
+interface ErrorRateChartProps {
   percentage: number,
 }
 
-const DoughnutChart = (props: DoughnutChartProps) => {
+const ErrorRateChart = (props: ErrorRateChartProps) => {
   const percentageRatio = props.percentage / 100;
 
   const options = {
@@ -23,6 +23,7 @@ const DoughnutChart = (props: DoughnutChartProps) => {
     },
     rotation: 270,
     circumference: 180,
+    aspectRatio: 1.5,
   };
   const plugins = [
     {
@@ -55,4 +56,4 @@ const DoughnutChart = (props: DoughnutChartProps) => {
   );
 }
 
-export default DoughnutChart;
+export default ErrorRateChart;

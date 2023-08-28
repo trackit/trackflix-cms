@@ -63,7 +63,7 @@ const BroadcastQualityChart = (props: BroadcastQualityChartProps) => {
     labels: props.streams.find((stream: Stream) => stream.id === id)?.data.map((val) => val.timestamp) || [],
     datasets: [
       {
-        label: 'Latency',
+        label: 'Quality',
         data: props.streams.find((stream: Stream) => stream.id === id)?.data.map((val) => yLabels.indexOf(val.quality)) || [],
         borderColor: 'blue',
         backgroundColor: 'rgba(0, 0, 255, 0.2)',
@@ -74,7 +74,7 @@ const BroadcastQualityChart = (props: BroadcastQualityChartProps) => {
   return (
     <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
       <Combobox placeholder="Select a stream id" label="Stream ID" value={id} onChange={setId} autocomplete={'none'} onClear={() => setId('')}>
-        {props.streams.map((stream: Stream) => <ComboboxOption value={stream.id}>{stream.id}</ComboboxOption>)}
+        {props.streams.map((stream: Stream) => <ComboboxOption value={stream.id} key={`stream-${stream.id}`}>{stream.id}</ComboboxOption>)}
       </Combobox>
       <Line data={data} options={options} />
     </div>

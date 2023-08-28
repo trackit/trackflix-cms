@@ -23,7 +23,7 @@ import { Duration } from './charts/enums';
 import LatencyChart from './charts/LatencyChart';
 import draft from './charts/draft.json';
 import BroadcastQualityChart from './charts/BroadcastQualityChart';
-import DoughnutChart from './charts/DoughnutChart';
+import ErrorRateChart from './charts/ErrorRateChart';
 import React from 'react';
 
 ChartJS.register(
@@ -56,7 +56,7 @@ const HomePage = () => {
         <BroadcastQualityChart
           streams={draft["broadcast-quality"].streams}
         />
-        <DoughnutChart
+        <ErrorRateChart
           percentage={draft["error-rates"].percentage}
         />
       </div>
