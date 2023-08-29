@@ -12,4 +12,5 @@ export interface Stream {
 export interface Video {
   id: string;
   name: string;
+  metrics: any;
 }
