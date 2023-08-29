@@ -3,6 +3,12 @@
     {
       "id": "0",
       "name": "Deploy a Node.js Application to AWS Elastic Beanstalk",
+      "interactions": {
+        "likes": 524,
+        "comments": 222,
+        "shares": 541,
+        "minutes": 1140
+      },
       "metrics": {
         "avg-view-duration": 2.04,
         "avg-watch-time": 445318,
@@ -48,12 +54,36 @@
             "timestamp": "21:3",
             "value": 380
           }
+        ],
+        "devices": [
+          {
+            "name": "Mobile",
+            "value": 25
+          },
+          {
+            "name": "Desktop",
+            "value": 70
+          },
+          {
+            "name": "Tablet",
+            "value": 3
+          },
+          {
+            "name": "TV",
+            "value": 5
+          }
         ]
       }
     },
     {
       "id": "1",
       "name": "How to create an Aurora Serverless Database Cluster",
+      "interactions": {
+        "likes": 524,
+        "comments": 222,
+        "shares": 541,
+        "minutes": 1140
+      },
       "metrics": {
         "avg-view-duration": 7.05,
         "avg-watch-time": 200024,
@@ -99,12 +129,36 @@
             "timestamp": "21:3",
             "value": 380
           }
+        ],
+        "devices": [
+          {
+            "name": "Mobile",
+            "value": 45
+          },
+          {
+            "name": "Desktop",
+            "value": 50
+          },
+          {
+            "name": "Tablet",
+            "value": 3
+          },
+          {
+            "name": "TV",
+            "value": 2
+          }
         ]
       }
     },
     {
       "id": "2",
       "name": "How to create an AWS Lambda Function",
+      "interactions": {
+        "likes": 524,
+        "comments": 222,
+        "shares": 541,
+        "minutes": 1140
+      },
       "metrics": {
         "avg-view-duration": 4.08,
         "avg-watch-time": 260554,
@@ -150,8 +204,128 @@
             "timestamp": "21:3",
             "value": 134
           }
+        ],
+        "devices": [
+          {
+            "name": "Mobile",
+            "value": 25
+          },
+          {
+            "name": "Desktop",
+            "value": 70
+          },
+          {
+            "name": "Tablet",
+            "value": 4
+          },
+          {
+            "name": "TV",
+            "value": 1
+          }
         ]
       }
+    }
+  ],
+  "users": [
+    {
+      "id": "fb6c5a72-467b-11ee-be56-0242ac120002",
+      "watched-categories": [
+        {
+          "name": "Sport",
+          "value": 21
+        },
+        {
+          "name": "Music",
+          "value": 10
+        },
+        {
+          "name": "News",
+          "value": 5
+        },
+        {
+          "name": "Movies",
+          "value": 3
+        },
+        {
+          "name": "Science",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "040f969e-467c-11ee-be56-0242ac120002",
+      "watched-categories": [
+        {
+          "name": "Video Games",
+          "value": 7
+        },
+        {
+          "name": "Lifestyle",
+          "value": 12
+        },
+        {
+          "name": "News",
+          "value": 21
+        },
+        {
+          "name": "Robotics",
+          "value": 1
+        },
+        {
+          "name": "Cooking",
+          "value": 8
+        }
+      ]
+    },
+    {
+      "id": "0acca4a4-467c-11ee-be56-0242ac120002",
+      "watched-categories": [
+        {
+          "name": "Sport",
+          "value": 15
+        },
+        {
+          "name": "Animal Videos",
+          "value": 11
+        },
+        {
+          "name": "News",
+          "value": 5
+        },
+        {
+          "name": "Movies",
+          "value": 1
+        },
+        {
+          "name": "Science",
+          "value": 8
+        }
+      ]
+    },
+    {
+      "id": "0f4f709c-467c-11ee-be56-0242ac120002",
+      "watched-categories": [
+        {
+          "name": "War Reporting",
+          "value": 11
+        },
+        {
+          "name": "Music",
+          "value": 14
+        },
+        {
+          "name": "News",
+          "value": 5
+        },
+        {
+          "name": "Horror",
+          "value": 2
+        },
+        {
+          "name": "Science",
+          "value": 9
+        }
+      ]
     }
   ]
 }
