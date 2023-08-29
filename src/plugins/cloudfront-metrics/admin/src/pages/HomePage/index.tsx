@@ -1,17 +1,15 @@
-/*
- *
- * HomePage
- *
- */
-
 import React from 'react';
 import pluginId from '../../pluginId';
+import { Layout, BaseHeaderLayout } from '@strapi/design-system';
 
 const HomePage = () => {
   return (
     <div>
-      <h1>{pluginId}&apos;s HomePage</h1>
-      <p>Happy coding</p>
+      <BaseHeaderLayout
+          title="Metrics"
+          subtitle={`le sous-titre de la page si ya besoin`}
+          as="h2"
+        />
     </div>
   );
 };
