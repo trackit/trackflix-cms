@@ -1,4 +1,4 @@
-import { Combobox, ComboboxOption, Card } from "@strapi/design-system";
+import { Combobox, ComboboxOption, Card, CardHeader, CardContent } from "@strapi/design-system";
 import { User, WatchedVideo } from "../../../interfaces";
 import { Bar } from "react-chartjs-2";
 import React, { useState, useEffect } from "react";
@@ -45,17 +45,21 @@ const RecommendationChart = ({ users }: { users: User[] }) => {
 
   return (
     <Card style={{ padding: '1em' }}>
-      <Combobox
-        label="Select a user"
-        value={user}
-        onChange={(value) => {
-          setUser(users.find((user: User) => user.id === value) || user);
-        }}
-        autocomplete={'both'}
-      >
-        {users.map((user: User) => (<ComboboxOption key={`user-${user.id}`} value={user.id}>{user.id}</ComboboxOption>))}
-      </Combobox>
-      <Bar style={{ paddingTop: '1em' }} data={data} options={options} />
+      <CardHeader style={{ height: '20%', alignItems: 'center', justifyContent: 'center' }}>
+        <Combobox
+          label="Select a user"
+          value={user}
+          onChange={(value) => {
+            setUser(users.find((user: User) => user.id === value) || user);
+          }}
+          autocomplete={'both'}
+        >
+          {users.map((user: User) => (<ComboboxOption key={`user-${user.id}`} value={user.id}>{user.id}</ComboboxOption>))}
+        </Combobox>
+      </CardHeader>
+      <CardContent>
+        <Bar style={{ paddingTop: '1em' }} data={data} options={options} />
+      </CardContent>
     </Card>
   );
 }

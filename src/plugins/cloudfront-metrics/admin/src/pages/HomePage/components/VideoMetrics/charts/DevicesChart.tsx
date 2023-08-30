@@ -1,6 +1,6 @@
 import { Doughnut } from "react-chartjs-2";
 import React from "react";
-import { Card } from "@strapi/design-system";
+import { Card, CardHeader, CardContent, Typography } from "@strapi/design-system";
 
 interface Device {
   name: string;
@@ -29,14 +29,22 @@ const DevicesChart = ({ devices }: { devices: Device[] }) => {
       },
     },
     maintainAspectRatio: false,
+    responsive: true,
+    // aspectRatio: 1,
   };
 
   return (
-    <Card style={{ width: "100%", height: "100%", padding: '1em' }}>
-      <Doughnut
-        data={data}
-        options={options}
-      />
+    <Card>
+      <CardHeader style={{ height: '20%' }}>
+        <Typography style={{ alignItems: 'center' }} variant="alpha">Devices</Typography>
+        </CardHeader>
+      <CardContent style={{height: '80%'}}>
+        <Doughnut
+          data={data}
+          options={options}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        />
+      </CardContent>
     </Card>
   );
 }

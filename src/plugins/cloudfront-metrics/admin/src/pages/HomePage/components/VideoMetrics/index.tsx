@@ -1,4 +1,4 @@
-import { Combobox, ComboboxOption, Card, Typography } from '@strapi/design-system';
+import { Combobox, ComboboxOption, Card, CardHeader, CardContent, Typography } from '@strapi/design-system';
 import { Video, Interactions } from '../../interfaces';
 import draft from './charts/draft.json';
 import WatchTimeChart from './charts/WatchTimeChart';
@@ -21,7 +21,7 @@ interface SelectVideoProps {
   setMetrics: any;
 }
 
-const WatchTimeInformation = ({ value, icon } : { value: any, icon: IconProp }) => {
+const Interaction = ({ value, icon } : { value: any, icon: IconProp }) => {
   return (
     <div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -31,8 +31,8 @@ const WatchTimeInformation = ({ value, icon } : { value: any, icon: IconProp }) 
           color='white'
         />
         <Typography
-          variant="beta"
-          style={{ margin: '0.5rem' }}
+          variant='beta'
+          style={{ paddingTop: '0.5em' }}
         >
           {value}
         </Typography>
@@ -43,14 +43,16 @@ const WatchTimeInformation = ({ value, icon } : { value: any, icon: IconProp }) 
 
 const UserInteractions = ({ interactions } : { interactions: Interactions }) => {
   return (
-    <Card style={{ paddingTop: '1em' }}>
-      <Typography style={{ display: 'flex', justifyContent: 'center' }} variant="alpha">User Interactions</Typography>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', paddingTop: '1em', }}>
-        <WatchTimeInformation value={interactions.likes} icon={faThumbsUp} />
-        <WatchTimeInformation value={interactions.comments} icon={faComment} />
-        <WatchTimeInformation value={interactions.shares} icon={faShareFromSquare} />
-        <WatchTimeInformation value={interactions.minutes} icon={faClock} />
-      </div>
+    <Card>
+      <CardHeader style={{ height: '20%' }}>
+        <Typography style={{ display: 'flex', justifyContent: 'center' }} variant="alpha">User Interactions</Typography>
+      </CardHeader>
+      <CardContent style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 0.2fr)', justifyContent: 'center', height: '80%', placeItems: 'center' }}>
+          <Interaction value={interactions.likes} icon={faThumbsUp} />
+          <Interaction value={interactions.comments} icon={faComment} />
+          <Interaction value={interactions.shares} icon={faShareFromSquare} />
+          <Interaction value={interactions.minutes} icon={faClock} />
+      </CardContent>
     </Card>
   );
 }
