@@ -6,5 +6,9 @@ exports.default = {
         enabled: true,
         resolve: './src/plugins/cloudfront-metrics'
     },
+    'custom-selects': {
+        enabled: true,
+        resolve: './src/plugins/custom-selects'
+    },
     // ...
 };

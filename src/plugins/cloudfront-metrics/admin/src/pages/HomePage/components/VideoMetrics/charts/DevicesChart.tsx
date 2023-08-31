@@ -30,15 +30,14 @@ const DevicesChart = ({ devices }: { devices: Device[] }) => {
     },
     maintainAspectRatio: false,
     responsive: true,
-    // aspectRatio: 1,
   };
 
   return (
     <Card>
       <CardHeader style={{ height: '20%' }}>
-        <Typography style={{ alignItems: 'center' }} variant="alpha">Devices</Typography>
+        <Typography style={{ alignItems: 'center', padding: '0.5em' }} variant="alpha">Devices</Typography>
         </CardHeader>
-      <CardContent style={{height: '80%'}}>
+      <CardContent style={{ height: '80%' }}>
         <Doughnut
           data={data}
           options={options}

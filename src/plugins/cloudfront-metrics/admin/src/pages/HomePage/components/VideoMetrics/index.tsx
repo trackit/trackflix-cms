@@ -13,6 +13,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import DevicesChart from './charts/DevicesChart';
 import RecommendationChart from './charts/RecommendationChart';
+import styled from '@emotion/styled';
 
 interface SelectVideoProps {
   streams: Video[];
@@ -20,6 +21,17 @@ interface SelectVideoProps {
   setSelectedStream: any;
   setMetrics: any;
 }
+
+const VideoInformationWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  gap: 1em;
+  padding-top: 1em;
+  @media screen and (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+`;
 
 const Interaction = ({ value, icon } : { value: any, icon: IconProp }) => {
   return (
@@ -45,7 +57,7 @@ const UserInteractions = ({ interactions } : { interactions: Interactions }) => 
   return (
     <Card>
       <CardHeader style={{ height: '20%' }}>
-        <Typography style={{ display: 'flex', justifyContent: 'center' }} variant="alpha">User Interactions</Typography>
+        <Typography style={{ display: 'flex', justifyContent: 'center', padding: '1em' }} variant="alpha">User Interactions</Typography>
       </CardHeader>
       <CardContent style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 0.2fr)', justifyContent: 'center', height: '80%', placeItems: 'center' }}>
           <Interaction value={interactions.likes} icon={faThumbsUp} />
@@ -89,10 +101,9 @@ const VideoMetrics = () => {
     }
   }, [selectedStream, metrics]);
 
-
   return (
     <div style={{ padding: '1em' }}>
-      <div style={{ width: '30%', paddingBottom: '1em' }}>
+      <div style={{ paddingBottom: '1em', justifyContent: 'center', display: 'flex' }}>
         <SelectVideo
           streams={draft['videos-list']}
           selectedStream={selectedStream}
@@ -107,7 +118,7 @@ const VideoMetrics = () => {
             key={key}
             metrics={selectedStream.metrics}
           />
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridTemplateRows: 'auto', gap: '1em', paddingTop: '1em' }}>
+          <VideoInformationWrapper>
             <UserInteractions
               interactions={selectedStream.interactions!}
             />
@@ -117,7 +128,7 @@ const VideoMetrics = () => {
             <RecommendationChart
               users={draft.users}
             />
-          </div>
+          </VideoInformationWrapper>
         </div>
         ) : null
       }

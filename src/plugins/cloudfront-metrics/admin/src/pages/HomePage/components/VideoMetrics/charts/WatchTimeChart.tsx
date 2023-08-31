@@ -1,6 +1,7 @@
 import { Typography, Card } from '@strapi/design-system';
 import { Line } from 'react-chartjs-2';
 import React from "react";
+import styled from '@emotion/styled';
 
 interface WatchTimeChartProps {
   metrics: any;
@@ -23,6 +24,19 @@ const WatchTimeInformation = ({ name, value } : { name: string, value: string })
     </div>
   );
 }
+
+const WatchTimeWrapper = styled.div`
+  display: grid;
+  @media screen and (min-width: 900px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media screen and (max-width: 900px) {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2em;
+  }
+  gap: 1em;
+  padding-top: 1em;
+`
 
 const WatchTimeChart = (props: WatchTimeChartProps) => {
   const options: any = {
@@ -67,11 +81,11 @@ const WatchTimeChart = (props: WatchTimeChartProps) => {
 
   return (
     <Card>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px', paddingTop: '1em' }}>
+      <WatchTimeWrapper>
         <WatchTimeInformation name="Average view duration" value={props.metrics["avg-view-duration"]} />
         <WatchTimeInformation name="Watch time (minutes)" value={props.metrics["avg-watch-time"]} />
         <WatchTimeInformation name="Views" value={props.metrics["views"]} />
-      </div>
+      </WatchTimeWrapper>
       <div
         style={{
           width: '100%',
