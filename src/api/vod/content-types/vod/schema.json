@@ -4,15 +4,50 @@
   "info": {
     "singularName": "vod",
     "pluralName": "vods",
-    "displayName": "VOD"
+    "displayName": "VOD",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
     "Name": {
       "type": "string"
+    },
+    "Thumbnails": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "rotation_start": {
+      "type": "date"
+    },
+    "rotation_end": {
+      "type": "date"
+    },
+    "description": {
+      "type": "text"
+    },
+    "live_channel": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::live-channel.live-channel",
+      "inversedBy": "vods"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "MOVIE",
+        "SHOW",
+        "SERIE"
+      ]
     }
   }
 }

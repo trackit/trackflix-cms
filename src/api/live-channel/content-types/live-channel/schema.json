@@ -8,7 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -48,9 +48,6 @@
     "catch_up": {
       "type": "boolean"
     },
-    "access_count": {
-      "type": "integer"
-    },
     "genre": {
       "type": "string"
     },
@@ -64,6 +61,12 @@
         "field1": "field1",
         "field2": "field2"
       }
+    },
+    "vods": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::vod.vod",
+      "mappedBy": "live_channel"
     }
   }
 }

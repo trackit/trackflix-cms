@@ -1,6 +1,6 @@
 import React, { CSSProperties, useEffect } from 'react';
 import { SingleSelect, SingleSelectOption, MultiSelect } from '@strapi/design-system';
-import { getFetchClient } from '@strapi/helper-plugin';
+import { getFetchClient, useCMEditViewDataManager } from '@strapi/helper-plugin';
 import pluginId from '../pluginId';
 import { object, string } from 'prop-types';
 
@@ -81,6 +81,8 @@ const GenreCategory = ({ field1, field2, value, onChange }) => {
   
   });
   }
+
+  const { modifiedData } = useCMEditViewDataManager()
 
   useEffect(() => {
     const fetchData = async () => {
