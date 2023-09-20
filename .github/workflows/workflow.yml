@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Console log
-        run: echo "The job is running"
+        run: echo ${{ secrets.HOST_DNS }} ${{ secrets.USERNAME }} ${{ secrets.EC2_SSH_KEY }}
   continuous-deployment:
     runs-on: ubuntu-latest
     steps:
