@@ -4,6 +4,11 @@ on:
     branches: [ staging ]
 
 jobs:
+  test: # we need to make a console log to see if the job is running
+    runs-on: ubuntu-latest
+    steps:
+      - name: Console log
+        run: echo "The job is running"
   continuous-deployment:
     runs-on: ubuntu-latest
     steps:
