@@ -4,11 +4,6 @@ on:
     branches: [ staging ]
 
 jobs:
-  test: # we need to make a console log to see if the job is running
-    runs-on: ubuntu-latest
-    steps:
-      - name: Console log
-        run: echo ${{ secrets.HOST_DNS }} ${{ secrets.USERNAME }} ${{ secrets.EC2_SSH_KEY }}
   continuous-deployment:
     runs-on: ubuntu-latest
     steps:
