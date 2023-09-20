@@ -21,6 +21,4 @@ jobs:
           script: |
             cd /home/ubuntu/dist
             git pull origin staging
-            yarn
-            yarn build
-            sudo pm2 restart all
+            ./scripts/build.sh
