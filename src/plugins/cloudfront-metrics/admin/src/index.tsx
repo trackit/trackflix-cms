@@ -8,6 +8,7 @@ import { RiClapperboardFill } from 'react-icons/ri';
 import { VscGraph } from 'react-icons/vsc'
 import {BsBroadcastPin} from 'react-icons/bs'
 import {CgWebsite} from 'react-icons/cg'
+import {HiMiniUsers} from 'react-icons/hi2'
 
 const name = pluginPkg.strapi.name;
 
@@ -109,6 +110,24 @@ export default {
       },
       permissions: [],
     });
+
+    app.addMenuLink({
+      to: `/content-manager/collectionType/plugin::users-permissions.user?page=1&pageSize=10&sort=username:ASC`,
+      icon: HiMiniUsers,
+      category: "Admin",
+      intlLabel: {
+        id: `${pluginId}.plugin.name`,
+        defaultMessage: "Users",
+      },
+      Component: async () => {
+        const component = await import(/* webpackChunkName: "[request]" */ './pages/App');
+
+        return component;
+      },
+      permissions: [],
+    });
+
+    
 
 
     const plugin = {

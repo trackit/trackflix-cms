@@ -105,7 +105,7 @@ index c259beb..db90060 100644
  
                return (
 diff --git a/node_modules/@strapi/admin/admin/src/content-manager/pages/App/index.js b/node_modules/@strapi/admin/admin/src/content-manager/pages/App/index.js
-index cfbc1cd..34ec16c 100644
+index cfbc1cd..59ee539 100644
 --- a/node_modules/@strapi/admin/admin/src/content-manager/pages/App/index.js
 +++ b/node_modules/@strapi/admin/admin/src/content-manager/pages/App/index.js
 @@ -122,7 +122,9 @@ const App = () => {
@@ -114,7 +114,7 @@ index cfbc1cd..34ec16c 100644
    return (
 -    <Layout sideNav={<LeftMenu />}>
 +    <Layout 
-+    // sideNav={<LeftMenu />}
++    //sideNav={<LeftMenu />}
 +    >
        <DragLayer renderItem={renderDraglayerItem} />
        <ModelsContext.Provider value={{ refetchData }}>
