@@ -48,6 +48,9 @@
         "SHOW",
         "SERIE"
       ]
+    },
+    "media_url": {
+      "type": "string"
     }
   }
 }
