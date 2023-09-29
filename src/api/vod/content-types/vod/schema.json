@@ -48,6 +48,12 @@
         "SHOW",
         "SERIE"
       ]
+    },
+    "media_url": {
+      "type": "string"
+    },
+    "highlighted": {
+      "type": "boolean"
     }
   }
 }

@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2023-09-19T15:23:32.163Z"
+    "x-generation-date": "2023-09-28T07:28:21.329Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -25,7 +25,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:80/api",
+      "url": "http://localhost:1337/api",
       "description": "Development server"
     }
   ],
@@ -2386,6 +2386,12 @@
                             "SERIE"
                           ]
                         },
+                        "media_url": {
+                          "type": "string"
+                        },
+                        "highlighted": {
+                          "type": "boolean"
+                        },
                         "createdAt": {
                           "type": "string",
                           "format": "date-time"
@@ -3338,6 +3344,12 @@
                   "SHOW",
                   "SERIE"
                 ]
+              },
+              "media_url": {
+                "type": "string"
+              },
+              "highlighted": {
+                "type": "boolean"
               }
             }
           }
@@ -4409,6 +4421,12 @@
                                         "SERIE"
                                       ]
                                     },
+                                    "media_url": {
+                                      "type": "string"
+                                    },
+                                    "highlighted": {
+                                      "type": "boolean"
+                                    },
                                     "createdAt": {
                                       "type": "string",
                                       "format": "date-time"
@@ -4513,6 +4531,12 @@
               "SHOW",
               "SERIE"
             ]
+          },
+          "media_url": {
+            "type": "string"
+          },
+          "highlighted": {
+            "type": "boolean"
           },
           "createdAt": {
             "type": "string",
