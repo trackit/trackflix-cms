@@ -6,7 +6,7 @@ Empower your content management with TrackFlix CMS, designed to effortlessly han
 
 # 🚀 Getting started with TrackFlix CMS
 
-TrackFlix CMS was buld with Strapi. It comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+TrackFlix CMS was built using Strapi. It comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
 
 ### `develop`
 
