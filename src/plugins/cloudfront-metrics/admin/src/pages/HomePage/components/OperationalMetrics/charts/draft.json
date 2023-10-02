@@ -1,0 +1,161 @@
+{
+  "uptime": {
+    "data": [
+      100,
+      97,
+      100,
+      87.24,
+      100,
+      100,
+      99.99,
+      100,
+      99.01,
+      100
+    ],
+    "duration": "days",
+    "period": 10
+  },
+  "latency": {
+    "data": [
+      0.201,
+      0.200,
+      0.210,
+      0.199,
+      0.150,
+      0.205,
+      0.222,
+      0.102,
+      0.100,
+      0.192
+    ],
+    "duration": "days",
+    "period": 10
+  },
+  "broadcast-quality": {
+    "streams": [
+      {
+        "id": "stream-976471-john-smith",
+        "name": "John Smith's stream",
+        "data": [
+          {
+            "quality": "FULL HD",
+            "timestamp": "00h10m00s"
+          },
+          {
+            "quality": "FULL HD",
+            "timestamp": "00h30m31s"
+          },
+          {
+            "quality": "FULL HD",
+            "timestamp": "00h45m31s"
+          },
+          {
+            "quality": "FULL HD",
+            "timestamp": "01h00m00s"
+          },
+          {
+            "quality": "FULL HD",
+            "timestamp": "01h31m00s"
+          }
+        ]
+      },
+      {
+        "id": "stream-714764-jane-doe",
+        "name": "Jane Doe's stream",
+        "data": [
+          {
+            "quality": "FULL HD",
+            "timestamp": "00h10m00s"
+          },
+          {
+            "quality": "4K",
+            "timestamp": "00h30m31s"
+          },
+          {
+            "quality": "4K",
+            "timestamp": "00h45m31s"
+          },
+          {
+            "quality": "4K",
+            "timestamp": "01h00m00s"
+          },
+          {
+            "quality": "2K",
+            "timestamp": "01h31m00s"
+          }
+        ]
+      },
+      {
+        "id": "stream-194711-john-doe",
+        "name": "John Doe's stream",
+        "data": [
+          {
+            "quality": "FULL HD",
+            "timestamp": "00h10m00s"
+          },
+          {
+            "quality": "FULL HD",
+            "timestamp": "00h30m31s"
+          },
+          {
+            "quality": "HD",
+            "timestamp": "00h45m31s"
+          },
+          {
+            "quality": "HD",
+            "timestamp": "01h00m00s"
+          },
+          {
+            "quality": "FULL HD",
+            "timestamp": "01h31m00s"
+          }
+        ]
+      },
+      {
+        "id": "stream-316724-jane-smith",
+        "name": "Jane Smith's stream",
+        "data": [
+          {
+            "quality": "2K",
+            "timestamp": "00h10m00s"
+          },
+          {
+            "quality": "4K",
+            "timestamp": "00h30m31s"
+          },
+          {
+            "quality": "4K",
+            "timestamp": "00h45m31s"
+          },
+          {
+            "quality": "4K",
+            "timestamp": "01h00m00s"
+          },
+          {
+            "quality": "4K",
+            "timestamp": "01h31m00s"
+          }
+        ]
+      }
+    ]
+  },
+  "error-rates": {
+    "percentage": 22.5
+  },
+  "service-availability": {
+    "data": [
+      100,
+      99.82,
+      100,
+      99.92,
+      100,
+      100,
+      99.99,
+      100,
+      99.01,
+      100
+    ],
+    "period": 10,
+    "duration": "days"
+  }
+}

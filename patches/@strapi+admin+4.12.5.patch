@@ -1,0 +1,121 @@
+diff --git a/node_modules/@strapi/admin/admin/src/components/LeftMenu/index.js b/node_modules/@strapi/admin/admin/src/components/LeftMenu/index.js
+index c259beb..db90060 100644
+--- a/node_modules/@strapi/admin/admin/src/components/LeftMenu/index.js
++++ b/node_modules/@strapi/admin/admin/src/components/LeftMenu/index.js
+@@ -55,6 +55,22 @@ const LinkUser = styled(RouterNavLink)`
+ `;
+ 
+ const LeftMenu = ({ generalSectionLinks, pluginsSectionLinks }) => {
++
++  //some objects of the pluginsSectionLinks array have a "category" property
++  //we want to make a new array with the pluginsSectionLinks objects that doesnt have a "category" property
++  //and group the objects that have a "category" property in a new object with the category name as the key
++  //and the value is an array of the objects that have the same category name
++  const pluginsSectionLinksNoCategory = pluginsSectionLinks.filter((link) => !link.category);
++  const pluginsSectionLinksCategory = pluginsSectionLinks.filter((link) => link.category);
++  const pluginsSectionLinksCategoryGrouped = pluginsSectionLinksCategory.reduce((acc, link) => {
++    const { category } = link;
++    if (!acc[category]) {
++      acc[category] = [];
++    }
++    acc[category].push(link);
++    return acc;
++  }, {});
++
+   const buttonRef = useRef();
+   const [userLinksVisible, setUserLinksVisible] = useState(false);
+   const {
+@@ -96,19 +112,13 @@ const LeftMenu = ({ generalSectionLinks, pluginsSectionLinks }) => {
+     trackUsage('willNavigate', { from: pathname, to: destination });
+   };
+ 
+-  const menuTitle = formatMessage({
+-    id: 'app.components.LeftMenu.navbrand.title',
+-    defaultMessage: 'Strapi Dashboard',
+-  });
++  const menuTitle = "Trackflix"
+ 
+   return (
+     <MainNav condensed={condensed}>
+       <NavBrand
+         as={RouterNavLink}
+-        workplace={formatMessage({
+-          id: 'app.components.LeftMenu.navbrand.workplace',
+-          defaultMessage: 'Workplace',
+-        })}
++        workplace="Content manager"
+         title={menuTitle}
+         icon={
+           <img
+@@ -124,23 +134,48 @@ const LeftMenu = ({ generalSectionLinks, pluginsSectionLinks }) => {
+       <Divider />
+ 
+       <NavSections>
+-        <NavLink
++        {/* <NavLink
+           as={RouterNavLink}
+           to="/content-manager"
+           icon={<Write />}
+           onClick={() => handleClickOnLink('/content-manager')}
+         >
+           {formatMessage({ id: 'global.content-manager', defaultMessage: 'Content manager' })}
+-        </NavLink>
++        </NavLink> */}
++
++        {Object.keys(pluginsSectionLinksCategoryGrouped).map((category) => {
++          return (
++            <NavSection
++              key={category}
++              label={formatMessage({
++                id: `app.components.LeftMenu.${category}`,
++                defaultMessage: category,
++              })}
++            >
++              {pluginsSectionLinksCategoryGrouped[category].map((link) => {
++                const Icon = link.icon;
+ 
+-        {pluginsSectionLinks.length > 0 ? (
++                return (
++                  <NavLink
++                    as={RouterNavLink}
++                    to={link.to}
++                    key={link.to}
++                    icon={<Icon />}
++                    onClick={() => handleClickOnLink(link.to)}
++                  >
++                    {formatMessage(link.intlLabel)}
++                  </NavLink>
++                );
++              })}
++            </NavSection>
++          );
++        })}
++
++        {pluginsSectionLinksNoCategory.length > 0 ? (
+           <NavSection
+-            label={formatMessage({
+-              id: 'app.components.LeftMenu.plugins',
+-              defaultMessage: 'Plugins',
+-            })}
++            label="Plugins"
+           >
+-            {pluginsSectionLinks.map((link) => {
++            {pluginsSectionLinksNoCategory.map((link) => {
+               const Icon = link.icon;
+ 
+               return (
+diff --git a/node_modules/@strapi/admin/admin/src/content-manager/pages/App/index.js b/node_modules/@strapi/admin/admin/src/content-manager/pages/App/index.js
+index cfbc1cd..59ee539 100644
+--- a/node_modules/@strapi/admin/admin/src/content-manager/pages/App/index.js
++++ b/node_modules/@strapi/admin/admin/src/content-manager/pages/App/index.js
+@@ -122,7 +122,9 @@ const App = () => {
+   }
+ 
+   return (
+-    <Layout sideNav={<LeftMenu />}>
++    <Layout 
++    //sideNav={<LeftMenu />}
++    >
+       <DragLayer renderItem={renderDraglayerItem} />
+       <ModelsContext.Provider value={{ refetchData }}>
+         <Switch>

@@ -1,53 +1,73 @@
 {
-  "name": "trackflix-dashboard",
-  "version": "0.1.0",
+  "name": "trackflix-cms-poc",
   "private": true,
+  "version": "0.1.0",
+  "description": "A Strapi application",
+  "scripts": {
+    "prebuild": "for plugin_dir in src/plugins/*; do (cd \"$plugin_dir\" && yarn build); done",
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi",
+    "postinstall": "patch-package"
+  },
   "dependencies": {
+    "@babel/core": "^7.22.10",
+    "@babel/runtime": "^7.22.10",
+    "@codemirror/autocomplete": "^6.9.0",
+    "@codemirror/language": "^6.9.0",
+    "@codemirror/lint": "^6.4.0",
+    "@codemirror/search": "^6.5.1",
+    "@codemirror/state": "^6.2.1",
+    "@codemirror/theme-one-dark": "^6.1.2",
+    "@codemirror/view": "^6.16.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.14.3",
-    "@mui/material": "^5.14.4",
-    "@mui/x-data-grid": "^6.11.0",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.39",
-    "@types/react": "^18.2.19",
-    "@types/react-dom": "^18.2.7",
+    "@formatjs/intl": "^2.9.0",
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-regular-svg-icons": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@lezer/common": "^1.0.4",
+    "@strapi/design-system": "^1.9.0",
+    "@strapi/helper-plugin": "4.12.0",
+    "@strapi/plugin-documentation": "4.12.0",
+    "@strapi/plugin-i18n": "4.12.0",
+    "@strapi/plugin-users-permissions": "4.12.0",
+    "@strapi/strapi": "4.12.0",
+    "chart.js": "^4.3.3",
+    "codemirror": "^6.0.1",
+    "crypto": "^1.0.1",
+    "crypto-browserify": "^3.12.0",
+    "dotenv": "^16.3.1",
+    "eslint": "^8.47.0",
+    "eslint-plugin-formatjs": "^4.10.3",
+    "koa-send": "^5.0.1",
+    "os": "^0.1.2",
+    "patch-package": "^8.0.0",
+    "path": "^0.12.7",
+    "pg": "8.8.0",
+    "postinstall-postinstall": "^2.1.0",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.14.2",
-    "react-scripts": "5.0.1",
+    "react-icons": "^4.10.1",
+    "react-intl": "^6.4.4",
+    "react-is": "16.8.0",
+    "react-router-dom": "5.3.4",
     "styled-components": "^6.0.7",
-    "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "yarn": "^1.22.19"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+  "author": {
+    "name": "A Strapi developer"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "strapi": {
+    "uuid": "f03025a3-39d4-4118-a528-aca9658a1a59"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "engines": {
+    "node": ">=16.0.0 <=20.x.x",
+    "npm": ">=6.0.0"
   },
-  "devDependencies": {
-    "tailwindcss": "^3.3.3"
-  }
+  "license": "MIT"
 }

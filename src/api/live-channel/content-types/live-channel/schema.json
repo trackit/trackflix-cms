@@ -1,0 +1,72 @@
+{
+  "kind": "collectionType",
+  "collectionName": "live_channels",
+  "info": {
+    "singularName": "live-channel",
+    "pluralName": "live-channels",
+    "displayName": "Live Channel",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "input_type": {
+      "type": "enumeration",
+      "enum": [
+        "RTMP",
+        "SRT",
+        "HLS"
+      ]
+    },
+    "output_type": {
+      "type": "enumeration",
+      "enum": [
+        "ABR - 4 outputs",
+        "ABR - 8 outputs"
+      ]
+    },
+    "thumbnail": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Live_to_vod": {
+      "type": "boolean"
+    },
+    "catch_up": {
+      "type": "boolean"
+    },
+    "genre": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "genre-category-relation": {
+      "type": "customField",
+      "customField": "plugin::custom-selects.genre-category",
+      "config": {
+        "field1": "field1",
+        "field2": "field2"
+      }
+    },
+    "vods": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::vod.vod",
+      "mappedBy": "live_channel"
+    }
+  }
+}
