@@ -1,0 +1,43 @@
+.homepage-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  margin-top: 20px; /* Add some margin at the top to push content down */
+}
+
+
+.left-section {
+  width: 50%;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #ccc; /* Change this to the desired subtitle color */
+}
+
+.right-section {
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.custom-button {
+  background-color: white;
+  color: #333; /* Change this to the desired text color */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.custom-button:hover {
+  background-color: #eee; /* Change this to the desired hover background color */
+}

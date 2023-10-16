@@ -43,6 +43,7 @@
     "eslint": "^8.47.0",
     "eslint-plugin-formatjs": "^4.10.3",
     "koa-send": "^5.0.1",
+    "koa-sendfile": "^3.0.0",
     "os": "^0.1.2",
     "patch-package": "^8.0.0",
     "path": "^0.12.7",
@@ -69,5 +70,8 @@
     "node": ">=16.0.0 <=20.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react-router-dom": "^5.3.3"
+  }
 }

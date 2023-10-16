@@ -8,13 +8,15 @@ import { RiClapperboardFill } from 'react-icons/ri';
 import { VscGraph } from 'react-icons/vsc'
 import {BsBroadcastPin} from 'react-icons/bs'
 import {CgWebsite} from 'react-icons/cg'
-import {HiMiniUsers} from 'react-icons/hi2'
+import {HiDocumentText, HiMiniUsers} from 'react-icons/hi2'
 import {BsFillShieldLockFill} from 'react-icons/bs'
 
 const name = pluginPkg.strapi.name;
 
 export default {
   register(app: any) {
+
+
 
     app.addMenuLink({
       to: `/content-manager/collectionType/api::live-channel.live-channel?page=1&pageSize=10&sort=name:ASC`,
@@ -111,7 +113,7 @@ export default {
       },
       permissions: [],
     });
-    
+
 
     app.addMenuLink({
       to: `/content-manager/collectionType/plugin::users-permissions.user?page=1&pageSize=10&sort=username:ASC`,
