@@ -8,7 +8,7 @@ import { RiClapperboardFill } from 'react-icons/ri';
 import { VscGraph } from 'react-icons/vsc'
 import {BsBroadcastPin} from 'react-icons/bs'
 import {CgWebsite} from 'react-icons/cg'
-import {HiDocumentText, HiMiniUsers} from 'react-icons/hi2'
+import {HiMiniUsers} from 'react-icons/hi2'
 import {BsFillShieldLockFill} from 'react-icons/bs'
 
 const name = pluginPkg.strapi.name;
