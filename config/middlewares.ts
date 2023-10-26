@@ -25,7 +25,7 @@ export default [
   {
     name: 'strapi::favicon',
     config: {
-      path: './public/img/favicon.ico'
+      path: './src/admin/extensions/trackit.png'
     },
   },
   'strapi::public',
