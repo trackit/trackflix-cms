@@ -44,7 +44,6 @@ export default ({ env }) => (
       },
     },
   'strapi::session',
-  'strapi::session',
   {
     name: 'strapi::favicon',
     config: {
