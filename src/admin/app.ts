@@ -1,7 +1,4 @@
-//import TrackItLogo from './extensions/trackit.png';
-
 const TrackItLogo = require('./extensions/trackit.png');
-//you can import your own logo here
 
 export const lightThemeColors = {
   colors: {
@@ -52,7 +49,6 @@ export const lightThemeColors = {
     warning700: '#be5d01',
   },
 };
-
 export const darkThemeColors = {
   colors: {
     alternative100: '#181826',
@@ -124,4 +120,3 @@ export default {
   bootstrap(app) {
   },
 };
-  
