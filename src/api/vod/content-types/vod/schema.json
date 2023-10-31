@@ -49,8 +49,11 @@
         "field2": "field2"
       }
     },
-    "view_count": {
-      "type": "integer"
+    "views": {
+      "type": "biginteger",
+      "default": "0",
+      "required": true,
+      "min": "0"
     },
     "genre": {
       "type": "string"
