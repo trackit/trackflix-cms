@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2023-10-26T10:09:45.026Z"
+    "x-generation-date": "2023-10-31T15:43:06.625Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -2378,13 +2378,17 @@
                             }
                           }
                         },
-                        "type": {
-                          "type": "string",
-                          "enum": [
-                            "MOVIE",
-                            "SHOW",
-                            "SERIE"
-                          ]
+                        "genre-category-relation": {
+                          "type": "string"
+                        },
+                        "view_count": {
+                          "type": "integer"
+                        },
+                        "genre": {
+                          "type": "string"
+                        },
+                        "category": {
+                          "type": "string"
                         },
                         "media_url": {
                           "type": "string"
@@ -3337,13 +3341,17 @@
                 ],
                 "example": "string or id"
               },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "MOVIE",
-                  "SHOW",
-                  "SERIE"
-                ]
+              "genre-category-relation": {
+                "type": "string"
+              },
+              "view_count": {
+                "type": "integer"
+              },
+              "genre": {
+                "type": "string"
+              },
+              "category": {
+                "type": "string"
               },
               "media_url": {
                 "type": "string"
@@ -4413,13 +4421,17 @@
                                         }
                                       }
                                     },
-                                    "type": {
-                                      "type": "string",
-                                      "enum": [
-                                        "MOVIE",
-                                        "SHOW",
-                                        "SERIE"
-                                      ]
+                                    "genre-category-relation": {
+                                      "type": "string"
+                                    },
+                                    "view_count": {
+                                      "type": "integer"
+                                    },
+                                    "genre": {
+                                      "type": "string"
+                                    },
+                                    "category": {
+                                      "type": "string"
                                     },
                                     "media_url": {
                                       "type": "string"
@@ -4524,13 +4536,17 @@
               }
             }
           },
-          "type": {
-            "type": "string",
-            "enum": [
-              "MOVIE",
-              "SHOW",
-              "SERIE"
-            ]
+          "genre-category-relation": {
+            "type": "string"
+          },
+          "view_count": {
+            "type": "integer"
+          },
+          "genre": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
           },
           "media_url": {
             "type": "string"

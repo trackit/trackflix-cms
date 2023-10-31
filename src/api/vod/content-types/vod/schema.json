@@ -41,13 +41,22 @@
       "target": "api::live-channel.live-channel",
       "inversedBy": "vods"
     },
-    "type": {
-      "type": "enumeration",
-      "enum": [
-        "MOVIE",
-        "SHOW",
-        "SERIE"
-      ]
+    "genre-category-relation": {
+      "type": "customField",
+      "customField": "plugin::custom-selects.genre-category",
+      "config": {
+        "field1": "field1",
+        "field2": "field2"
+      }
+    },
+    "view_count": {
+      "type": "integer"
+    },
+    "genre": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
     },
     "media_url": {
       "type": "string"
