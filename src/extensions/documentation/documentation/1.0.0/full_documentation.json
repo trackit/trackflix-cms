@@ -2378,13 +2378,17 @@
                             }
                           }
                         },
-                        "type": {
-                          "type": "string",
-                          "enum": [
-                            "MOVIE",
-                            "SHOW",
-                            "SERIE"
-                          ]
+                        "genre-category-relation": {
+                          "type": "string"
+                        },
+                        "view_count": {
+                          "type": "integer"
+                        },
+                        "genre": {
+                          "type": "string"
+                        },
+                        "category": {
+                          "type": "string"
                         },
                         "media_url": {
                           "type": "string"
@@ -3337,13 +3341,17 @@
                 ],
                 "example": "string or id"
               },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "MOVIE",
-                  "SHOW",
-                  "SERIE"
-                ]
+              "genre-category-relation": {
+                "type": "string"
+              },
+              "view_count": {
+                "type": "integer"
+              },
+              "genre": {
+                "type": "string"
+              },
+              "category": {
+                "type": "string"
               },
               "media_url": {
                 "type": "string"
@@ -4413,13 +4421,17 @@
                                         }
                                       }
                                     },
-                                    "type": {
-                                      "type": "string",
-                                      "enum": [
-                                        "MOVIE",
-                                        "SHOW",
-                                        "SERIE"
-                                      ]
+                                    "genre-category-relation": {
+                                      "type": "string"
+                                    },
+                                    "view_count": {
+                                      "type": "integer"
+                                    },
+                                    "genre": {
+                                      "type": "string"
+                                    },
+                                    "category": {
+                                      "type": "string"
                                     },
                                     "media_url": {
                                       "type": "string"
@@ -4524,13 +4536,17 @@
               }
             }
           },
-          "type": {
-            "type": "string",
-            "enum": [
-              "MOVIE",
-              "SHOW",
-              "SERIE"
-            ]
+          "genre-category-relation": {
+            "type": "string"
+          },
+          "view_count": {
+            "type": "integer"
+          },
+          "genre": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
           },
           "media_url": {
             "type": "string"
