@@ -119,3 +119,66 @@ index cfbc1cd..59ee539 100644
        <DragLayer renderItem={renderDraglayerItem} />
        <ModelsContext.Provider value={{ refetchData }}>
          <Switch>
+diff --git a/node_modules/@strapi/admin/admin/src/pages/AuthPage/components/Login/BaseLogin.js b/node_modules/@strapi/admin/admin/src/pages/AuthPage/components/Login/BaseLogin.js
+index 66f21f3..0bf72fd 100644
+--- a/node_modules/@strapi/admin/admin/src/pages/AuthPage/components/Login/BaseLogin.js
++++ b/node_modules/@strapi/admin/admin/src/pages/AuthPage/components/Login/BaseLogin.js
+@@ -41,7 +41,7 @@ const Login = ({ onSubmit, schema, children }) => {
+               <Column>
+                 <Logo />
+                 <Box paddingTop={6} paddingBottom={1}>
+-                  <Typography variant="alpha" as="h1">
++                <Typography as="h1" variant="alpha" textAlign="center">
+                     {formatMessage({
+                       id: 'Auth.form.welcome.title',
+                       defaultMessage: 'Welcome!',
+@@ -52,7 +52,7 @@ const Login = ({ onSubmit, schema, children }) => {
+                   <Typography variant="epsilon" textColor="neutral600">
+                     {formatMessage({
+                       id: 'Auth.form.welcome.subtitle',
+-                      defaultMessage: 'Log in to your Strapi account',
++                      defaultMessage: 'Log in to your Trackflix account',
+                     })}
+                   </Typography>
+                 </Box>
+diff --git a/node_modules/@strapi/admin/admin/src/pages/AuthPage/components/Register/index.js b/node_modules/@strapi/admin/admin/src/pages/AuthPage/components/Register/index.js
+index cec300e..1d978f2 100644
+--- a/node_modules/@strapi/admin/admin/src/pages/AuthPage/components/Register/index.js
++++ b/node_modules/@strapi/admin/admin/src/pages/AuthPage/components/Register/index.js
+@@ -160,7 +160,7 @@ const Register = ({ authType, fieldsToDisable, noSignin, onSubmit, schema }) =>
+                     <Typography as="h1" variant="alpha" textAlign="center">
+                       {formatMessage({
+                         id: 'Auth.form.welcome.title',
+-                        defaultMessage: 'Welcome to Strapi!',
++                        defaultMessage: 'Welcome to your Trackflix content manager!',
+                       })}
+                     </Typography>
+ 
+diff --git a/node_modules/@strapi/admin/admin/src/translations/en.json b/node_modules/@strapi/admin/admin/src/translations/en.json
+index f999eac..047840f 100644
+--- a/node_modules/@strapi/admin/admin/src/translations/en.json
++++ b/node_modules/@strapi/admin/admin/src/translations/en.json
+@@ -44,8 +44,8 @@
+   "Auth.form.rememberMe.label": "Remember me",
+   "Auth.form.username.label": "Username",
+   "Auth.form.username.placeholder": "e.g. Kai_Doe",
+-  "Auth.form.welcome.subtitle": "Log in to your Strapi account",
+-  "Auth.form.welcome.title": "Welcome to Strapi!",
++  "Auth.form.welcome.subtitle": "Log in to your Trackflix account",
++  "Auth.form.welcome.title": "Welcome to your Trackflix content manager!",
+   "Auth.link.forgot-password": "Forgot your password?",
+   "Auth.link.ready": "Ready to sign in?",
+   "Auth.link.signin": "Sign in",
+diff --git a/node_modules/@strapi/admin/index.html b/node_modules/@strapi/admin/index.html
+index a00a161..17ad53b 100644
+--- a/node_modules/@strapi/admin/index.html
++++ b/node_modules/@strapi/admin/index.html
+@@ -6,7 +6,7 @@
+     <!-- Make the page mobile compatible -->
+     <meta name="viewport" content="width=device-width, initial-scale=1" />
+     <meta name="mobile-web-app-capable" content="yes" />
+-    <title>Strapi Admin</title>
++    <title>Trackflix Admin</title>
+   </head>
+   <body>
+     <!-- The app hooks into this div -->
