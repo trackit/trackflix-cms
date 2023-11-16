@@ -1,6 +1,10 @@
 import { Line } from "react-chartjs-2";
 import { Duration } from "../../../enums";
 import React from "react";
+import  {Theme} from "../../../interfaces"
+import {darkTheme } from "@strapi/design-system"
+import hexRgb from "hex-rgb";
+const customDarkTheme: Theme = darkTheme;
 
 interface ServiceAvailabilityChartProps {
   data: number[];
@@ -52,14 +56,14 @@ const ServiceAvailabilityChart = (props: ServiceAvailabilityChartProps) => {
       },
     },
   };
-
+  const percentageColor = hexRgb(customDarkTheme.colors.primary600,  {format: 'css', alpha: 0.2});
   const data = {
     labels: labels,
     datasets: [{
       label: 'Service Availability',
       data: props.data,
-      backgroundColor: 'rgba(0, 0, 255, 0.2)',
-      borderColor: 'blue',
+      backgroundColor: percentageColor,
+      borderColor: customDarkTheme.colors.primary600,
     }]
   };
 

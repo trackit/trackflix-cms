@@ -4,6 +4,8 @@
  *
  */
 
+import { DesignSystemProvider, darkTheme } from '@strapi/design-system';
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -35,7 +37,9 @@ ChartJS.register(
 );
 
 const HomePage = () => {
+
   return (
+
     <div>
       <OperationalMetrics />
       <VideoMetrics />

@@ -36,6 +36,7 @@
     "dotenv": "^16.3.1",
     "eslint": "^8.47.0",
     "eslint-plugin-formatjs": "^4.10.3",
+    "hex-rgb": "^5.0.0",
     "koa-send": "^5.0.1",
     "koa-sendfile": "^3.0.0",
     "mini-svg-data-uri": "^1.4.4",
