@@ -31,39 +31,40 @@ export default async ({ env }) => {
         enabled: true,
         resolve: './src/plugins/docusaurus'
       },
-      documentation: {
-        enabled: true,
-        config: {
-          openapi: '3.0.0',
-          info: {
-            version: '1.0.0',
-            title: 'Trackflix Api Documentation',
-            description: '',
-            termsOfService: 'YOUR_TERMS_OF_SERVICE_URL',
-            contact: {
-              name: 'Trackit team',
-              email: 'teams@trackit.io',
-              url: 'https://trackit.io'
-            },
-            license: {
-              name: 'Apache 2.0',
-              url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
-            },
+    documentation: {
+      enabled: true,
+      config: {
+        openapi: '3.0.0',
+        info: {
+          version: '1.0.0',
+          title: 'Trackflix Api Documentation',
+          description: '',
+          termsOfService: 'YOUR_TERMS_OF_SERVICE_URL',
+          contact: {
+            name: 'Trackit team',
+            email: 'teams@trackit.io',
+            url: 'https://trackit.io'
           },
-          'x-strapi-config': {
-            // Leave empty to ignore plugins during generation
-            plugins: [ 'upload', 'users-permissions'],
-            path: '/documentation',
+          license: {
+            name: 'Apache 2.0',
+            url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
           },
-          servers: [
-            { url: 'https://trackflix-cms.trackit.io/api', description: 'Production server' },
-          ],
-          externalDocs: {
-            description: 'Find out more',
-            url: 'https://docs.strapi.io/developer-docs/latest/getting-started/introduction.html'
-          },
-          security: [ { bearerAuth: [] } ]
-        }
-      },
+        },
+        'x-strapi-config': {
+          // Leave empty to ignore plugins during generation
+          plugins: [ 'upload', 'users-permissions'],
+          path: '/documentation',
+        },
+        servers: [
+          { url: 'https://trackflix-cms.trackit.io/api', description: 'Production server' },
+        ],
+        externalDocs: {
+          description: 'Find out more',
+          url: 'https://docs.strapi.io/developer-docs/latest/getting-started/introduction.html'
+        },
+        security: [ { bearerAuth: [] } ]
+      }
+    }
+    // ...
   }
-}
+};

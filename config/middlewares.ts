@@ -34,13 +34,6 @@ export default ({ env }) => (
     'strapi::query',
     'strapi::body',
     'strapi::session',
-    {
-      name: 'strapi::favicon',
-      config: {
-        path: './src/admin/extensions/trackit.png'
-      },
-    },
-  },
   'strapi::cors',
   'strapi::poweredBy',
   'strapi::logger',
@@ -54,4 +47,4 @@ export default ({ env }) => (
     },
   },
   'strapi::public',
-];
+]);
