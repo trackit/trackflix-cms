@@ -1,6 +1,6 @@
 import { Box, Typography, Flex, Layout, Grid, GridItem, Button } from "@strapi/design-system"
 import { getFetchClient, useStrapiApp } from "@strapi/helper-plugin"
-import React, { CSSProperties, useEffect, useState } from 'react';
+import React, { CSSProperties, useEffect, useMemo, useState } from 'react';
 import pluginId from '../../pluginId';
 import { LiveChannel, User, Video } from "./interface";
 
@@ -10,8 +10,8 @@ const vodThumbnailStyle : CSSProperties = {
 }
 
 const liveThumbnailStyle: CSSProperties = {
-  width: 300,
-  height: 300,
+  width: 280,
+  height: 280,
   overflow: "hidden",
   borderRadius: "100%",
 }
@@ -68,7 +68,7 @@ const LastLiveChanel = () => {
           }
         </Box>
         <Button>
-          <Typography as="h4" >Manage your VODs</Typography>
+          <Typography as="h4" >Schedule your lives</Typography>
         </Button>
       </Flex>
     </Box>
@@ -78,8 +78,13 @@ const LastLiveChanel = () => {
 
 const LastVod = () => {
   const { get } : { get: (route: string) => Promise<any>} = getFetchClient()
-  const [lastVideo, setLastVideoId] = useState<Video | null>(null)
+  const [lastVideo, setLastVideo] = useState<any>(null)
   const [thumbnailUrl, setThumbnailUrl] = useState<string>("");
+  const owner = useMemo(()=> {
+    const prefix = "uploaded by "
+    if (lastVideo === null) return "";
+    return prefix
+  }, [lastVideo])
 
   useEffect(() => {
       if (lastVideo !== null) return
@@ -87,7 +92,7 @@ const LastVod = () => {
         const meResponse = await get(`/${pluginId}/me`);
         const me : User = meResponse.data;
         const lastVideoResponse = await get(`/${pluginId}/vod`)
-        setLastVideoId(lastVideoResponse.data.results[0]);
+        setLastVideo(lastVideoResponse.data.results[0]);
       })()
   }, [])
 
@@ -95,6 +100,10 @@ const LastVod = () => {
     if (lastVideo === null) return
     const thumbnail = lastVideo!.Thumbnails[0]
     setThumbnailUrl(thumbnail.url);
+  }, [lastVideo])
+
+  useEffect(() =>  {
+    console.log(lastVideo)
   }, [lastVideo])
 
   
@@ -113,9 +122,11 @@ const LastVod = () => {
     >
       <Typography style={cardTitleStyle} as="p">Last uploaded VOD</Typography>
       <Flex direction="column" gap={8} style={{marginTop: 30}}>
-        <Typography as="h2" variant="alpha" style={{width: "100%", textAlign: "center"}}>Video name</Typography>
-        <Typography>uploaded by</Typography>
-        <Typography>mmazouz</Typography>
+        <Flex direction="column" gap={1}>
+          <Typography as="h2" variant="alpha" style={{width: "100%", textAlign: "center"}}>{lastVideo ? lastVideo.Name : ""}</Typography>
+          <Typography>uploaded by</Typography>
+          <Typography>mmazouz</Typography>
+        </Flex>
         <Box style={vodThumbnailStyle} shadow="tableShadeow" background="neutral100">
           {thumbnailUrl != "" &&
             <img style={{aspectRatio: "16/9", width: "100%"}} src={thumbnailUrl}/>
