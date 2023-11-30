@@ -1,6 +1,6 @@
-import path from 'path';
+import {join} from 'path';
 
-export default ({ env }) => {
+export default ({env}) => {
   const client = env('DATABASE_CLIENT', 'sqlite');
 
   const connections = {
@@ -24,7 +24,7 @@ export default ({ env }) => {
           ),
         },
       },
-      pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
+      pool: {min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10)},
     },
     mysql2: {
       connection: {
@@ -45,7 +45,7 @@ export default ({ env }) => {
           ),
         },
       },
-      pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
+      pool: {min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10)},
     },
     postgres: {
       connection: {
@@ -68,11 +68,11 @@ export default ({ env }) => {
         },
         schema: env('DATABASE_SCHEMA', 'public'),
       },
-      pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
+      pool: {min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10)},
     },
     sqlite: {
       connection: {
-        filename: path.join(
+        filename: join(
           __dirname,
           '..',
           '..',

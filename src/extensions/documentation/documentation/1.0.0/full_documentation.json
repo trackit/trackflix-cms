@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2023-10-26T10:09:45.026Z"
+    "x-generation-date": "2023-11-30T12:18:29.968Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -316,6 +316,7 @@
                                                                             "action": {
                                                                               "type": "string"
                                                                             },
+                                                                            "actionParameters": {},
                                                                             "subject": {
                                                                               "type": "string"
                                                                             },
@@ -864,6 +865,7 @@
                                                                             "action": {
                                                                               "type": "string"
                                                                             },
+                                                                            "actionParameters": {},
                                                                             "subject": {
                                                                               "type": "string"
                                                                             },
@@ -1641,6 +1643,7 @@
                                                                                         "action": {
                                                                                           "type": "string"
                                                                                         },
+                                                                                        "actionParameters": {},
                                                                                         "subject": {
                                                                                           "type": "string"
                                                                                         },
@@ -2381,8 +2384,10 @@
                         "genre-category-relation": {
                           "type": "string"
                         },
-                        "view_count": {
-                          "type": "integer"
+                        "views": {
+                          "type": "string",
+                          "pattern": "^\\d*$",
+                          "example": "123456789"
                         },
                         "genre": {
                           "type": "string"
@@ -2917,6 +2922,7 @@
                                                                                         "action": {
                                                                                           "type": "string"
                                                                                         },
+                                                                                        "actionParameters": {},
                                                                                         "subject": {
                                                                                           "type": "string"
                                                                                         },
@@ -3300,6 +3306,9 @@
         ],
         "properties": {
           "data": {
+            "required": [
+              "views"
+            ],
             "type": "object",
             "properties": {
               "Name": {
@@ -3344,8 +3353,10 @@
               "genre-category-relation": {
                 "type": "string"
               },
-              "view_count": {
-                "type": "integer"
+              "views": {
+                "type": "string",
+                "pattern": "^\\d*$",
+                "example": "123456789"
               },
               "genre": {
                 "type": "string"
@@ -3411,6 +3422,9 @@
       },
       "Vod": {
         "type": "object",
+        "required": [
+          "views"
+        ],
         "properties": {
           "Name": {
             "type": "string"
@@ -3738,6 +3752,7 @@
                                                                                           "action": {
                                                                                             "type": "string"
                                                                                           },
+                                                                                          "actionParameters": {},
                                                                                           "subject": {
                                                                                             "type": "string"
                                                                                           },
@@ -4424,8 +4439,10 @@
                                     "genre-category-relation": {
                                       "type": "string"
                                     },
-                                    "view_count": {
-                                      "type": "integer"
+                                    "views": {
+                                      "type": "string",
+                                      "pattern": "^\\d*$",
+                                      "example": "123456789"
                                     },
                                     "genre": {
                                       "type": "string"
@@ -4539,8 +4556,10 @@
           "genre-category-relation": {
             "type": "string"
           },
-          "view_count": {
-            "type": "integer"
+          "views": {
+            "type": "string",
+            "pattern": "^\\d*$",
+            "example": "123456789"
           },
           "genre": {
             "type": "string"
@@ -7688,7 +7707,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successfull registration",
+            "description": "Successful registration",
             "content": {
               "application/json": {
                 "schema": {
