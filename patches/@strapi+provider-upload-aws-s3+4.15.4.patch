@@ -1,0 +1,13 @@
+diff --git a/node_modules/@strapi/provider-upload-aws-s3/dist/index.js b/node_modules/@strapi/provider-upload-aws-s3/dist/index.js
+index 6cec5cd..817ce80 100644
+--- a/node_modules/@strapi/provider-upload-aws-s3/dist/index.js
++++ b/node_modules/@strapi/provider-upload-aws-s3/dist/index.js
+@@ -69,7 +69,7 @@ const extractCredentials = (options) => {
+       secretAccessKey: options.s3Options.credentials.secretAccessKey
+     };
+   }
+-  throw new Error("Couldn't find AWS credentials.");
++  return undefined;
+ };
+ const assertUrlProtocol = (url) => {
+   return /^\w*:\/\//.test(url);
