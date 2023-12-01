@@ -53,7 +53,7 @@ const Interaction = ({ value, icon } : { value: any, icon: IconProp }) => {
   );
 }
 
-const UserInteractions = ({ interactions } : { interactions: Interactions }) => {
+export const UserInteractions = ({ interactions } : { interactions: Interactions }) => {
   return (
     <Card>
       <CardHeader style={{ height: '20%' }}>

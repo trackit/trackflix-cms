@@ -9,7 +9,7 @@ export default ({ strapi }: { strapi: Strapi }) => ({
   },
   async vod(ctx) {
     const req = await strapi.service('api::vod.vod')?.find({
-      orderBy: "createdAt",
+      sort: "createdAt",
       populate: ['Thumbnails']
     })
     ctx.body = req
