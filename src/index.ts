@@ -54,14 +54,6 @@ const readOnlyPermissions = [
   },
   {
     action: 'plugin::content-manager.explorer.read',
-    subject: 'api::serie.serie',
-    conditions: [],
-    properties: {
-      fields: ['Name', 'Thumbnail', 'pub_date', 'description'],
-    },
-  },
-  {
-    action: 'plugin::content-manager.explorer.read',
     subject: 'api::vod.vod',
     conditions: [],
     properties: {
