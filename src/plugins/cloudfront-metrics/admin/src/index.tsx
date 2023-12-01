@@ -16,8 +16,6 @@ const name = pluginPkg.strapi.name;
 export default {
   register(app: any) {
 
-
-
     app.addMenuLink({
       to: `/content-manager/collectionType/api::live-channel.live-channel?page=1&pageSize=10&sort=name:ASC`,
       icon: BsBroadcastPin,
@@ -98,22 +96,6 @@ export default {
       permissions: [],
     });
 
-    app.addMenuLink({
-      to: `/lol`,
-      icon: CgWebsite,
-      category: "Configuration",
-      intlLabel: {
-        id: `${pluginId}.plugin.name`,
-        defaultMessage: "Platforms",
-      },
-      Component: async () => {
-        const component = await import(/* webpackChunkName: "[request]" */ './pages/App');
-
-        return component;
-      },
-      permissions: [],
-    });
-
 
     app.addMenuLink({
       to: `/content-manager/collectionType/plugin::users-permissions.user?page=1&pageSize=10&sort=username:ASC`,
@@ -122,22 +104,6 @@ export default {
       intlLabel: {
         id: `${pluginId}.plugin.name`,
         defaultMessage: "Users",
-      },
-      Component: async () => {
-        const component = await import(/* webpackChunkName: "[request]" */ './pages/App');
-
-        return component;
-      },
-      permissions: [],
-    });
-
-    app.addMenuLink({
-      to: `/content-manager/collectionType/plugin::users-permissions.role?page=1&pageSize=10&sort=username:ASC`,
-      icon: BsFillShieldLockFill,
-      category: "Admin",
-      intlLabel: {
-        id: `${pluginId}.plugin.name`,
-        defaultMessage: "Roles",
       },
       Component: async () => {
         const component = await import(/* webpackChunkName: "[request]" */ './pages/App');

@@ -6,6 +6,7 @@ on:
 jobs:
   continuous-deployment:
     runs-on: ubuntu-latest
+    timeout-minutes: 360
     steps:
       - name: Executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@master
