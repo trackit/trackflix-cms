@@ -16,8 +16,6 @@ const name = pluginPkg.strapi.name;
 export default {
   register(app: any) {
 
-
-
     app.addMenuLink({
       to: `/content-manager/collectionType/api::live-channel.live-channel?page=1&pageSize=10&sort=name:ASC`,
       icon: BsBroadcastPin,
@@ -89,22 +87,6 @@ export default {
       intlLabel: {
         id: `${pluginId}.plugin.name`,
         defaultMessage: "Categories",
-      },
-      Component: async () => {
-        const component = await import(/* webpackChunkName: "[request]" */ './pages/App');
-
-        return component;
-      },
-      permissions: [],
-    });
-
-    app.addMenuLink({
-      to: `/lol`,
-      icon: CgWebsite,
-      category: "Configuration",
-      intlLabel: {
-        id: `${pluginId}.plugin.name`,
-        defaultMessage: "Platforms",
       },
       Component: async () => {
         const component = await import(/* webpackChunkName: "[request]" */ './pages/App');
