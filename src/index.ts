@@ -87,7 +87,7 @@ const createReadOnlyRole = async () => {
   const roleService = strapi.services["admin::role"];
   const data = await strapi.entityService.create('admin::role', {
     data: {
-      name: 'read-only',
+      name: 'Read-Only',
       code: `read-only`,
       description: 'Read only access for demo user',
     },
