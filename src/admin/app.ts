@@ -1,4 +1,7 @@
+import { text } from "@fortawesome/fontawesome-svg-core";
+
 const TrackItLogo = require('./extensions/trackit.png');
+
 
 export const lightThemeColors = {
   colors: {
@@ -13,7 +16,7 @@ export const lightThemeColors = {
     danger500: '#ee5e52',
     danger600: '#d02b20',
     danger700: '#b72b1a',
-    neutral0: '#ffffff',
+    neutral0: '#4287f5',
     neutral100: '#f6f6f9',
     neutral1000: '#181826',
     neutral150: '#eaeaef',
@@ -29,7 +32,7 @@ export const lightThemeColors = {
     primary200: '#FB7477',
     primary500: '#FA6163',
     primary600: '#F94044',
-    primary700: '#F9393C',
+    primary700: '#FCEDEE',
     buttonPrimary500: '#FA6163',
     buttonPrimary600: '#F94044',
     secondary100: '#eaf5ff',
