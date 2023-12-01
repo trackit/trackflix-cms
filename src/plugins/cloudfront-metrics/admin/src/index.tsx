@@ -113,22 +113,6 @@ export default {
       permissions: [],
     });
 
-    app.addMenuLink({
-      to: `/content-manager/collectionType/plugin::users-permissions.role?page=1&pageSize=10&sort=username:ASC`,
-      icon: BsFillShieldLockFill,
-      category: "Admin",
-      intlLabel: {
-        id: `${pluginId}.plugin.name`,
-        defaultMessage: "Roles",
-      },
-      Component: async () => {
-        const component = await import(/* webpackChunkName: "[request]" */ './pages/App');
-
-        return component;
-      },
-      permissions: [],
-    });
-
 
     const plugin = {
       id: pluginId,
