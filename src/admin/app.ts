@@ -16,7 +16,7 @@ export const lightThemeColors = {
     danger500: '#ee5e52',
     danger600: '#d02b20',
     danger700: '#b72b1a',
-    neutral0: '#4287f5',
+    neutral0: '#ffffff',
     neutral100: '#f6f6f9',
     neutral1000: '#181826',
     neutral150: '#eaeaef',
@@ -28,11 +28,11 @@ export const lightThemeColors = {
     neutral700: '#4a4a6a',
     neutral800: '#32324d',
     neutral900: '#212134',
-    primary100: '#F94044',
+    primary100: '#fcedee',
     primary200: '#FB7477',
     primary500: '#FA6163',
     primary600: '#F94044',
-    primary700: '#FCEDEE',
+    primary700: '#F9393C',
     buttonPrimary500: '#FA6163',
     buttonPrimary600: '#F94044',
     secondary100: '#eaf5ff',
@@ -52,6 +52,7 @@ export const lightThemeColors = {
     warning700: '#be5d01',
   },
 };
+
 export const darkThemeColors = {
   colors: {
     alternative100: '#181826',
