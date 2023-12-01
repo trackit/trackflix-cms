@@ -66,6 +66,10 @@
     },
     "highlighted": {
       "type": "boolean"
+    },
+    "owner": {
+      "type": "integer",
+      "required": false
     }
   }
 }
