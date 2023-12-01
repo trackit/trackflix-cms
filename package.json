@@ -12,8 +12,6 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.462.0",
-    "@aws-sdk/credential-provider-sso": "^3.460.0",
     "@babel/core": "^7.22.10",
     "@babel/runtime": "^7.22.10",
     "@codemirror/autocomplete": "^6.9.0",
