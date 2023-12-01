@@ -34,6 +34,7 @@
     "@strapi/plugin-documentation": "4.12.0",
     "@strapi/plugin-i18n": "4.12.0",
     "@strapi/plugin-users-permissions": "4.12.0",
+    "@strapi/provider-upload-aws-s3": "^4.15.4",
     "@strapi/strapi": "4.12.0",
     "async_hooks": "^1.0.0",
     "chart.js": "^4.3.3",
