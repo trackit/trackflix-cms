@@ -1,8 +1,8 @@
 import { Box, Typography, Flex, Layout, Grid, GridItem, Button } from "@strapi/design-system"
-import { getFetchClient, useStrapiApp } from "@strapi/helper-plugin"
-import React, { CSSProperties, useEffect, useMemo, useState } from 'react';
+import { getFetchClient } from "@strapi/helper-plugin"
+import React, { CSSProperties, useEffect, useState } from 'react';
 import pluginId from '../../pluginId';
-import { LiveChannel, User, Video } from "./interface";
+import { LiveChannel, Video } from "./interface";
 
 const vodThumbnailStyle : CSSProperties = {
   width: 300,
@@ -17,37 +17,35 @@ const liveThumbnailStyle: CSSProperties = {
 }
 
 const cardTitleStyle: CSSProperties = {
-  fontSize: 19,
-  width: "80%",
-  textAlign: "left",
-  fontWeight: 600,
-  marginLeft: 0,
-  marginTop: 0,
+  textAlign: "center",
 }
 
+const navigateCollectionType = (collectionType: 'vod' | 'live') => {
+  const type = collectionType === 'vod' ? 'vod' : 'live-channel';
+  window.location.href = `${window.location.origin}/admin/content-manager/collectionType/api::${type}.${type}`;
+}
 
 const LastLiveChanel = () => {
   const { get } : { get: (route: string) => Promise<any>} = getFetchClient()
-  const [lastLive, setLastLive] = useState<LiveChannel | null>(null)
+  const [lastLive, setLastLive] = useState<LiveChannel | null>(null);
   const [thumbnailUrl, setThumbnailUrl] = useState<string>("");
 
   useEffect(() => {
-      if (lastLive !== null) return
+      if (lastLive !== null) return;
       (async () => {
-        const lastVideoResponse = await get(`/${pluginId}/live`)
-        const live = lastVideoResponse.data.results[0] as LiveChannel
+        const lastVideoResponse = await get(`/${pluginId}/live`);
+        if (!lastVideoResponse?.data?.results || lastVideoResponse?.data?.results?.length <= 0) return;
+        const live = lastVideoResponse.data.results[0] as LiveChannel;
         setLastLive(live);
-        
       })()
   }, [])
 
   useEffect(() => {
-    if (lastLive === null) return
-    const thumbnail = lastLive!.thumbnail
-    setThumbnailUrl(thumbnail.url);
-  }, [lastLive])
+    if (lastLive === null) return;
+    const thumbnail = lastLive?.thumbnail;
+    setThumbnailUrl(thumbnail?.url);
+  }, [lastLive]);
 
-  
   return (
     <Box
       as="aside"
@@ -59,54 +57,84 @@ const LastLiveChanel = () => {
       paddingTop={6}
       paddingBottom={6}
       shadow="tableShadow"
+      height={500}
     >
       <Flex direction="column" gap={8}>
-        <Typography as="h2" variant="alpha">Your live Channels</Typography>
+        <Typography as="h2" variant="alpha">Live channel</Typography>
         <Box style={liveThumbnailStyle} shadow="tableShadow" background="neutral100">
-          {thumbnailUrl != "" &&
+          {thumbnailUrl &&
             <img style={{overflow: "hidden", width: "100%"}} src={thumbnailUrl}/>
           }
         </Box>
-        <Button>
-          <Typography as="h4" >Schedule your lives</Typography>
+        <Button onClick={() => {
+          navigateCollectionType('live');
+        }}>
+          <Typography as="h4" >Schedule a session</Typography>
         </Button>
       </Flex>
     </Box>
   )
 }
 
+const Separator = () => {
+  return (
+    <Box
+      as="hr"
+      style={{
+        border: "none",
+        height: 1,
+        backgroundColor: "#e3e9f3",
+        marginTop: 10,
+        marginBottom: 10,
+      }}
+    />
+  );
+}
 
-const LastVod = () => {
+const VODContainer = ({ variant }: { variant: 'latest' | 'most-viewed' }) => {
   const { get } : { get: (route: string) => Promise<any>} = getFetchClient()
-  const [lastVideo, setLastVideo] = useState<any>(null)
-  const [thumbnailUrl, setThumbnailUrl] = useState<string>("");
-  const owner = useMemo(()=> {
-    const prefix = "uploaded by "
-    if (lastVideo === null) return "";
-    return prefix
-  }, [lastVideo])
+  const [video, setVideo] = useState<{
+    name: string;
+    thumbnail: string;
+    views: number;
+  } | null>(null);
 
   useEffect(() => {
-      if (lastVideo !== null) return
-      (async () => {
-        const meResponse = await get(`/${pluginId}/me`);
-        const me : User = meResponse.data;
-        const lastVideoResponse = await get(`/${pluginId}/vod`)
-        setLastVideo(lastVideoResponse.data.results[0]);
-      })()
-  }, [])
+    if (video !== null) return
+    (async () => {
+      const lastVideoResponse = await get(`/${pluginId}/vod`)
+      const { results } = lastVideoResponse.data;
+      if (!results || results.length <= 0) return;
 
-  useEffect(() => {
-    if (lastVideo === null) return
-    const thumbnail = lastVideo!.Thumbnails[0]
-    setThumbnailUrl(thumbnail.url);
-  }, [lastVideo])
+      const getVideo = () => {
+        switch (variant) {
+          case 'latest':
+            return results.reduce((prev: Video, current: Video) => {
+              if (prev.createdAt < current.createdAt) {
+                return current;
+              }
+              return prev;
+            }, results[0]);
+          case 'most-viewed':
+            return results.reduce((prev: Video, current: Video) => {
+              if (prev.views < current.views) {
+                return current;
+              }
+              return prev;
+            }, results[0]);
+          default:
+            return results[0];
+        }
+      }
+      const video = getVideo();
+      setVideo({
+        name: video.Name,
+        thumbnail: video.Thumbnails[0].url,
+        views: video.views,
+      });
+    })()
+  }, [video]);
 
-  useEffect(() =>  {
-    console.log(lastVideo)
-  }, [lastVideo])
-
-  
   return (
     <Box
       as="aside"
@@ -120,67 +148,25 @@ const LastVod = () => {
       shadow="tableShadow"
       style={{position: "relative", width: 350}}
     >
-      <Typography style={cardTitleStyle} as="p">Last uploaded VOD</Typography>
+      <Typography style={cardTitleStyle} as="h2" variant="alpha">{variant === 'latest' ? 'Latest VOD': 'Most viewed 🔥'}</Typography>
+      <Separator />
       <Flex direction="column" gap={8} style={{marginTop: 30}}>
         <Flex direction="column" gap={1}>
-          <Typography as="h2" variant="alpha" style={{width: "100%", textAlign: "center"}}>{lastVideo ? lastVideo.Name : ""}</Typography>
-          <Typography>uploaded by</Typography>
-          <Typography>mmazouz</Typography>
+          <Typography as="h2" variant="alpha" style={{width: "100%", textAlign: "center"}}>{video ? video.name : ""}</Typography>
+          <Typography>by Author</Typography>
+            {variant === 'most-viewed' &&
+            <Typography variant="beta">{video ? `${video.views} view(s)` : ""}</Typography>
+          }
         </Flex>
         <Box style={vodThumbnailStyle} shadow="tableShadeow" background="neutral100">
-          {thumbnailUrl != "" &&
-            <img style={{aspectRatio: "16/9", width: "100%"}} src={thumbnailUrl}/>
+          {video?.thumbnail != "" &&
+            <img style={{aspectRatio: "16/9", width: "100%"}} src={video?.thumbnail}/>
           }
         </Box>
-        <Button>
-          <Typography as="h4" >Manage your VODs</Typography>
-        </Button>
-      </Flex>
-    </Box>
-  )
-}
-
-const MostViewedVOD = () => {
-  const { get } : { get: (route: string) => Promise<any>} = getFetchClient()
-  const [lastVideo, setLastVideoId] = useState<Video | null>(null)
-  const [thumbnailUrl, setThumbnailUrl] = useState<string>("");
-
-  useEffect(() => {
-      if (lastVideo !== null) return
-      (async () => {
-        const lastVideoResponse = await get(`/${pluginId}/vod`)
-        setLastVideoId(lastVideoResponse.data.results[0]);
-      })()
-  }, [])
-
-  useEffect(() => {
-    if (lastVideo === null) return
-    const thumbnail = lastVideo!.Thumbnails[0]
-    setThumbnailUrl(thumbnail.url);
-  }, [lastVideo])
-
-  
-  return (
-    <Box
-      as="aside"
-      aria-labelledby="join-the-community"
-      background="neutral0"
-      hasRadius
-      paddingRight={5}
-      paddingLeft={5}
-      paddingTop={6}
-      paddingBottom={6}
-      shadow="tableShadow"
-    >
-      <Flex direction="column" gap={8}>
-        <Typography as="h2" variant="alpha">VOD content</Typography>
-        <Box style={vodThumbnailStyle} shadow="tableShadow" background="neutral100">
-          {thumbnailUrl != "" &&
-            <img style={{aspectRatio: "16/9", width: "100%"}} src={thumbnailUrl}/>
-          }
-        </Box>
-        <Button>
-          <Typography as="h4" >Manage your VODs</Typography>
+        <Button onClick={() => {
+          navigateCollectionType('vod');
+        }}>
+          <Typography as="h4" >Manage your VOD's</Typography>
         </Button>
       </Flex>
     </Box>
@@ -195,15 +181,19 @@ const HomePage = () => {
             <GridItem col={8} s={12}>
               <Box paddingLeft={6} paddingBottom={10}>
                 <Flex direction="column" alignItems="flex-start" gap={5}>
-                  <Typography as="h1" variant="alpha">Welcome to your Trackflix CMS</Typography>
+                  <Typography as="h1" variant="alpha">Welcome to your Trackflix CMS 👋</Typography>
+                  <Typography as="p" variant="epsilon" width="70%">
+                    We hope you are making progress on your project! Feel free to read the latest news about Strapi.
+                    We are giving our best to improve the product based on your feedback.
+                  </Typography>
                 </Flex>
               </Box>
             </GridItem>
           </Grid>
-          <Flex direction="row" alignItems="center" justifyContent="center" gap={10}>
-            <LastVod />
+          <Flex direction="row" alignItems="stretch" justifyContent="center" gap={10}>
+            <VODContainer variant="latest" />
             <LastLiveChanel />
-            <LastVod />
+            <VODContainer variant="most-viewed" />
           </Flex>
       </Box>
     </Layout>
