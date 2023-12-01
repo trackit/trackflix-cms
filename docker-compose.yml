@@ -1,0 +1,41 @@
+version: "3"
+services:
+  trackflixDB:
+    container_name: trackflixDB
+    platform: linux/amd64
+    image: postgres:15.5
+    env_file: .env
+    restart: unless-stopped
+    volumes:
+      - trackflix-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    ports:
+      - "5432:5432"
+    networks:
+      - trackflix
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@trackit.io
+      PGADMIN_DEFAULT_PASSWORD: password
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - trackflix
+
+volumes:
+  trackflix-data:
+  pgadmin-data:
+
+networks:
+  trackflix:
+    name: Trackflix
+    driver: bridge

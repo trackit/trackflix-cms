@@ -114,3 +114,4 @@ build
 package-lock.json
 dist/
 *.tsbuildinfo
+**/dist/
