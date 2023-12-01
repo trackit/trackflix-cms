@@ -25,7 +25,7 @@ export const lightThemeColors = {
     neutral700: '#4a4a6a',
     neutral800: '#32324d',
     neutral900: '#212134',
-    primary100: '#  fcedee',
+    primary100: '#fcedee',
     primary200: '#FB7477',
     primary500: '#FA6163',
     primary600: '#F94044',
