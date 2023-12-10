@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "test_uploads",
+  "info": {
+    "singularName": "test-upload",
+    "pluralName": "test-uploads",
+    "displayName": "test upload",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "test_upload": {
+      "type": "customField",
+      "customField": "plugin::upload-video.upload-video"
+    },
+    "test": {
+      "type": "string"
+    }
+  }
+}
