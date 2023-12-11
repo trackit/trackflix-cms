@@ -155,10 +155,10 @@ index cec300e..1d978f2 100644
                      </Typography>
  
 diff --git a/node_modules/@strapi/admin/admin/src/pages/HomePage/index.js b/node_modules/@strapi/admin/admin/src/pages/HomePage/index.js
-index a22f746..ba83dc5 100644
+index a22f746..7ac1038 100644
 --- a/node_modules/@strapi/admin/admin/src/pages/HomePage/index.js
 +++ b/node_modules/@strapi/admin/admin/src/pages/HomePage/index.js
-@@ -1,107 +1,194 @@
+@@ -1,107 +1,193 @@
 -/*
 - * HomePage
 - *
@@ -220,7 +220,6 @@ index a22f746..ba83dc5 100644
 +import { Box, Typography, Flex, Layout, Grid, GridItem, Button } from '@strapi/design-system'
 +import { useFetchClient } from '@strapi/helper-plugin'
 +import React, { useEffect, useState } from 'react';
-+import { LiveChannel } from './interface';
 +
 +const vodThumbnailStyle = {
 +  width: 300,
@@ -257,8 +256,8 @@ index a22f746..ba83dc5 100644
 +
 +const LastLiveChanel = () => {
 +  const { get }  = useFetchClient()
-+  const [lastLive, setLastLive] = useState<LiveChannel | null>(null);
-+  const [thumbnailUrl, setThumbnailUrl] = useState<string>('');
++  const [lastLive, setLastLive] = useState(null);
++  const [thumbnailUrl, setThumbnailUrl] = useState('');
 +
 +  useEffect(() => {
 +    const fetchThumbnail = async () => {
@@ -276,7 +275,7 @@ index a22f746..ba83dc5 100644
 +    const thumbnail = lastLive?.thumbnail;
 +    setThumbnailUrl(thumbnail?.url);
 +  }, [lastLive]);
-+
+ 
 +  return (
 +    <Box
 +      as='aside'
@@ -340,7 +339,7 @@ index a22f746..ba83dc5 100644
 +    if (video === null)
 +      fetchVod();
 +  });
- 
++
 +  return (
 +    <Box
 +      as='aside'
