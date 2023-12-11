@@ -1,14 +1,24 @@
-import React, { CSSProperties, useEffect } from 'react';
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import React, { CSSProperties, useEffect, useState } from 'react';
 import { FormData } from 'formdata-node';
-import {Readable} from "stream"
-import {FormDataEncoder} from "form-data-encoder"
-import { SingleSelect, SingleSelectOption, MultiSelect, TextInput, Typography  } from '@strapi/design-system';
+import {TextInput, Typography  } from '@strapi/design-system';
+import styled, { DefaultTheme, WebTarget } from 'styled-components';
 import { getFetchClient, useCMEditViewDataManager, useStrapiApp } from '@strapi/helper-plugin';
 import pluginId from '../pluginId';
-import { any, object, string } from 'prop-types';
+import { Theme } from './types';
 
-const {get, post} : {get: any, post: (url: string, data?: Object, config?: Object) => any} = getFetchClient();
+
+type fetchClientFunction = (url: string, data?: Object, config?: Object) => any
+
+interface OnchangeTarget {
+  name: string;
+  value: string;
+  type: string
+}
+
+interface customFieldProps {
+  onChange: ( {target} : {target : OnchangeTarget} , shouldSetInitialValue? : boolean) => any;
+  value: string
+}
 
 const containerStyle : CSSProperties = {
   display: 'flex',
@@ -27,12 +37,31 @@ const uploadFileStyle: CSSProperties = {
     borderRadius: 10,
 }
 
+const UploadFileButton = styled.label`
+  cursor: pointer;
+
+  border: ${({ theme }) => `1px solid ${(theme as Theme).colors.neutral200}`}};
+  text-align: center;
+  width: max-content;
+  color: ${({theme}) => theme.colors.neutral800};
+  padding: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 10px;
+  &:hover {
+    transform: scale(1.01)
+  }
+  &:active {
+    transform: scale(0.99)
+  }
+`
+
+
 const uploadFileContainerStyle : CSSProperties = {
   width: "100%",
   display: 'flex',
   flexDirection: "row",
   justifyContent: "center",
-  border: "1px solid blue",
 }
 
 const orStyle: CSSProperties = {
@@ -40,6 +69,13 @@ const orStyle: CSSProperties = {
     textAlign: "center"
   }
 
+const UploadVideo = ( {onChange, value} : customFieldProps ) => {
+
+  const [videoUrl, setVideoUrl] = useState(value ? value : "");
+  const [isUrlInputDisabled, setUrlInputDisabled] = useState(Boolean(value));
+  const {get, post} : {get: any, post: fetchClientFunction} = getFetchClient();
+
+  console.log(value)
 
   const uploadAsset = (blobfile: any) => {
     const { rawFile, caption, name, alternativeText } = {
@@ -63,42 +99,44 @@ const orStyle: CSSProperties = {
       headers: {
         'Content-Type': 'multipart/form-data',
       }
-    }).then((res: any) => console.log(res.data[0].url));
+    })
   };
 
-const uploadFile = async (e: ProgressEvent<FileReader>, file: File) => {
-  const videoBlob = new Blob([e.target!.result!], { type: file.type });
-  uploadAsset(videoBlob)
-}
-
-const onFileUpload : React.ChangeEventHandler<HTMLInputElement> = (e) => {
-  if (e.target.files) {
-    const reader = new FileReader();
-    const file = e.target.files[0]
-    reader.onload = (e) => uploadFile(e, file)
-    reader.readAsArrayBuffer(file);
-    
+  const uploadFile = async (e: ProgressEvent<FileReader>, file: File) => {
+    const videoBlob = new Blob([e.target!.result!], { type: file.type });
+    uploadAsset(videoBlob).then((response: any) => {console.log(response); return response.data[0].url}).then((url: string) => {
+      onChange({
+        target: {
+          name: "test_upload",
+          type: "text",
+          value: url
+        }
+      })
+      setVideoUrl(url);
+      setUrlInputDisabled(true)
+    })
   }
-}
 
-const UploadVideo = () => {
-
-  
-  const { modifiedData } = useCMEditViewDataManager()
-  const strapiApp = useStrapiApp()
-  console.log(strapiApp.getPlugin("upload"))
+  const onFileUpload : React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    if (e.target.files) {
+      const reader = new FileReader();
+      const file = e.target.files[0]
+      reader.onload = (e) => uploadFile(e, file)
+      reader.readAsArrayBuffer(file);
+    }
+  }
 
   return (
     <div style={containerStyle}>
-        <TextInput label="VOD URL" placeholder="URL to your VOD file..." />
+        <TextInput disabled={isUrlInputDisabled} label="VOD URL" placeholder="URL to your VOD file..." value={videoUrl} onChange={(e: any) => setVideoUrl(e.target.value)} />
         <Typography style={orStyle} as="h2">
-            salam
+            or
         </Typography>
         <div style={uploadFileContainerStyle}>
-          <label className="custom-file-upload" style={uploadFileStyle}>
-              <input type="file" onChange={(e) => onFileUpload(e)} style={{display: 'none'}}/>
-              Custom Upload
-          </label>
+          <UploadFileButton>
+          <input type="file" onChange={(e) => onFileUpload(e)} style={{display: 'none'}}/>
+              Choose a VOD file
+          </UploadFileButton>
         </div>
     </div>
   );

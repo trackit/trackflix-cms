@@ -13,7 +13,7 @@
   "pluginOptions": {},
   "attributes": {
     "test_upload": {
-      "type": "customField",
+      "type": "text",
       "customField": "plugin::upload-video.upload-video"
     },
     "test": {
