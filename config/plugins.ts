@@ -1,5 +1,4 @@
 export default async ({ env }) => {
-
   return {
     upload: {
       config: {
