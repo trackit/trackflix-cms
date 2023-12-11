@@ -13,11 +13,9 @@
   "pluginOptions": {},
   "attributes": {
     "test_upload": {
-<<<<<<< HEAD
       "type": "text",
-=======
       "type": "customField",
->>>>>>> c3583e7 (feat(uploading): test content-type + PoC upload button to s3)
+      "type": "text",
       "customField": "plugin::upload-video.upload-video"
     },
     "test": {
