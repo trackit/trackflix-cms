@@ -155,10 +155,10 @@ index cec300e..1d978f2 100644
                      </Typography>
  
 diff --git a/node_modules/@strapi/admin/admin/src/pages/HomePage/index.js b/node_modules/@strapi/admin/admin/src/pages/HomePage/index.js
-index a22f746..7ac1038 100644
+index a22f746..c3060d1 100644
 --- a/node_modules/@strapi/admin/admin/src/pages/HomePage/index.js
 +++ b/node_modules/@strapi/admin/admin/src/pages/HomePage/index.js
-@@ -1,107 +1,193 @@
+@@ -1,107 +1,209 @@
 -/*
 - * HomePage
 - *
@@ -248,10 +248,11 @@ index a22f746..7ac1038 100644
 +}
 +
 +const getUrl = (type, sortAttribute) =>
-+  `/content-manager/collection-types/api::${type}.${type}?sort=${sortAttribute}:desc&_limit=1`;
++  `/content-manager/collection-types/api::${type}.${type}${sortAttribute ? `?sort=${sortAttribute}:desc&_limit=1` : ''}`;
 +
 +const navigateCollectionType = (type) => {
-+  window.location.href = `${window.location.origin}/admin/${getUrl(type)}`;
++  const url = getUrl(type).replace('collection-types', 'collectionType');
++  window.location.href = `${window.location.origin}/admin${url}`;
 +}
 +
 +const LastLiveChanel = () => {
@@ -291,9 +292,10 @@ index a22f746..7ac1038 100644
 +    >
 +      <Flex direction='column' gap={8}>
 +        <Typography as='h2' variant='alpha'>Live channel</Typography>
-+        <Box style={liveThumbnailStyle} shadow='tableShadow' background='neutral100'>
-+          {thumbnailUrl &&
-+            <img style={{overflow: 'hidden', width: '100%'}} src={thumbnailUrl}/>
++        <Separator />
++        <Box style={vodThumbnailStyle} shadow='tableShadow' background='neutral100'>
++          {thumbnailUrl != '' &&
++            <img style={{ aspectRatio: '16/9', width: '100%' }} src={thumbnailUrl}/>
 +          }
 +        </Box>
 +        <Button onClick={() => { navigateCollectionType(CollectionType.Live) }} >
@@ -330,10 +332,23 @@ index a22f746..7ac1038 100644
 +      const { results } = lastVideoResponse.data;
 +      if (!results || results?.length === 0) return;
 +
++      const { Name, Thumbnails, views, updatedBy, createdAt } = results[0] || {
++        Name: '',
++        Thumbnails: [],
++        views: 0,
++        updatedBy: {
++          firstname: 'John',
++          lastname: 'Doe',
++        },
++        createdAt: '',
++      };
++
 +      setVideo({
-+        name: results[0].Name,
-+        thumbnail: results[0].Thumbnails[0]?.url,
-+        views: results[0].views,
++        name: Name,
++        thumbnail: Thumbnails[0]?.url,
++        views,
++        author: `${updatedBy?.firstname} ${updatedBy?.lastname}`,
++        createdAt,
 +      });
 +    }
 +    if (video === null)
@@ -357,23 +372,24 @@ index a22f746..7ac1038 100644
 +        {sortAttribute === VODSortAttribute.Latest ? 'Latest VOD': 'Most viewed 🔥'}
 +      </Typography>
 +      <Separator />
-+      <Flex direction='column' gap={8} style={{marginTop: 30}}>
++      <Flex direction='column' gap={8} style={{ marginTop: 30 }}>
 +        <Flex direction='column' gap={1}>
-+          <Typography as='h2' variant='alpha' style={{width: '100%', textAlign: 'center'}}>
++          <Typography as='h2' variant='alpha' style={{ width: '100%', textAlign: 'center' }}>
 +            {video ? video.name : ''}
 +          </Typography>
-+          <Typography>by Author</Typography>
-+            {sortAttribute === VODSortAttribute.MostViewed &&
-+              <Typography variant='beta'>{video ? `${video.views} view(s)` : ''}</Typography>
++          <Typography>{`by ${video?.author}`}</Typography>
++            {sortAttribute === VODSortAttribute.MostViewed ?
++              <Typography variant='beta'>{`${video?.views} view(s)`}</Typography>
++              : <Typography variant='beta'>{new Date(video?.createdAt).toLocaleDateString()}</Typography>
 +            }
 +        </Flex>
-+        <Box style={vodThumbnailStyle} shadow='tableShadeow' background='neutral100'>
++        <Box style={vodThumbnailStyle} shadow='tableShadow' background='neutral100'>
 +          {video?.thumbnail != '' &&
-+            <img style={{aspectRatio: '16/9', width: '100%'}} src={video?.thumbnail}/>
++            <img style={{ aspectRatio: '16/9', width: '100%' }} src={video?.thumbnail}/>
 +          }
 +        </Box>
 +        <Button
-+          onClick={() => { navigateCollectionType(CollectionType.Vod) }}
++          onClick={() => navigateCollectionType(CollectionType.Vod)}
 +        >
 +          <Typography as='h4'>Manage your VOD's</Typography>
 +        </Button>
