@@ -50,7 +50,7 @@ export default ({ env }) => ({
   },
   settings: {
     importLimit: 3000,
-    validStatus: [200, 201], validMethod: ['PUT', 'POST', 'DELETE'], fillByResponse: false, importLimit: 3000, index_prefix: '', index_postfix: '',
+    validStatus: [200, 201], validMethod: ['PUT', 'POST', 'DELETE'], fillByResponse: false, index_prefix: '', index_postfix: '',
     removeExistIndexForMigration: false,
   },
   models: ${JSON.stringify(modelsConfig, null, 2)}
