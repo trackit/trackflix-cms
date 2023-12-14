@@ -41,5 +41,6 @@ export default ({ env }) => (
       },
     },
     'strapi::public',
+    "plugin::opensearch.opensearchMiddleware",
   ]
 );

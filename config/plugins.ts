@@ -31,6 +31,10 @@ export default async ({ env }) => {
       'docusaurus': {
         enabled: true,
         resolve: './src/plugins/docusaurus'
-      }
+      },
+      'opensearch' : {
+        enabled : true,
+        resolve: './src/plugins/opensearch'
+    }
 }
 }
