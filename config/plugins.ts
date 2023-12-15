@@ -17,12 +17,13 @@ export default async ({env}) => ({
   },
   upload: {
     config: {
+      sizeLimit: 2000 * 1024 * 1024,
       provider: 'aws-s3',
       providerOptions: {
         s3Options: {
           region: env('AWS_REGION'),
           params: {
-            ACL: 'private', // <== set ACL to private
+            //ACL: 'private', // <== public by default, set ACL to private if needed
             Bucket: env('AWS_BUCKET'),
           },
         },

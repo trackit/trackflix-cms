@@ -8,8 +8,8 @@ export default [
     },
   },
   {
-    method: 'POST',
-    path: '/',
+    method: 'GET',
+    path: '/link',
     handler: 'myController.upload',
     config: {
       policies: [],

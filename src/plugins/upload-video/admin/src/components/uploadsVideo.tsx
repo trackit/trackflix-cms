@@ -1,11 +1,9 @@
 import React, { CSSProperties, useEffect, useState } from 'react';
-import { FormData } from 'formdata-node';
 import {TextInput, Typography  } from '@strapi/design-system';
 import styled, { DefaultTheme, WebTarget } from 'styled-components';
-import { getFetchClient, useCMEditViewDataManager, useStrapiApp } from '@strapi/helper-plugin';
-import pluginId from '../pluginId';
+import { getFetchClient, useCMEditViewDataManager } from '@strapi/helper-plugin';
 import { Theme } from './types';
-
+import { readFile } from './readFile';
 
 type fetchClientFunction = (url: string, data?: Object, config?: Object) => any
 
@@ -13,6 +11,13 @@ interface OnchangeTarget {
   name: string;
   value: string;
   type: string
+}
+
+interface UploadData {
+  rawFile: Blob;
+  caption: string;
+  name: string;
+  alternativeText: string;
 }
 
 interface customFieldProps {
@@ -37,6 +42,11 @@ const uploadFileStyle: CSSProperties = {
     borderRadius: 10,
 }
 
+const showProgress = (data: ProgressEvent<FileReader>) => {
+  const progress = (data.loaded / data.total) * 100;
+  console.log(data.loaded, data.total, progress);
+}
+
 const UploadFileButton = styled.label`
   cursor: pointer;
 
@@ -56,7 +66,6 @@ const UploadFileButton = styled.label`
   }
 `
 
-
 const uploadFileContainerStyle : CSSProperties = {
   width: "100%",
   display: 'flex',
@@ -69,22 +78,21 @@ const orStyle: CSSProperties = {
     textAlign: "center"
   }
 
-const UploadVideo = ( {onChange, value} : customFieldProps ) => {
-
+const UploadVideo = ( props : customFieldProps ) => {
+  const { onChange, value } = props;
   const [videoUrl, setVideoUrl] = useState(value ? value : "");
   const [isUrlInputDisabled, setUrlInputDisabled] = useState(Boolean(value));
   const {get, post} : {get: any, post: fetchClientFunction} = getFetchClient();
 
-  console.log(value)
+  const { modifiedData } = useCMEditViewDataManager();
 
-  const uploadAsset = (blobfile: any) => {
-    const { rawFile, caption, name, alternativeText } = {
-      rawFile: blobfile, caption: "test", name: "ok", alternativeText: "test"
-    }
+
+  useEffect(() => {
+  }, [modifiedData])
+
+  const uploadAsset = ({rawFile, caption, name, alternativeText}: UploadData) => {
     const formData = new FormData();
-  
-    formData.append('files', rawFile);
-  
+    formData.append("files", rawFile);
     formData.append(
       'fileInfo',
       JSON.stringify({
@@ -94,7 +102,7 @@ const UploadVideo = ( {onChange, value} : customFieldProps ) => {
         folder: 1,
       })
     );
-  
+      
     return post(`/upload`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -103,8 +111,20 @@ const UploadVideo = ( {onChange, value} : customFieldProps ) => {
   };
 
   const uploadFile = async (e: ProgressEvent<FileReader>, file: File) => {
+    console.log("loaded, starting blob creation")
     const videoBlob = new Blob([e.target!.result!], { type: file.type });
-    uploadAsset(videoBlob).then((response: any) => {console.log(response); return response.data[0].url}).then((url: string) => {
+    console.log("blob created, uploading")
+    uploadAsset({
+      rawFile: videoBlob,
+      caption: file.name,
+      name: file.name,
+      alternativeText: file.name
+    })
+    .then((response: any) => {
+      console.log(response)
+      return response.data[0].url
+    })
+    .then((url: string) => {
       onChange({
         target: {
           name: "test_upload",
@@ -116,12 +136,14 @@ const UploadVideo = ( {onChange, value} : customFieldProps ) => {
       setUrlInputDisabled(true)
     })
   }
-
   const onFileUpload : React.ChangeEventHandler<HTMLInputElement> = (e) => {
     if (e.target.files) {
       const reader = new FileReader();
-      const file = e.target.files[0]
-      reader.onload = (e) => uploadFile(e, file)
+      const file = e.target.files[0];
+      reader.onprogress = showProgress;
+      reader.onload = (e) => {
+        uploadFile(e, file);
+      }
       reader.readAsArrayBuffer(file);
     }
   }
