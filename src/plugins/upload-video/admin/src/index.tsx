@@ -9,22 +9,6 @@ const name = pluginPkg.strapi.name;
 
 export default {
   register(app: any) {
-    app.addMenuLink({
-      to: `/plugins/${pluginId}`,
-      icon: PluginIcon,
-      intlLabel: {
-        id: `${pluginId}.plugin.name`,
-        defaultMessage: name,
-      },
-      Component: async () => {
-        const component = await import(/* webpackChunkName: "[request]" */ './pages/App');
-
-        return component;
-      },
-      permissions: [
-      ],
-    });
-
     app.customFields.register({
       name: 'upload-video',
       plugin: 'custom-selects',
@@ -35,7 +19,7 @@ export default {
       },
       intlDescription: {
         id: `${pluginId}.custom-field.genre-category.description`,
-        defaultMessage: "put directly video URL if it host or uploads yours to s3 bucket"
+        defaultMessage: "insert VOD URL when it's already hosted or upload your local one to your s3 bucket"
       },
       type: 'string',
       icon: PluginIcon,
