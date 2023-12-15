@@ -87,8 +87,6 @@ const UploadVideo = ( props : customFieldProps ) => {
 
   const { modifiedData } = useCMEditViewDataManager();
 
-  console.log(props)
-
 
   useEffect(() => {
   }, [modifiedData])
@@ -105,7 +103,7 @@ const UploadVideo = ( props : customFieldProps ) => {
         folder: 1,
       })
     );
-  
+      
     return post(`/upload`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
