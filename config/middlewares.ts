@@ -43,12 +43,7 @@ export default ({ env }) => (
         },
       },
     },
-    'strapi::session',
-  'strapi::cors',
-  'strapi::poweredBy',
-  'strapi::logger',
-  'strapi::query',
-  'strapi::body',
+  'strapi::session',
   'strapi::session',
   {
     name: 'strapi::favicon',

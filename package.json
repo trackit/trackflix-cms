@@ -29,7 +29,7 @@
     "@strapi/provider-upload-aws-s3": "4.15.4",
     "@strapi/strapi": "4.12.0",
     "@types/uuid": "^9.0.7",
-    "aws-sdk": "^2.1517.0",
+    "aws-sdk": "^2.1519.0",
     "chart.js": "^4.3.3",
     "codemirror": "^6.0.1",
     "crypto": "^1.0.1",
