@@ -22,7 +22,8 @@ interface UploadData {
 
 interface customFieldProps {
   onChange: ( {target} : {target : OnchangeTarget} , shouldSetInitialValue? : boolean) => any;
-  value: string
+  value: string;
+  name: string;
 }
 
 const containerStyle : CSSProperties = {
@@ -86,6 +87,8 @@ const UploadVideo = ( props : customFieldProps ) => {
 
   const { modifiedData } = useCMEditViewDataManager();
 
+  console.log(props)
+
 
   useEffect(() => {
   }, [modifiedData])
@@ -127,8 +130,8 @@ const UploadVideo = ( props : customFieldProps ) => {
     .then((url: string) => {
       onChange({
         target: {
-          name: "test_upload",
-          type: "text",
+          name: props.name,
+          type: "string",
           value: url
         }
       })
