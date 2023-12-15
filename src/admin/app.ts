@@ -1,4 +1,7 @@
+import { text } from "@fortawesome/fontawesome-svg-core";
+
 const TrackItLogo = require('./extensions/trackit.png');
+
 
 export const lightThemeColors = {
   colors: {
@@ -121,4 +124,3 @@ export default {
   bootstrap(app) {
   },
 };
-  
