@@ -87,6 +87,8 @@ const UploadVideo = ( props : customFieldProps ) => {
 
   const { modifiedData } = useCMEditViewDataManager();
 
+  console.log(props)
+
 
   useEffect(() => {
   }, [modifiedData])
