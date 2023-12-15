@@ -1,6 +1,10 @@
 import { Doughnut } from "react-chartjs-2";
 import React from "react";
 import { Chart } from "chart.js";
+import hexRgb from 'hex-rgb';
+import  {Theme} from "../../../interfaces"
+import {darkTheme } from "@strapi/design-system"
+const customDarkTheme: Theme = darkTheme;
 
 interface ErrorRateChartProps {
   percentage: number,
@@ -40,13 +44,17 @@ const ErrorRateChart = (props: ErrorRateChartProps) => {
       }
     }
   ];
+
+  const percentageColor = hexRgb(customDarkTheme.colors.primary600,  {format: 'css', alpha: 0.2});
+  console.log(percentageColor.toString());
   const data = {
     datasets: [{
       label: 'Percentage of errors',
       data: [percentageRatio, 1 - percentageRatio],
-      backgroundColor: ['rgba(0, 0, 255, 0.2)', 'rgba(0, 0, 0, 0)'],
-      borderColor: ['blue', 'rgba(0, 0, 0, 0)'],
+      backgroundColor: [percentageColor, 'rgba(0, 0, 0, 0)'],
+      borderColor: [customDarkTheme.colors.primary600, 'rgba(0, 0, 0, 0)'],
     }]
+    
   };
 
   return (

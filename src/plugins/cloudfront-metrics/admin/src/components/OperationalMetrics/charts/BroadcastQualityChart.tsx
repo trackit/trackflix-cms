@@ -2,6 +2,10 @@ import { Combobox, ComboboxOption } from '@strapi/design-system';
 import { Line } from 'react-chartjs-2';
 import React, { useState } from 'react';
 import { Stream } from '../../../interfaces';
+import  {Theme} from "../../../interfaces"
+import {darkTheme } from "@strapi/design-system"
+import hexRgb from 'hex-rgb';
+const customDarkTheme: Theme = darkTheme;
 
 interface BroadcastQualityChartProps {
   streams: Stream[];
@@ -48,14 +52,15 @@ const BroadcastQualityChart = (props: BroadcastQualityChartProps) => {
     },
   } as any;
 
+  const percentageColor = hexRgb(customDarkTheme.colors.primary600,  {format: 'css', alpha: 0.2});
   const data = {
     labels: props.streams.find((stream: Stream) => stream.id === id)?.data.map((val) => val.timestamp) || [],
     datasets: [
       {
         label: 'Quality',
         data: props.streams.find((stream: Stream) => stream.id === id)?.data.map((val) => yLabels.indexOf(val.quality)) || [],
-        borderColor: 'blue',
-        backgroundColor: 'rgba(0, 0, 255, 0.2)',
+        borderColor: customDarkTheme.colors.primary600, 
+        backgroundColor: percentageColor,
       },
     ],
   };

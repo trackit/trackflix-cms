@@ -2,6 +2,9 @@ import { Combobox, ComboboxOption, Card, CardHeader, CardContent } from "@strapi
 import { User, WatchedVideo } from "../../../interfaces";
 import { Bar } from "react-chartjs-2";
 import React, { useState, useEffect } from "react";
+import  {Theme} from "../../../interfaces"
+import {darkTheme } from "@strapi/design-system"
+const customDarkTheme: Theme = darkTheme;
 
 const RecommendationChart = ({ users }: { users: User[] }) => {
   const [user, setUser] = useState<User>({
@@ -37,7 +40,7 @@ const RecommendationChart = ({ users }: { users: User[] }) => {
       {
         label: 'Views',
         data: user["watched-categories"]?.map((category: WatchedVideo) => category.value) || [''],
-        borderColor: 'blue',
+        borderColor: customDarkTheme.colors.primary600,
         backgroundColor: 'rgba(0, 0, 255, 0.2)',
       },
     ],
@@ -49,7 +52,7 @@ const RecommendationChart = ({ users }: { users: User[] }) => {
         <Combobox
           label="Select a user"
           value={user}
-          onChange={(value) => {
+          onChange={(value: any) => {
             setUser(users.find((user: User) => user.id === value) || user);
           }}
           autocomplete={'both'}

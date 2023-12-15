@@ -2,31 +2,31 @@
   "openapi": "3.0.0",
   "info": {
     "version": "1.0.0",
-    "title": "DOCUMENTATION",
+    "title": "Trackflix Api Documentation",
     "description": "",
     "termsOfService": "YOUR_TERMS_OF_SERVICE_URL",
     "contact": {
-      "name": "TEAM",
-      "email": "contact-email@something.io",
-      "url": "mywebsite.io"
+      "name": "Trackit team",
+      "email": "teams@trackit.io",
+      "url": "https://trackit.io"
     },
     "license": {
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2023-10-26T10:09:45.026Z"
+    "x-generation-date": "2023-12-11T14:02:54.161Z"
   },
   "x-strapi-config": {
-    "path": "/documentation",
     "plugins": [
       "upload",
       "users-permissions"
-    ]
+    ],
+    "path": "/documentation"
   },
   "servers": [
     {
-      "url": "http://localhost:1337/api",
-      "description": "Development server"
+      "url": "https://trackflix-cms.trackit.io/api",
+      "description": "Production server"
     }
   ],
   "externalDocs": {
@@ -2381,8 +2381,10 @@
                         "genre-category-relation": {
                           "type": "string"
                         },
-                        "view_count": {
-                          "type": "integer"
+                        "views": {
+                          "type": "string",
+                          "pattern": "^\\d*$",
+                          "example": "123456789"
                         },
                         "genre": {
                           "type": "string"
@@ -3300,6 +3302,9 @@
         ],
         "properties": {
           "data": {
+            "required": [
+              "views"
+            ],
             "type": "object",
             "properties": {
               "Name": {
@@ -3344,8 +3349,10 @@
               "genre-category-relation": {
                 "type": "string"
               },
-              "view_count": {
-                "type": "integer"
+              "views": {
+                "type": "string",
+                "pattern": "^\\d*$",
+                "example": "123456789"
               },
               "genre": {
                 "type": "string"
@@ -3411,6 +3418,9 @@
       },
       "Vod": {
         "type": "object",
+        "required": [
+          "views"
+        ],
         "properties": {
           "Name": {
             "type": "string"
@@ -4424,8 +4434,10 @@
                                     "genre-category-relation": {
                                       "type": "string"
                                     },
-                                    "view_count": {
-                                      "type": "integer"
+                                    "views": {
+                                      "type": "string",
+                                      "pattern": "^\\d*$",
+                                      "example": "123456789"
                                     },
                                     "genre": {
                                       "type": "string"
@@ -4539,8 +4551,10 @@
           "genre-category-relation": {
             "type": "string"
           },
-          "view_count": {
-            "type": "integer"
+          "views": {
+            "type": "string",
+            "pattern": "^\\d*$",
+            "example": "123456789"
           },
           "genre": {
             "type": "string"

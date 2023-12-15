@@ -53,7 +53,7 @@ const Interaction = ({ value, icon } : { value: any, icon: IconProp }) => {
   );
 }
 
-const UserInteractions = ({ interactions } : { interactions: Interactions }) => {
+export const UserInteractions = ({ interactions } : { interactions: Interactions }) => {
   return (
     <Card>
       <CardHeader style={{ height: '20%' }}>
@@ -75,7 +75,7 @@ const SelectVideo = (props: SelectVideoProps) => {
       label="Select a video"
       placeholder="Video name"
       value={props.selectedStream}
-      onChange={(value) => {
+      onChange={(value: any) => {
         props.setSelectedStream(props.streams.find((stream: Video) => stream.id === value));
         props.setMetrics(props.streams.find((stream: Video) => stream.id === value)?.metrics);
       }}

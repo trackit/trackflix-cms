@@ -7,6 +7,10 @@ import ErrorRateChart from './charts/ErrorRateChart';
 import ServiceAvailabilityChart from './charts/ServiceAvailabilityChart';
 import React from 'react';
 import styled from '@emotion/styled';
+import {
+  useDesignSystem,
+  darkTheme,
+} from '@strapi/design-system';
 
 const OperationalMetricsWrapper = styled.div`
   display: grid;
@@ -22,6 +26,7 @@ const OperationalMetricsWrapper = styled.div`
 `;
 
 export const OperationalMetrics = () => {
+
   return (
     <OperationalMetricsWrapper>
       <UptimeChart

@@ -1,6 +1,10 @@
 import { Bar } from "react-chartjs-2";
 import React from 'react';
 import { Duration } from "../../../enums";
+import  {Theme} from "../../../interfaces"
+import {darkTheme } from "@strapi/design-system"
+import hexRgb from "hex-rgb";
+const customDarkTheme: Theme = darkTheme;
 
 interface UptimeChartProps {
   data: number[];
@@ -22,14 +26,16 @@ const UptimeChart = (props: UptimeChartProps) => {
     }
   });
 
+  const percentageColor = hexRgb(customDarkTheme.colors.primary600,  {format: 'css', alpha: 0.2});
+
   const data = {
     labels: labels,
     datasets: [
       {
         label: 'Up-time Percentage',
         data: props.data,
-        borderColor: 'blue',
-        backgroundColor: 'rgba(0, 0, 255, 0.2)',
+        borderColor: customDarkTheme.colors.primary600,
+        backgroundColor: percentageColor,
       },
     ],
   };

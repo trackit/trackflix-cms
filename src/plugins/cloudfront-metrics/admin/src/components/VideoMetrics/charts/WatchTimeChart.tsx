@@ -2,6 +2,9 @@ import { Typography, Card } from '@strapi/design-system';
 import { Line } from 'react-chartjs-2';
 import React from "react";
 import styled from '@emotion/styled';
+import  {Theme} from "../../../interfaces"
+import {darkTheme } from "@strapi/design-system"
+const customDarkTheme: Theme = darkTheme;
 
 interface WatchTimeChartProps {
   metrics: any;
@@ -74,7 +77,7 @@ const WatchTimeChart = (props: WatchTimeChartProps) => {
       {
         label: 'Viewers',
         data: props.metrics["watch-time"].map((elem: any) => elem.value),
-        borderColor: '#007eff',
+        borderColor: customDarkTheme.colors.primary600,
       }
     ]
   };
