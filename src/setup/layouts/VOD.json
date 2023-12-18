@@ -1,0 +1,60 @@
+{
+  "layouts": {
+    "edit": [
+      [
+        {
+          "name": "Name",
+          "size": 6
+        },
+        {
+          "name": "Thumbnails",
+          "size": 6
+        }
+      ],
+      [
+        {
+          "name": "description",
+          "size": 6
+        },
+        {
+          "name": "genre-category-relation",
+          "size": 6
+        }
+      ],
+      [
+        {
+          "name": "media_url",
+          "size": 12
+        }
+      ],
+      [
+        {
+          "name": "rotation_start",
+          "size": 6
+        },
+        {
+          "name": "rotation_end",
+          "size": 6
+        }
+      ],
+      [
+        {
+          "name": "live_channel",
+          "size": 6
+        },
+        {
+          "name": "highlighted",
+          "size": 6
+        }
+      ]
+    ],
+    "list": [
+      "Thumbnails",
+      "Name",
+      "media_url",
+      "genre",
+      "category",
+      "views"
+    ]
+  }
+}
