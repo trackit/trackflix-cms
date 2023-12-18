@@ -1,7 +1,5 @@
 import { createReadOnlyRoleIfNotExists } from "./setup/readOnlyRole";
-import { setVODLayout } from "./setup/VOD";
-
-
+import { setVODLayout } from "./setup/layouts";
 
 export default {
 register({ strapi }) {
