@@ -155,10 +155,10 @@ index cec300e..1d978f2 100644
                      </Typography>
  
 diff --git a/node_modules/@strapi/admin/admin/src/pages/HomePage/index.js b/node_modules/@strapi/admin/admin/src/pages/HomePage/index.js
-index a22f746..c3060d1 100644
+index a22f746..9a91935 100644
 --- a/node_modules/@strapi/admin/admin/src/pages/HomePage/index.js
 +++ b/node_modules/@strapi/admin/admin/src/pages/HomePage/index.js
-@@ -1,107 +1,209 @@
+@@ -1,107 +1,221 @@
 -/*
 - * HomePage
 - *
@@ -171,28 +171,51 @@ index a22f746..c3060d1 100644
 -import { Helmet } from 'react-helmet';
 -import { FormattedMessage } from 'react-intl';
 -import { useHistory } from 'react-router-dom';
--import styled from 'styled-components';
--
++import { Box, Typography, Flex, Layout, Grid, GridItem, Button } from '@strapi/design-system'
++import { useFetchClient } from '@strapi/helper-plugin'
++import React, { useEffect, useState } from 'react';
+ import styled from 'styled-components';
+ 
 -import GuidedTourHomepage from '../../components/GuidedTour/Homepage';
 -import isGuidedTourCompleted from '../../components/GuidedTour/utils/isGuidedTourCompleted';
 -import { useContentTypes } from '../../hooks/useContentTypes';
 -import { useEnterprise } from '../../hooks/useEnterprise';
--
++const vodThumbnailStyle = {
++  width: 300,
++  aspectRatio: '16/9'
++}
+ 
 -import cornerOrnamentPath from './assets/corner-ornament.svg';
 -import ContentBlocks from './ContentBlocks';
 -import HomeHeader from './HomeHeader';
 -import SocialLinks from './SocialLinks';
--
++const cardTitleStyle = {
++  textAlign: 'center',
++}
+ 
 -const LogoContainer = styled(Box)`
 -  position: absolute;
 -  top: 0;
 -  right: 0;
--
++const PageContainer = styled(Box)`
++  @media (max-width: 768px) {
++    padding: 0px;
++  }
++  padding: 10px;
++`
+ 
 -  img {
 -    width: ${150 / 16}rem;
--  }
--`;
--
++const HomePageContainer = styled(Flex)`
++  @media (max-width: 1200px) {
++    flex-direction: column;
++    align-items: center; /* Centers items horizontally in column flex-direction */
+   }
++  justify-content: center;
++  flex-direction: row;
++  align-items: stretch;
+ `;
+ 
 -export const HomePageCE = () => {
 -  // Temporary until we develop the menu API
 -  const { collectionTypes, singleTypes, isLoading: isLoadingForModels } = useContentTypes();
@@ -217,26 +240,6 @@ index a22f746..c3060d1 100644
 -  if (isLoadingForModels) {
 -    return <LoadingIndicatorPage />;
 -  }
-+import { Box, Typography, Flex, Layout, Grid, GridItem, Button } from '@strapi/design-system'
-+import { useFetchClient } from '@strapi/helper-plugin'
-+import React, { useEffect, useState } from 'react';
-+
-+const vodThumbnailStyle = {
-+  width: 300,
-+  aspectRatio: '16/9'
-+}
-+
-+const liveThumbnailStyle = {
-+  width: 280,
-+  height: 280,
-+  overflow: 'hidden',
-+  borderRadius: '100%',
-+}
-+
-+const cardTitleStyle = {
-+  textAlign: 'center',
-+}
-+
 +const CollectionType = {
 +  Vod: 'vod',
 +  Live: 'live-channel',
@@ -289,6 +292,7 @@ index a22f746..c3060d1 100644
 +      paddingBottom={6}
 +      shadow='tableShadow'
 +      height={500}
++      style={{ position: 'relative', width: 350 }}
 +    >
 +      <Flex direction='column' gap={8}>
 +        <Typography as='h2' variant='alpha'>Live channel</Typography>
@@ -409,21 +413,13 @@ index a22f746..c3060d1 100644
 -          <img alt="" aria-hidden src={cornerOrnamentPath} />
 -        </LogoContainer>
 -        <Box padding={10}>
-+      <Box padding={10}>
++      <PageContainer>
            <Grid>
              <GridItem col={8} s={12}>
 -              <HomeHeader
 -                onCreateCT={handleClick}
 -                hasCreatedContentType={hasAlreadyCreatedContentTypes}
 -              />
--            </GridItem>
--          </Grid>
--          <Grid gap={6}>
--            <GridItem col={8} s={12}>
--              {showGuidedTour ? <GuidedTourHomepage /> : <ContentBlocks />}
--            </GridItem>
--            <GridItem col={4} s={12}>
--              <SocialLinks />
 +              <Box paddingLeft={6} paddingBottom={10}>
 +                <Flex direction='column' alignItems='flex-start' gap={5}>
 +                  <Typography as='h1' variant='alpha'>Welcome to your Trackflix CMS 👋</Typography>
@@ -435,14 +431,22 @@ index a22f746..c3060d1 100644
 +              </Box>
              </GridItem>
            </Grid>
+-          <Grid gap={6}>
+-            <GridItem col={8} s={12}>
+-              {showGuidedTour ? <GuidedTourHomepage /> : <ContentBlocks />}
+-            </GridItem>
+-            <GridItem col={4} s={12}>
+-              <SocialLinks />
+-            </GridItem>
+-          </Grid>
 -        </Box>
 -      </Main>
-+          <Flex direction='row' alignItems='stretch' justifyContent='center' gap={10}>
++          <HomePageContainer gap={10}>
 +            <VODContainer sortAttribute={VODSortAttribute.Latest} />
 +            <LastLiveChanel />
 +            <VODContainer sortAttribute={VODSortAttribute.MostViewed} />
-+          </Flex>
-+      </Box>
++          </HomePageContainer>
++      </PageContainer>
      </Layout>
    );
  };
