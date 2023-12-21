@@ -59,6 +59,7 @@ const HomePage = () => {
         )
          .then((res) => {
         if (isResponseObject(res)) {
+          console.log('Data received:', res.data);
         setIsCreated(res.status.created);
         setIsDeleted(res.status.deleted);
         setHasMapping(res.status.hasMapping);
@@ -74,6 +75,7 @@ const HomePage = () => {
     const fetchDataAndModels = async () => {
       try {
         const { data: modelsData } = await get("/opensearch/models");
+        console.log(modelsData)
         setModels(modelsData);
         setActiveModel(modelsData[0]);
       } catch (error) {
@@ -116,9 +118,9 @@ const HomePage = () => {
 
   useEffect(() => {
     if (searchMode) {
-      handleSearch(); // Call handleSearch when in searchMode
+      handleSearch(); 
     } else {
-      fetchData(); // Call fetchData when not in searchMode
+      fetchData(); 
     }
   }, [searchMode, activeModel, page, limit]);
 

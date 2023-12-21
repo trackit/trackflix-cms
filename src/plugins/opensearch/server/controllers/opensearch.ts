@@ -67,6 +67,7 @@ export default ({ strapi }: { strapi: Strapi }) => ({
       .plugin('opensearch')
       .service('functions')
       .find(index, _limit, _start);
+      console.log(data.body.hits.hits)
     } catch (e) {
       strapi.log.warn(`There is an error to get fetch model ${index} from Opensearch`);
       return ctx.send({ data: null, total: 0, status });
@@ -127,7 +128,6 @@ export default ({ strapi }: { strapi: Strapi }) => ({
   async migrateModel(ctx : Context) {
     const bodyData = JSON.parse(ctx.request.body.body);
     const model = bodyData.model;
-
     await strapi.plugin('opensearch')
                 .service('functions')
                 .migrateModel(model);

@@ -175,7 +175,7 @@ async migrateById(model : string,{id,id_in,relations,conditions}: { id: string; 
       doc,
     ]);
 
-    const result = await strapi.opensearch.bulk({ refresh: true, body });
+    const result = await strapi.opensearch.bulk({ refresh: false, body });
 
     return result;
 
@@ -218,14 +218,14 @@ async migrateModel(model: string, params: Record<string, any> = {}){
   const { indexExist } = await strapi.opensearch.indices.exists({
     index: targetModel.index,
   });
-
+  strapi.log.info('indexExist:',indexExist)
   const indexConfig = indexExist
       ? indicesMapping[targetModel.model]
       : null;
 
   const migrationIsEnabled =
   targetModel && !!targetModel.enabled && targetModel.migration;
-
+  strapi.log.info('migrationEnabled:',migrationIsEnabled)
   if (!migrationIsEnabled) return;
 
 
@@ -259,7 +259,6 @@ async migrateModel(model: string, params: Record<string, any> = {}){
 
     start += 1;
 
-    // progress bar
     strapi.log.info(
       `(${start}/${indexLength + 1}) Imported to ${
         targetModel.index
@@ -306,7 +305,7 @@ async function getDocsFromModel(
     limit: settings.importLimit,
     offset: settings.importLimit * start,
   });
-
+  strapi.log.info(JSON.stringify(data))
   let result = data;
   if (indexConfig && indexConfig.mappings && indexConfig.mappings.properties) {
     const helper = strapi.plugin('opensearch').service('helper')
@@ -314,7 +313,6 @@ async function getDocsFromModel(
       docs: data,
       properties: indexConfig.mappings.properties,
     });
-
     result = res.result || result;
   }
 
@@ -325,16 +323,23 @@ async function indexData(targetModel: OpenSearchModelIndex, data: any[]) {
   strapi.log.debug(`Sending ${targetModel.model} model to opensearch...`);
 
   const body = await parseDataToEOpensearch(targetModel, data);
-
+  strapi.log.info('indexdata body:',JSON.stringify(data))
   try {
-    await strapi.opensearch.bulk({ refresh: true, body });
+    await strapi.opensearch.bulk({ refresh: false, body });
   } catch (e) {
-    strapi.log.error(e);
+    strapi.log.error('Error during bulk indexing:', e);
     return;
   }
 }
 
 async function parseDataToEOpensearch(targetModel: OpenSearchModelIndex, data: any[]) {
+  strapi.log.info('parsedata:', data);
+
+  if (!data) {
+    strapi.log.error('Data is null or undefined. Check the source data.');
+    return [];
+  }
+
   return data.flatMap((doc) => [
     {
       index: {

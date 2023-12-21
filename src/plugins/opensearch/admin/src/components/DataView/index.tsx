@@ -80,7 +80,7 @@ const DataView: React.FC<DataViewProps> = ({
     return obj && typeof obj.success === 'boolean';
   }
 
-  const migrate = async (model) => {
+  const migrate = async (model:any) => {
     setIsMigrating(true);
     try {
       const response = await post("/opensearch/migrate-model", {
@@ -114,7 +114,7 @@ const DataView: React.FC<DataViewProps> = ({
     }
   };
 
-  const deleteIndex = async (model) => {
+  const deleteIndex = async (model:any) => {
     setIsDeleting(true);
     try {
       const response = await post("/opensearch/delete-index", {
@@ -147,7 +147,7 @@ const DataView: React.FC<DataViewProps> = ({
     }
   };
 
-  const createIndex = async (model) => {
+  const createIndex = async (model:any) => {
     setIsCreating(true);
     try {
       const response = await post("/opensearch/create-index", {
