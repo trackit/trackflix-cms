@@ -2,6 +2,8 @@
 
 import { Client} from '@opensearch-project/opensearch'
 import { Strapi } from "@strapi/strapi";
+import { defaultProvider } from '@aws-sdk/credential-provider-node' 
+import { AwsSigv4Signer } from '@opensearch-project/opensearch/aws'
 
 
 
@@ -18,9 +20,18 @@ export default async ({ strapi }: { strapi: Strapi }) => {
      * Initialize strapi.opensearch object
      */
     if (strapi.config.opensearch) {
-      const { connection } = strapi.config.opensearch;
-
-      const client = new Client(connection);
+      const client = new Client({
+        ...AwsSigv4Signer({
+          region: 'us-west-2',
+          service: 'aoss',
+          getCredentials: () => {
+            // Any other method to acquire a new Credentials object can be used.
+            const credentialsProvider = defaultProvider();
+            return credentialsProvider();
+          },
+        }),
+        node: process.env.OPENSEARCH_HOST
+      });
 
 
       strapi.opensearch = client;

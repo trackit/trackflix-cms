@@ -10,7 +10,7 @@ declare module '@strapi/strapi' {
     opensearch: {
       count: (params: { index: string }) => Promise<CountResponse>;
       get: (params: { index: string, id: string }) => Promise<any>;
-      bulk: (params: { refresh: boolean; body: any }) => Promise<any>;
+      bulk: (params: { body: any }) => Promise<any>;
       index: (params: { index: string; body: any }) => Promise<any>;
       update: (params: { index: string; id: string; body: any }) => Promise<any>;
       search: (params: { index: string; size: number; from: number; body: any }) => Promise<any>;

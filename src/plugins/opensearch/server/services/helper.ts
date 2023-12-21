@@ -41,13 +41,6 @@ const isModel = (config: ModelConfig): boolean => {
 
 const opensearchConfigTemplate = (modelsConfig: ModelConfig[]): string => `
 export default ({ env }) => ({
-  connection: {
-    node: env('OPENSEARCH_HOST', 'https://search-trackflix-cmd-search-dnqokazsdocnbsxqf5drkytzu4.eu-west-3.es.amazonaws.com'),
-    auth: {
-      username: env('OPENSEARCH_USERNAME','trackflix'),
-      password: env('OPENSEARCH_PASSWORD','Trackflix1!'),
-    },
-  },
   settings: {
     importLimit: 3000,
     validStatus: [200, 201], validMethod: ['PUT', 'POST', 'DELETE'], fillByResponse: false, index_prefix: '', index_postfix: '',
@@ -277,30 +270,108 @@ export default ({ strapi }: { strapi: Strapi }) => ({
     }
   },
 
-  async generateMappings({ targetModels, data }: { targetModels: any | any[]; data: any }) {
+  async generateMappings({ targetModels }: { targetModels: any | any[]}) {
     if (!Array.isArray(targetModels)) targetModels = [targetModels];
 
-    const rootPath = path.resolve(__dirname, '../../../');
-    const exportPath = `${rootPath}/exports/opensearch`;
+  const rootPath = path.resolve(__dirname, '../../../');
+  const exportPath = `${rootPath}/exports/opensearch`;
 
-    for (const targetModel of targetModels) {
-      let map: any = {};
-      if (!data) {
-        map = await strapi.opensearch.indices.getMapping({
-          index: targetModel.index,
-        });
-      }
+  for (const targetModel of targetModels) {
+    const schemaPath = path.join(
+      rootPath,
+      'src/api',
+      targetModel.model,
+      'content-types',
+      targetModel.model,
+      'schema.json'
+    );
+    const schema = require(schemaPath);
 
-      if ((map && map.body) || data) {
-        fs.writeFile(
-          `${exportPath}/${targetModel.model}.index.json`,
-          JSON.stringify(map.body || data, null, 2),
-          (err) => {
-            if (err) throw err;
-          }
-        );
+    const mapping = {
+      properties: {},
+    };
+
+    // Extract mapping from attributes in the schema
+    Object.keys(schema.attributes).forEach((attr) => {
+      const attrConfig = schema.attributes[attr];
+
+      if (attrConfig.type === 'relation') {
+        // Dynamically handle relation properties
+        mapping.properties[attr] = {
+          type: 'nested', // Use nested type for relations
+          properties: {},
+        };
+
+        if (attrConfig.relationType === 'manyToOne') {
+          // Many-to-one relation
+          mapping.properties[attr].properties[attrConfig.alias || attr] = {
+            type: 'keyword', // or 'text' based on your requirements
+          };
+        } else if (attrConfig.relationType === 'oneToMany') {
+          // One-to-many relation
+          mapping.properties[attr].properties[attrConfig.alias || attr] = {
+            type: 'nested',
+            properties: {
+              // Include additional properties specific to the one-to-many relation if needed
+            },
+          };
+        } else {
+          // Handle other relation types as needed
+        }
+      } else {
+        // Handle non-relation types
+        if (attrConfig.type === 'string' && attrConfig.enum) {
+          // Enumeration type
+          mapping.properties[attr] = {
+            type: 'keyword',
+            ignore_above: 256,
+            fields: {
+              enum: {
+                type: 'text',
+              },
+            },
+          };
+        } else if (attrConfig.type === 'media') {
+          // Media type
+          mapping.properties[attr] = {
+            type: 'binary',
+            doc_values: false,
+          };
+        } else if (attrConfig.type === 'boolean') {
+          // Boolean type
+          mapping.properties[attr] = {
+            type: 'boolean',
+          };
+        } else if (attrConfig.type === 'customField' && attrConfig.customField === 'plugin::custom-selects.genre-category') {
+          // CustomField type
+          mapping.properties[attr] = {
+            type: 'nested',
+            properties: {
+              field1: { type: 'text' },
+              field2: { type: 'text' },
+            },
+          };
+        } else {
+          // Default to text type for other cases
+          mapping.properties[attr] = {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          };
+        }
       }
-    }
+    });
+
+    // Save the mapping to a file
+    fs.writeFileSync(
+      path.join(exportPath, `${targetModel.model}.index.json`),
+      JSON.stringify({ mappings: { properties: mapping } }, null, 2)
+    );
+  }
   },
   async checkEnableModels() {
   const { models } = strapi.config.opensearch;
@@ -350,9 +421,32 @@ export default ({ strapi }: { strapi: Strapi }) => ({
 
     const indicesMapConfigFile = fs.readdirSync(exportPath);
 
-    const enableModels = models.filter((model: any) => model.enabled);
+    const enableModels = models.filter((model) => model.enabled);
 
+    // Step 1: Generate mappings for all models
+    for (const targetModel of enableModels) {
+      if (!strapi.plugin('opensearch').service('functions').indicesMapping[targetModel.model]) {
+        try {
+          const indexMap = await strapi.opensearch.indices.getMapping({
+            index: targetModel.index,
+          });
+          if (indexMap.statusCode === 200) {
+            strapi.plugin('opensearch').service('functions').indicesMapping[targetModel.model] =
+              indexMap.body[targetModel.index];
 
+            await this.generateMappings({
+              targetModels: [{ model: targetModel.model }],
+            });
+          }
+        } catch (e) {
+          strapi.log.warn(
+            `There is an error getting the mapping of ${targetModel.index} index from Opensearch`
+          );
+        }
+      }
+    }
+
+    // Step 2: Load existing mappings from files
     for (const index of indicesMapConfigFile) {
       if (indexFilePattern.test(index)) {
         const map = require(`${exportPath}/${index}`);
@@ -360,7 +454,7 @@ export default ({ strapi }: { strapi: Strapi }) => ({
         const matchResult = index.match(indexFilePattern);
         const [, model] = (matchResult || []) as [string, string];
 
-        const targetModel = models.find((item: any) => item.model === model);
+        const targetModel = models.find((item) => item.model === model);
 
         if (targetModel && targetModel.enabled) {
           strapi.plugin('opensearch').service('functions').indicesMapping[targetModel.model] =
@@ -368,7 +462,6 @@ export default ({ strapi }: { strapi: Strapi }) => ({
         }
       }
     }
-
     for (const targetModel of enableModels) {
       if (! strapi.plugin('opensearch').service('functions').indicesMapping[targetModel.model]) {
         try {
@@ -379,8 +472,9 @@ export default ({ strapi }: { strapi: Strapi }) => ({
             strapi.plugin('opensearch').service('functions').indicesMapping[targetModel.model] =
               indexMap.body[targetModel.index];
 
-              const mapData = indexMap.body[targetModel.index];
-              fs.writeFileSync(`${exportPath}/${targetModel.model}.index.json`, JSON.stringify(mapData, null, 2));
+              await module.exports.generateMappings({
+                targetModels: [{ model: targetModel.model }],
+              });
           }
         } catch (e) {
           strapi.log.warn(

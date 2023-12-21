@@ -87,7 +87,6 @@ export default ({ strapi }: { strapi: Strapi }) => ({
     try {
       return strapi.opensearch.bulk({
         body,
-        refresh: false
       });
     } catch (e) {
       strapi.log.error(e.message);
@@ -175,7 +174,7 @@ async migrateById(model : string,{id,id_in,relations,conditions}: { id: string; 
       doc,
     ]);
 
-    const result = await strapi.opensearch.bulk({ refresh: true, body });
+    const result = await strapi.opensearch.bulk({ body });
 
     return result;
 
@@ -327,12 +326,18 @@ async function indexData(targetModel: OpenSearchModelIndex, data: any[]) {
   const body = await parseDataToEOpensearch(targetModel, data);
 
   try {
-    await strapi.opensearch.bulk({ refresh: true, body });
+    const response = await strapi.opensearch.bulk({ body });
+
+    if (response.errors) {
+      // Log or handle errors if there are any
+      strapi.log.error(`Bulk indexing errors: ${JSON.stringify(response.items)}`);
+    }
   } catch (e) {
-    strapi.log.error(e);
+    strapi.log.error(`Error during bulk indexing: ${e}`);
     return;
   }
 }
+
 
 async function parseDataToEOpensearch(targetModel: OpenSearchModelIndex, data: any[]) {
   return data.flatMap((doc) => [
