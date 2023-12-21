@@ -28,6 +28,8 @@
     "@strapi/plugin-users-permissions": "4.12.0",
     "@strapi/provider-upload-aws-s3": "4.15.4",
     "@strapi/strapi": "4.12.0",
+    "@types/uuid": "^9.0.7",
+    "aws-sdk": "^2.1519.0",
     "chart.js": "^4.3.3",
     "classnames": "^2.3.2",
     "codemirror": "^6.0.1",
@@ -36,6 +38,7 @@
     "dotenv": "^16.3.1",
     "eslint": "^8.47.0",
     "eslint-plugin-formatjs": "^4.10.3",
+    "hex-rgb": "^5.0.0",
     "koa-send": "^5.0.1",
     "koa-sendfile": "^3.0.0",
     "os": "^0.1.2",
@@ -51,9 +54,9 @@
     "react-intl": "^6.4.4",
     "react-is": "16.8.0",
     "react-router-dom": "5.3.4",
-    "string-strip-html": "^13.4.3",
+    "strapi-auto-uuid": "^0.0.8",
     "styled-components": "^6.0.7",
-    "typescript": "^5.2.2",
+    "uuid": "^9.0.1",
     "yarn": "^1.22.19"
   },
   "author": {
