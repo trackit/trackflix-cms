@@ -114,11 +114,27 @@ const useThreeDots = () => {
 };
 
 
+const useVideoUrl = (props: customFieldProps) => {
+  const [videoUrl, setVideoUrl] = useState(props.value ? props.value : "");
+  const setVideoUrlWithOnChange = (url: string) => {
+    setVideoUrl(url);
+    props.onChange({
+      target: {
+        name: props.name,
+        type: "string",
+        value: url
+      }
+    })
+  }
+  return [videoUrl, setVideoUrlWithOnChange] as const;
+}
+
+
 
 const UploadVideo = ( props : customFieldProps ) => {
-  const { onChange, value } = props;
+  const { value } = props;
   const [uploadStatus, setUploadStatus] = useState(UploadStatus.IDLE);
-  const [videoUrl, setVideoUrl] = useState(value ? value : "");
+  const [videoUrl, setVideoUrl] = useVideoUrl(props);
   const [progress, setProgress] = useState(0);
   const dots = useThreeDots();
   const placeholder = useMemo(() => {
@@ -163,13 +179,6 @@ const UploadVideo = ( props : customFieldProps ) => {
     })
     .then((response: any) => response.data[0].url)
     .then((url: string) => {
-      onChange({
-        target: {
-          name: props.name,
-          type: "string",
-          value: url
-        }
-      })
       setVideoUrl(url);
       setUploadStatus(UploadStatus.IDLE);
     })
