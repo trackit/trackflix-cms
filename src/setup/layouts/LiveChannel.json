@@ -1,0 +1,52 @@
+{
+    "layouts": {
+        "edit": [
+        [
+            {
+            "name": "name",
+            "size": 6
+            },
+            {
+            "name": "thumbnail",
+            "size": 6
+            }
+        ],
+        [
+            {
+            "name": "input_type",
+            "size": 6
+            },
+            {
+            "name": "output_type",
+            "size": 6
+            }
+        ],
+        [
+            {
+            "name": "vods",
+            "size": 6
+            },
+            {
+            "name": "genre-category-relation",
+            "size": 6
+            }
+        ],
+        [
+            {
+            "name": "catch_up",
+            "size": 6
+            },
+            {
+            "name": "Live_to_vod",
+            "size": 6
+            }
+        ]
+        ],
+        "list": [
+        "thumbnail",
+        "name",
+        "genre",
+        "category"
+        ]
+    }
+}  
