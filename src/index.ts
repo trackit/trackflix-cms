@@ -1,5 +1,5 @@
 import { createReadOnlyRoleIfNotExists } from "./setup/readOnlyRole";
-import { setVODLayout } from "./setup/layouts";
+import { setVODLayout, setLiveChannelLayout } from "./setup/layouts";
 
 export default {
 register({ strapi }) {
@@ -9,5 +9,6 @@ register({ strapi }) {
 async bootstrap({ strapi }) {
   createReadOnlyRoleIfNotExists(strapi);
   setVODLayout(strapi);
+  setLiveChannelLayout(strapi);
 },
 };
