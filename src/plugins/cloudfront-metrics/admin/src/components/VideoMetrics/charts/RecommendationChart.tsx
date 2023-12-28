@@ -4,6 +4,7 @@ import { Bar } from "react-chartjs-2";
 import React, { useState, useEffect } from "react";
 import  {Theme} from "../../../interfaces"
 import {darkTheme } from "@strapi/design-system"
+import hexRgb from "hex-rgb";
 const customDarkTheme: Theme = darkTheme;
 
 const RecommendationChart = ({ users }: { users: User[] }) => {
@@ -34,6 +35,7 @@ const RecommendationChart = ({ users }: { users: User[] }) => {
     }
   };
 
+  const percentageColor = hexRgb(customDarkTheme.colors.primary600,  { format: 'css', alpha: 0.2 });
   const data = {
     labels: user["watched-categories"]?.map((category: WatchedVideo) => category.name) || [''],
     datasets: [
@@ -41,7 +43,7 @@ const RecommendationChart = ({ users }: { users: User[] }) => {
         label: 'Views',
         data: user["watched-categories"]?.map((category: WatchedVideo) => category.value) || [''],
         borderColor: customDarkTheme.colors.primary600,
-        backgroundColor: 'rgba(0, 0, 255, 0.2)',
+        backgroundColor: percentageColor,
       },
     ],
   };
