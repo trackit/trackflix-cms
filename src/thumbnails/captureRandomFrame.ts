@@ -15,7 +15,7 @@ const captureRandomFrame = (data : {media_url: string, name: string}) => {
       .output(filePath)
       .screenshots({
         count: 1,
-        timemarks: ['0'],
+        timemarks: ['00:00:05.000'],
         folder: dirPath,
       })
       .on('end', () => {
