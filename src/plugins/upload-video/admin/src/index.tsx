@@ -19,12 +19,12 @@ export default {
       },
       intlDescription: {
         id: `${pluginId}.custom-field.genre-category.description`,
-        defaultMessage: "insert VOD URL when it's already hosted or upload your local one to your s3 bucket"
+        defaultMessage: "insert VOD URL if it's already hosted or upload your local one to your s3 bucket"
       },
       type: 'string',
       icon: PluginIcon,
       components: {
-        Input: async () => import(/* webpackChunkName: "input-component" */ "./components/uploadsVideo"),
+        Input: async () => import(/* webpackChunkName: "input-component" */ "./customFields/UploadVideo/uploadsVideo"),
         pluginId,
       } 
       // …
