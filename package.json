@@ -5,11 +5,10 @@
   "description": "A Strapi application",
   "scripts": {
     "prebuild": "for plugin_dir in src/plugins/*; do (cd \"$plugin_dir\" && yarn build); done",
-    "build-user-guide": "cd user-guide && yarn install && yarn build",
     "copy-user-guide": "cp -r user-guide/build public/docusaurus",
     "develop": "strapi develop",
     "start": "strapi start",
-    "build": "yarn build-user-guide && yarn copy-user-guide && strapi build",
+    "build": "strapi build",
     "strapi": "strapi",
     "postinstall": "patch-package"
   },
