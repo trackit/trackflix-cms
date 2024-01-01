@@ -16,6 +16,8 @@ const name = pluginPkg.strapi.name;
 export default {
   register(app: any) {
 
+
+
     app.addMenuLink({
       to: `/content-manager/collectionType/api::live-channel.live-channel?page=1&pageSize=10&sort=name:ASC`,
       icon: BsBroadcastPin,

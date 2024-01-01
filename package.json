@@ -5,9 +5,11 @@
   "description": "A Strapi application",
   "scripts": {
     "prebuild": "for plugin_dir in src/plugins/*; do (cd \"$plugin_dir\" && yarn build); done",
+    "build-user-guide": "cd user-guide && yarn install && yarn build",
+    "copy-user-guide": "cp -r user-guide/build public/docusaurus",
     "develop": "strapi develop",
     "start": "strapi start",
-    "build": "strapi build",
+    "build": "yarn build-user-guide && yarn copy-user-guide && strapi build",
     "strapi": "strapi",
     "postinstall": "patch-package"
   },
@@ -31,6 +33,7 @@
     "@types/uuid": "^9.0.7",
     "aws-sdk": "^2.1519.0",
     "chart.js": "^4.3.3",
+    "classnames": "^2.3.2",
     "codemirror": "^6.0.1",
     "crypto": "^1.0.1",
     "crypto-browserify": "^3.12.0",
