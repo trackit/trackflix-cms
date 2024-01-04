@@ -35,6 +35,269 @@ npm run build
 # or
 yarn build
 ```
+# Configuring OpenSearch Serverless Plugin
+
+Implementing Amazon OpenSearch Serverless within the Strapi.io project requires the following step-by-step process. 
+### Configure permissions 
+* In order to use OpenSearch Serverless, you must have the correct IAM permissions. IAM user or role must have an attached identity-based policy with the following minimum permissions:
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "aoss:CreateCollection",
+        "aoss:ListCollections",
+        "aoss:BatchGetCollection",
+        "aoss:DeleteCollection",
+        "aoss:CreateAccessPolicy",
+        "aoss:ListAccessPolicies",
+        "aoss:UpdateAccessPolicy",
+        "aoss:CreateSecurityPolicy",
+        "aoss:GetSecurityPolicy",
+        "aoss:UpdateSecurityPolicy",
+        "iam:ListUsers",
+        "iam:ListRoles"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+   ]
+}
+```
+* Create a collection:
+  * Open the Amazon OpenSearch Service console at https://console.aws.amazon.com/aos/home.
+  * Choose Collections in the left navigation pane and choose Create collection.
+  * Name the collection movies.
+  * For collection type, choose Search. For more information, see Choosing a collection type.
+  * Under Encryption, select Use AWS owned key. This is the AWS KMS key that OpenSearch Serverless will use to encrypt your data.
+  * Under Network, configure network settings for the collection.
+    * For the access type, select Public.
+    * For the resource type, enable access to both OpenSearch endpoints and OpenSearch Dashboards. Since you'll upload and search data using OpenSearch Dashboards, you need to enable both.
+  * Choose Next.
+  * For Configure data access, set up access settings for the collection. Data access policies allow users and roles to access the data within a collection. In this tutorial, we'll provide a single user the permissions required to index and search data in the movies collection.
+  * Create a single rule that provides access to the movies collection. Name the rule Movies collection access.
+  * Choose Add principals, IAM users and roles and select the user or role that you'll use to sign in to OpenSearch Dashboards and index data. Choose Save.
+  * Under Index permissions, select all of the permissions.
+  * Choose Next.
+  * For the access policy settings, choose Create a new data access policy and name the policy movies.
+  * Choose Next.
+  * Review your collection settings and choose Submit. Wait several minutes for the collection status to become Active.
+### Creating a Strapi Plugin
+* Understand the basics of Strapi plugins and their role in extending functionality.
+* Develop a custom Strapi plugin to seamlessly integrate with Amazon Opensearch.
+### Configuring Strapi with Opensearch
+* Configure Strapi to establish a connection with Amazon Opensearch
+## Strapi setup
+In order to activate the plugin, add the following settings to PROJECT/config/plugins.ts:
+```typescript
+export default {
+    // ...
+
+    'opensearch' : {
+      enabled : true,
+      resolve: './src/plugins/opensearch'
+
+    }
+    // ...
+  }
+```
+Additionally, activate the plugin middleware in PROJECT/config/middlewares.ts:
+```typescript
+export default [
+     // ...
+
+
+    "plugin::opensearch.opensearchMiddleware",
+
+     // ...
+];
+```
+### Plugin Functionality
+Upon the initial run of the project, the plugin generates a config file at PROJECT/config/opensearch.ts. The config file structure is as follows:
+```typescript
+export default ({ env }) => ({
+  settings: {
+    version:1,
+    validStatus: [200, 201], validMethod: ['PUT', 'POST', 'DELETE'], fillByResponse: false, index_prefix: '', index_postfix: '',
+    removeExistIndexForMigration: false,
+  },
+  models: [
+  {
+    "model": "category",
+    "pk": "id",
+    "plugin": null,
+    "enabled": false,
+    "index": "category",
+    "relations": [],
+    "conditions": {},
+    "fillByResponse": true,
+    "migration": false,
+    "supportAdminPanel": true,
+    "urls": []
+  }]});
+```
+The ‘settings’ section contains the initial settings for the OpenSearch plugin. The ‘models’ section defines models within the PROJECT/src/api/** path, allowing for customization of the initial settings.
+### Usage
+For example, to modify the category model and observe changes in OpenSearch:
+
+* Set enabled to true in the model's settings.
+* Save and restart the plugin to create an index for this model in OpenSearch. The index name can be changed in the model’s settings.
+* Adjust the model settings as follows:
+```typescript
+{
+    "model": "category",
+    "pk": "id",
+    "content": "category",
+    "enabled": true,
+    "index": "categories",
+    "relations": [],
+    "conditions": {},
+    "fillByResponse": false,
+    "migration": true,
+    "supportAdminPanel": true,
+    "urls": ["/categories"]
+  }
+```
+Now, changes made in the Strapi admin panel such as creating, deleting, or updating, reflect in OpenSearch.
+# Deploying Trackflix CMS to Amazon EC2
+### Create AWS VPC    
+* From your AWS Management Console and as your regular user​ 
+  * Find Services, search for VPC and click on EC2, Isolated Cloud Resources
+* Select Appropriate Region:​
+In the top menu, near your IAM Account User name, select, from the dropdown, the most appropriate region to host your Strapi project. For example, US East (N.Virginia) or Asia Pacific (Hong Kong). You will want to remember this region for configuring other services on AWS and serving these services from the same region.
+* Click on the orange Create VPC button​:
+  * Select VPC and More
+  * Select Auto-generate nametags. Add a suitable name, e.g. strapi-vpc.
+  * Leave IPv4 CIDR block as 10.0.0.0/16 (unless you have a specific reason to change it).
+  * Leave Tenancy as Default.
+  * Select 2 for Number of Availability Zones (AZs)
+  * Select 2 for Number of Public Subnets
+  * Select 2 for Number of Private Subnets
+  * Select 0 for NAT gateways. ::: tip If you know that you will need to scale your project, you can increase the number of subnets and NAT gateways. For example, if you are expecting a large number of users, you may want to increase the number of private subnets and NAT gateways. For more information, see VPC and Subnet Sizing. 
+  * Select S3 Gateway for VPC Endpoints.
+  * Check Enable DNS hostnames and Enable DNS resolution.
+  * Select Create VPC.
+### Create AWS AMI Role
+* Go to the IAM service on your AWS dashboard.
+* On the sidebar, choose Roles.
+* Choose “create role”. 
+* Trusted Type entity: Choose AWS Service
+* Use Case: Choose EC2 then classic EC2 use case.
+* Click Next
+* Permissions: search then choose “AmazonS3FullAccess”
+* Click next and choose the Name you want for your role.
+### Create EC2 instance
+* Click on the Launch Instance button
+* Choose a name and add tags as desired
+* Application and OS Images: 
+  * Choose Ubuntu as OS 
+  * Choose Ubuntu Server 22.04 LTS (HVM), SSD Volume Type as version
+* Choose Instance Type:
+  * t2.small is the smallest instance type that can run Strapi, t2.medium will be more stable and fast on deployment.
+* Key pair (login):
+  * Choose a key you are already in possession of or create and download a new one.
+* Network settings:
+  * Choose the VPC you have created in the previous step 
+  * Create a new security group 
+  * Allow SSH from anywhere
+
+* Configure storage:
+  * 1x 8 Gb, gp3 should be enough as we don’t store anything on the EC2.
+
+* Advanced details:
+  * Click on IAM instance profile Info
+  * Choose the role we created in the previous step
+* Finally, click on the Launch instances button.
+### Configure S3 for image hosting
+In the top menu, click on Services and do a search for s3, click on Scalable storage in the cloud.
+Click on Create bucket button:
+* Give your bucket a unique name, under Bucket name, e.g. my-project-name-images.
+* Select the most appropriate region.
+* Click Next.
+* Configure any appropriate options for your project in the Configure Options page, and click next.
+* Under Block public access:
+  * Uncheck Block all public access and set the permissions as follows:
+    * Uncheck Block new public ACLs and uploading public objects (Recommended)
+    * Uncheck Block public access to buckets and objects granted through any access control lists (ACLs)
+    * Check Block public access to buckets and objects granted through new public bucket policies
+    * Check Block public and cross-account access to buckets and objects through any public bucket policies
+    * Select Do not grant Amazon S3 Log Delivery group write access to this bucket.
+* Click Next.
+* Review and click Create bucket
+### Create RDS instance
+* Click Create database button
+* Select engine: PostgreSQL
+* Choose use case: as you like
+* Specify DB details:
+  * DB engine version: PostgreSQL 10.x-R1
+  * DB instance class: db.t2.micro
+  * Multi-AZ deployment: No
+  * Storage: General Purpose (SSD), 20 GB
+  * DB instance identifier: as you like
+  * Master username: as you like
+  * Password: as you like
+* Configure advanced settings
+   * Public accessibility: Yes (that's why you need a super strong password)
+   * Database name: strapi
+   * Monitoring & Maintenance window: choose an idle period in your timezone
+   * Click Create database button
+* Instance Details panel - Security groups
+  * Edit inbound rules: PostgreSQL (5432) - Anywhere
+* Create databases for dev & staging modes (GUI recommend)
+  * Development mode: strapi_dev
+  * Staging mode: strapi_staging
+  * Production mode: strapi (already exists)
+
+### Configure EC2 as a Node.js server:
+* Setup the .pem file:
+  * $ mv key-pair-name.pem ~/.ssh/
+  * $ chmod 400 ~/.ssh/key-pair-name.pem
+* Log in to your server as the default ubuntu user:
+  * $ ssh -i ~/.ssh/key-pair-name.pem ubuntu@<ec2-public-ip>
+  * $ sudo apt update
+* Nodejs installation: 
+  * Install nvm:
+     * nvm install 16.20.2
+     * nvm use 16.20.2
+  * Install Yarn (package manager) and PM2 (process manager):
+     * Npm install -g yarn #package manager, seems more stable than npm
+     * Npm install -g pm2 #process manager, to handle logs storage and server status updates.
+
+* Nginx configuration:
+     * Sudo apt-get install nginx
+     * Sudo systemctl enable –now nginx
+     * Replace default config at /etc/nginx/nginx.conf by the following config https://pastebin.com/bbVU7nSc (config file link)
+	 * Sudo nginx -t # test if the config doesn’t contains any error
+* SSL config:
+     * Sudo apt-get install certbot
+     * Sudo apt-get install python3-certbot-nginx
+     * Sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
+     * Add a cron job to regenerate the certificate everyday at noon as it expire at a certain time crontab -e
+     * Choose your favorite editor then add the following line to the file:0 12 * * * /usr/bin/certbot renew --quiet
+
+Nginx is now setup including SSL certificate
+### Deploy from GitHub
+You will next deploy the Trackflix CMS project to your EC2 instance by cloning it from GitHub.
+From your terminal and logged into your EC2 instance as the ubuntu user:
+* git clone git@github.com:trackit/trackflix-cms.git
+* yarn #install the dependencies
+* yarn create-env #generate .env with new random safe tokens
+
+Modify the .env file with your database configuration. If not done, redirect to a readme section explaining how to create the database.
+Available DB systems are MySQL and PostgreSQL.
+```db
+DATABASE_CLIENT=postgres_or_mysql
+DATABASE_HOST=your_database_host
+DATABASE_PORT=5432 # or any other
+DATABASE_NAME=your_database_name
+DATABASE_USERNAME=your_database_username
+DATABASE_PASSWORD=your_database_password
+DATABASE_SSL=false
+```
+* App keys
+The app keys (JWT tokens and other security strings) are automatically generated and changing them isn’t mandatory.
+
 
 # 👨‍💻 Features
 ## 🎬 Live Channel
