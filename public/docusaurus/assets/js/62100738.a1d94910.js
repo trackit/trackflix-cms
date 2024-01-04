@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkstrapi_docusaurus=self.webpackChunkstrapi_docusaurus||[]).push([[782],{8643:e=>{e.exports=JSON.parse('{"title":"User Guide","description":"...","slug":"/category/user-guide","permalink":"/docusaurus/docs/category/user-guide","navigation":{"next":{"title":"Live Channel","permalink":"/docusaurus/docs/getting-started/live-channel"}}}')}}]);
