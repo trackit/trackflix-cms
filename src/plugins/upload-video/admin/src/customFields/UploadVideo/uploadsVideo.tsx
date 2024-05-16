@@ -167,7 +167,6 @@ const UploadVideo = ( props : customFieldProps ) => {
         folder: 1,
       })
     );
-    console.log(formData)
     return post(`/upload`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
