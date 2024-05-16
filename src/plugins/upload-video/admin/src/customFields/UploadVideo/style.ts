@@ -34,7 +34,16 @@ const style : {[key: string]: CSSProperties} = {
         paddingLeft: 20,
         paddingRight: 20,
         borderRadius: 10,
-    }
+    },
+    videoPlayer: {
+        width: "40%",
+    },
+    videoPlayerContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+
 }
 
 export default style;

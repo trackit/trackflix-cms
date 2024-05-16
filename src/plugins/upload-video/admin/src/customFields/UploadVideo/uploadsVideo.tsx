@@ -37,6 +37,13 @@ const cursors = {
   [UploadStatus.UPLOADING]: "progress",
 }
 
+const VideoPlayer = ({ src }: { src: string }) => (
+  <video controls style={style.videoPlayer} >
+    <source src={src} type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+);
+
 const UploadFileButton = styled.label<{uploadStatus: UploadStatus}>`
     cursor: ${({uploadStatus}) => cursors[uploadStatus]};
     position: relative;
@@ -160,7 +167,7 @@ const UploadVideo = ( props : customFieldProps ) => {
         folder: 1,
       })
     );
-      
+    console.log(formData)
     return post(`/upload`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -213,6 +220,9 @@ const UploadVideo = ( props : customFieldProps ) => {
             <LoaderAnimated style={{visibility: uploadStatus == UploadStatus.UPLOADING ? "visible" : "hidden"}}/>
           </UploadFileButton>
         </div>
+        <div style={style.videoPlayerContainer}>
+      {videoUrl && <VideoPlayer src={videoUrl} />}
+    </div>
     </div>
   );
 };
