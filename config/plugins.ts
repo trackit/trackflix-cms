@@ -11,10 +11,6 @@ export default async ({env}) => ({
     enabled: true,
     resolve: './src/plugins/docusaurus'
   },
-  'opensearch': {
-    enabled: true,
-    resolve: './src/plugins/opensearch'
-  },
   'upload-video': {
     enabled: true,
     resolve: './src/plugins/upload-video'
